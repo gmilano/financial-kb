@@ -1,0 +1,13 @@
+{
+  "topics": ["fintech", "algorithmic-trading", "quantitative-finance", "finance-ai", "risk-management"],
+  "agentKeywords": "AI finance trading portfolio risk management open source",
+  "repoKeywords": "quantitative trading algorithmic finance AI open source",
+  "verticalKeywords": "banking core banking fintech platform open source",
+  "minStars": 200,
+  "licenses": ["MIT", "Apache-2.0", "BSD-2-Clause"],
+  "keywords": {
+    "agents": ["trading bot", "portfolio optimizer", "risk agent", "fraud detection"],
+    "repos": ["QuantLib", "Zipline", "backtrader", "FinBERT", "algorithmic trading"],
+    "verticals": ["Mifos", "GNU Cash", "Odoo accounting", "Open Bank Project"]
+  }
+}
