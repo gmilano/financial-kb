@@ -1,13 +1,106 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-09
+updated: 2026-11-21
 ---
 
 # Financial Repos — Trending Log
 
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
+
+## 2026-11-21
+
+### Resolved — the item this log carried forward as blocked
+
+The 2026-11-09 section ends with an **Unresolved** entry:
+`formancehq/ledger`, "no license shown on the sidebar and `/blob/main/LICENSE`
+returned 404… blocked on license verification. Carried forward to the next pass."
+
+**Resolved: it is MIT.**
+
+| Repo | License | Bytes | Stars | Last push | Evidence |
+|---|---|---|---|---|---|
+| https://github.com/formancehq/ledger | MIT | 1,083 | 1,482 | 2026-11-21 | Canonical MIT text, identical on `HEAD`, `main` and `master`; `search/repositories` independently reports `MIT` |
+
+The prior 404 came from probing a **github.com web path**, which this proxy
+answers 403/404 regardless of truth. Probing
+`raw.githubusercontent.com/<slug>/HEAD/LICENSE` discriminates correctly. The
+practical consequence is in `repos/foundations.md`: this closes the "no
+permissive ledger library" gap this KB had named as genuine. **Every
+"license could not be verified" note in every industry KB should be re-run
+against raw before it is believed.**
+
+Keep it distinct from `formancehq/stack` (533 stars, SPDX `NOASSERTION`,
+pushed 2026-11-10) — a different repo and a separate licensing question.
+
+### Full-KB URL sweep: 3 repos in the history below have been deleted
+
+All 66 unique `github.com/<owner>/<repo>` URLs in this KB were checked by
+`git ls-remote` ref count this pass. **63 resolve; 3 return zero refs and no
+longer exist:**
+
+| Repo (as recorded in history below) | Status 2026-11-21 |
+|---|---|
+| https://github.com/Devsinfin/bank-churn-random-forest | **Deleted** — 0 refs |
+| https://github.com/sammygallant214/CryptoDesk-ai | **Deleted** — 0 refs |
+| https://github.com/skstmdals1-ctrl/bybit-dashboard | **Deleted** — 0 refs |
+
+The history below is **not being rewritten** — that is the point of an
+append-only log, and the rows stay as the record of what was true when they were
+written. This section is the correction layer.
+
+All three came from the automated 0-star intake of 2026-07-02, and all three were
+re-verified as existing on 2026-11-09. **Three of those eight repos vanished
+within about four and a half months.** That is the empirical case for the
+2026-11-09 decision to demote unlicensed single-author repos out of the curated
+set: in this corner of the distribution, "it resolves today" has a measured
+half-life. It also sets the honest expectation for the 0-star rows this pass
+*did* adopt (`open-banking-io/mcp-server`, `OpenFin8/openfin8-br`,
+`StrategicProjects/pixbr`) — they were adopted on verified licence and function
+match, and each needs re-checking rather than assuming.
+
+### Infrastructure repos gaining in financial builds
+
+| Repo | License | Stars | Last push | Note |
+|---|---|---|---|---|
+| https://github.com/freqtrade/freqtrade | GPL-3.0 | 57,113 | 2026-11-19 | Measured for the first time in this KB. By stars the **second-largest asset in the whole financial set**, and it is GPL-3.0 — recorded here precisely so a future pass does not promote it into a permissive table |
+| https://github.com/stefan-jansen/machine-learning-for-trading | MIT | 21,921 | 2026-11-18 | The reference ML-for-trading codebase as runnable notebooks. MIT and still actively pushed |
+| https://github.com/tigerbeetle/tigerbeetle | Apache-2.0 | 17,411 | 2026-11-11 | +~0.1k since 2026-11-09. Still the ledger-of-record choice under new payments builds |
+| https://github.com/SantanderAI/gen-fraud-graph | Apache-2.0 | 296 | 2026-10-01 | Bank-published synthetic fraud graph generator |
+| https://github.com/stefanoamorelli/sec-edgar-mcp | AGPL-3.0 | 388 | 2026-11-01 | SEC filings over MCP. Note the slug — `sec-edgar/sec-edgar-mcp` does not exist |
+
+### Platform corrections measured this pass
+
+| Repo | Status | Detail |
+|---|---|---|
+| https://github.com/apache/ofbiz | **ARCHIVED** | Last push **2020-04-27**, 804 stars. Still recommended by current ERP roundups. The live project is `apache/ofbiz-framework` (Apache-2.0, 1,151 stars, pushed 2026-11-20) |
+| https://github.com/idurar/idurar-erp-crm | License claim wrong in sources | Listicles call it MIT; it is **AGPL-3.0** (8,963 stars) |
+| https://github.com/aureuserp/aureuserp | Slug correction | MIT, 12,265 stars, pushed 2026-11-20. The slug cited in roundups, `aureus-erp/aureus-erp`, **does not exist** — `ls-remote` cannot resolve it |
+
+### Channel defects found this pass — these affect how this log should be read
+
+1. **`search/repositories` returns false negatives on live repos.** `OpenBB-finance/OpenBB`
+   and `FinAegis/finaegis` return HTTP 422 "resources do not exist or you do not
+   have permission"; `stefan-jansen/zipline-reloaded` returns `total_count: 0`.
+   All three are live (5,537 / 1,645 / 291 refs, resolving HEAD SHAs). Treat this
+   channel as **precision, never coverage**.
+2. **`raw.githubusercontent.com` is case-sensitive.** `bacen/pix-api` gives 404
+   for `README.md` and 200 for `readme.md`. A case-blind absence probe will
+   report "no LICENSE file" on a repo that has one spelled differently. Absence
+   counts as *measured* only when case variants were tried and a control file in
+   the same repo returned 200.
+3. **`NOASSERTION` resolved to Apache-2.0 in 2 of 2 cases opened.**
+
+### Still open, verified by function rather than assumed
+
+- **No permissive, maintained agentic AML / transaction-monitoring platform.**
+  Best functional match is AGPL-3.0 (`jube-home/aml-fraud-transaction-monitoring`,
+  116 stars). Permissive candidates measured at 0–83 stars with **no LICENSE
+  file**. Biggest build-vs-buy opening in this KB.
+- **No permissive SEPA or Pix payment-*initiation* agent.** Read paths are
+  covered in both regions; initiation is not, and that is a deliberate product
+  choice across the space rather than a gap waiting to be filled.
 
 ## 2026-11-09
 
