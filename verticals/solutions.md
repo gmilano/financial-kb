@@ -176,6 +176,59 @@ priced as one.
 | Akaunting | https://github.com/akaunting/akaunting | **BSL — not OSI** | 10,300 | Online accounting. Business Source License is *not* an open source license. Do not treat it as one |
 | Odoo | https://github.com/odoo/odoo | open-core, LGPL-3 community | 55,700 | ERP/CRM suite, open-core since v9.0: community modules plus proprietary enterprise apps. Confirm per module. For a finance engagement that needs permissive, Aureus ERP above is the cleaner answer |
 
+## FINOS — the governance layer, written by the banks themselves
+
+**Added 2026-11-22 (pass 4).** Four passes of this KB have catalogued what to
+*build* with and nothing about what a bank's second line will **accept**. That
+artefact exists, it is open, and it is written by the institutions that do the
+accepting. FINOS (the Fintech Open Source Foundation, a Linux Foundation
+project) runs an AI governance effort whose **Common Controls for AI Services**
+work is backed by Citigroup, Morgan Stanley and Bank of America.
+
+| Asset | Repo | License (bytes) | Stars | Forks | Last push | What it is |
+|---|---|---|---|---|---|---|
+| AI Governance Framework | https://github.com/finos/ai-governance-framework | **CC-BY-4.0** (18,650) | 120 | 82 | 2026-11-18 | Catalogue of AI **risks and mitigations** for financial services, structured for onboarding, development and deployment of AI in a regulated institution. 82 forks |
+| AIGF MCP server | https://github.com/finos/aigf-mcp-server | Apache-2.0 (11,336) | 10 | 6 | 2026-11-09 | **The framework as an MCP server** — an agent can query the control catalogue directly while designing or reviewing a system |
+| AI reference architecture library | https://github.com/finos/ai-reference-architecture-library | Apache-2.0 (11,357) | 18 | 13 | 2026-11-19 | Reference architectures for AI systems in financial services |
+| AI Readiness (SIG) | https://github.com/finos/ai-readiness | CC-BY-4.0 | 66 | — | 2026-08-13 | Cross-member working group on shared AI adoption obstacles |
+| Common Domain Model | https://github.com/finos/common-domain-model | **Community Specification License 1.0** (16,142) | 296 | 142 | 2026-11-20 | Standard model for financial products, trades and lifecycle events. A *specification* licence — see the note below |
+| Legend | https://github.com/finos/legend | Apache-2.0 | 1,557 | — | 2026-11-22 | Data modelling and governance platform, originally Goldman Sachs. The largest FINOS codebase; pushed today |
+
+### Read the licences before planning the deliverable
+
+**`ai-governance-framework` is CC-BY-4.0 — a *content* licence, not a software
+licence.** This is the right choice for a control catalogue and it changes how
+you use it: you may redistribute and adapt the material, including commercially,
+**with attribution**. You are adopting a document, not importing a dependency,
+and a client deliverable that reproduces its controls must credit FINOS.
+`common-domain-model` ships the **Community Specification License 1.0**, a
+standards instrument with patent and contribution terms — again a specification,
+not a code grant. GitHub reports `NOASSERTION` for it.
+
+### Why this belongs in a solutions file at all
+
+Everything else in this KB is a thing you install. This is a thing you **cite**,
+and in a regulated engagement the citation is often the harder half. The
+commercial logic is the same one the legal KB found in Singapore's MinLaw
+guidance: *the short, sector-specific, peer-authored document is what the client
+uses as a buying criterion*, and it beats a vendor's assurances precisely
+because the client's competitors wrote it.
+
+It also composes with obligations this KB already tracks. The EU AI Act's
+Article 9(10) allows AI risk management to fold into existing **DORA** ICT
+processes; a control catalogue that is already mapped to financial-services
+risks is the natural carrier for that consolidation. And an
+`aigf-mcp-server`-shaped control catalogue is queryable **by the agent being
+governed**, which is the cheapest available answer to "show me the control that
+applies to this component" during a review.
+
+**Caveat, stated rather than hidden:** FINOS publishes a framework, not a
+certification. No supervisor has endorsed it. Its value is as a defensible
+starting point and a shared vocabulary with the client's risk function — which
+is exactly what pass 2 argued is available to whoever writes a credible agent
+control framework first, given that US SR 26-2 and OCC Bulletin 2026-13 place
+agentic AI **outside** existing model-risk guidance.
+
 ## Regional rails — LATAM
 
 | Asset | Repo | License | Stars | Note |
@@ -190,6 +243,40 @@ do not vendor the file into a client repository as though it were Apache-license
 code, because the grant is a badge, not a filed license. The spec content is a
 public regulatory artefact; the clean path is to fetch it from BCB's developer
 area at build time and keep the generated client as your own work.
+
+### LATAM batch rails — CNAB and boleto, the layer Pix did not replace
+
+**Added 2026-11-22 (pass 4).** The three rows above are all Pix. Pix is the
+story, and it is not the whole rail. Brazilian corporate collections and
+payables still run on **CNAB 240/400 remessa and retorno files** and on
+**boletos**, and that is where a client's accounts-receivable reconciliation
+pain actually sits. These are the LATAM counterparts of NACHA (US) and
+BAI2/MT940 (EMEA), and unlike those two the ecosystem is large, permissive and
+has real traction.
+
+| Asset | Repo | License (bytes) | Stars | Forks | Last push | Note |
+|---|---|---|---|---|---|---|
+| laravel-boleto | https://github.com/eduardokum/laravel-boleto | MIT (1,123) | 629 | 434 | 2026-11-03 | **The highest-traction LATAM payments asset found in any pass of this KB.** Generates boletos *and* CNAB remessa files, multi-bank. 434 forks is production usage, not curiosity |
+| OpenCnabPHP | https://github.com/openboleto/OpenCnabPHP | MIT (1,109) | 214 | 129 | 2026-06-08 | Multi-bank generation **and reading** of CNAB 240 and CNAB 400 remessa/retorno files. The reading half is what a reconciliation agent needs |
+| CnabPHP | https://github.com/andersondanilo/CnabPHP | MIT (1,081) | 325 | 192 | 2022-03-10 | Widely forked CNAB library. **Last push 2022-03-10 — stale, listed for its forks and as a format reference, not as a dependency** |
+| boleto_bancario | https://github.com/tomas-stefano/boleto_bancario | MIT (1,093) | 69 | — | 2026-02-03 | Boleto issuing in Ruby, for a stack that is not PHP |
+| sat-cfdi | https://github.com/Angle/sat-cfdi | MIT (1,059) | 2 | 7 | 2026-10-23 | **Mexico.** Parses and validates **CFDI 4.0** invoices against SAT rules. Low traction, but CFDI is the fiscal artefact every Mexican payable is settled against |
+
+**Why this matters for an engagement, and it is a point the legal KB reached
+first.** That KB found that porting a US billing standard (LEDES) into LATAM was
+the wrong work, because the region's functional equivalent is **the national
+electronic fiscal invoice** — CFDI in Mexico, NF-e/NFS-e in Brazil — not a
+sector standard. The same rule holds here in the opposite direction: do not
+assume a LATAM reconciliation build needs ISO 20022 tooling. **It needs CNAB and
+boleto parsing and CFDI matching**, all of which exist under MIT today, and
+`eduardokum/laravel-boleto` has more forks (434) than any ISO 20022 repository
+found this pass.
+
+**Caution on the PHP concentration.** Four of the five rows are PHP, which
+reflects the Brazilian SMB web stack rather than a bank-grade runtime. For a
+tier-1 bank engagement, treat these as **executable format specifications** —
+the authoritative answer to "what exactly goes in position 63 of a CNAB 240
+segment" — and port the layout, rather than deploying the library.
 
 ## How to put AI on top of these
 

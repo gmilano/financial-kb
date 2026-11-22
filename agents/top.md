@@ -240,6 +240,53 @@ run**. The repository states its agents stage output for human sign-off and do
 not execute transactions or post to a ledger — which is the same boundary
 `verticals/solutions.md` recommends, arrived at independently.
 
+## Back-office and message-layer agents — new 2026-11-22 (pass 4)
+
+The tier above covers agents that *decide* (trade, advise, initiate). This tier
+covers agents that **close the books and reconcile the file** — the work the
+Cambridge CCAF 2026 survey puts at four of the top five AI use cases in
+financial services, and the work this KB had no rows for.
+
+Traction here is low and is stated per row, not hidden. That is the honest
+shape of the category: the people who reconcile bank statements for a living do
+not star GitHub repositories, which is the same measurement artefact the legal
+KB recorded for billable-hours tooling. **Read these as reference designs and
+starting points, not as dependencies to adopt on their star count.**
+
+| Agent | Repo | License (bytes) | Stars | Last push | What it does |
+|---|---|---|---|---|---|
+| bankstatementparser-mcp | https://github.com/sebastienrousseau/bankstatementparser-mcp | Apache-2.0 (10,287) | 3 | 2026-11-18 | **The highest-leverage row in this table.** Exposes BAI2, MT940/MT942, camt.053, OFX and CSV parsing as an **MCP server**, so an agent reads a bank file as structured transactions instead of guessing at a PDF |
+| agent-for-accounting | https://github.com/FoundrySoftHQ/agent-for-accounting | MIT (1,070) | 5 | 2026-08-05 | Reconciles a month of bank and ledger CSVs and **surfaces only the lines that need a decision**. The design is the point: the agent triages, the human decides, and the volume that needs no judgement never reaches a person |
+| payment-reconciliation-agent | https://github.com/adithyaathreya2264/payment-reconciliation-agent | Apache-2.0 (11,357) | 7 | 2026-08-29 | **APAC-placed.** Reconciliation over Indian payment data — UPI, NEFT and payment-gateway settlements. The only region-anchored asset found on this plane outside NA, EMEA and LATAM |
+| financial-inteligence-agent | https://github.com/leojg/financial-inteligence-agent | Apache-2.0 (11,357) | 19 | 2026-11-01 | LangGraph agent that ingests bank statements and answers questions over them. Useful mainly as a **worked LangGraph wiring** for statement data |
+| motiva | https://github.com/apognu/motiva | MIT (1,073) | 16 | 2026-11-21 | Reimplementation of the **OpenSanctions scoring API**. Pushed yesterday. Pairs with `moov-io/watchman`: Watchman holds the lists, this scores the match |
+| sieve-aml | https://github.com/AbgarSim/sieve-aml | MIT (1,071) | 16 | 2026-11-16 | Sanctions and AML screening over **35+ official lists** with a nightly-refreshed database and a dashboard |
+| payee-match | https://github.com/softvasco/payee-match | MIT (1,068) | 0 | 2026-11-21 | **Verification of Payee** name matching for .NET against the EPC VOP scheme, with explainable and close-match outcomes. Zero stars, one day old, and it addresses an obligation that has been **in force in the euro area since 9 October 2025** |
+
+### The benchmark row — the testability argument, again
+
+| Asset | Repo | License (bytes) | Stars | Forks | Why it matters |
+|---|---|---|---|---|---|
+| Sanctions screening benchmark | https://github.com/Divine16/Sanctions-screening-benchmark | MIT (1,069) | 33 | 38 | Reproducible benchmark for sanctions **name-screening effectiveness**, measuring recall across documented transliteration and spelling cases |
+
+Note the ratio: **33 stars and 38 forks.** More people cloned it than starred
+it, which is the signature of a tool being *run* rather than bookmarked. This is
+the third time this KB family has found that the honest-evaluation asset is the
+one that converts a compliance conversation: `kingdee/lingee-bench` for business
+value, `SantanderAI/gen-fraud-graph` for synthetic fraud topology, and now a
+recall benchmark for name screening. **A screening engine with no recall
+measurement is unsellable to a second-line risk function**, and the benchmark
+costs nothing to adopt.
+
+### What this tier does not include
+
+No row here is an autonomous back-office agent that posts entries unsupervised,
+because none was found that is permissive, maintained and honest about its
+failure modes. `regulatory reporting automation bank` returns **`total_count:
+3`**, all zero-star. **COREP, FINREP and XBRL regulatory reporting have no
+permissive agentic tooling at all** — searched this pass, stated as a gap rather
+than filled with a listicle result.
+
 ## What is deliberately NOT here
 
 - **Generic agent frameworks** (LangChain, LangGraph, CrewAI, AutoGen, Pydantic AI).

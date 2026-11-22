@@ -9,6 +9,79 @@ updated: 2026-11-22
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-22 (pass 4)
+
+Pass theme: **the plane where the money moves had no agents in this KB at all.**
+Pass 3 (eleven hours earlier) added agentic *payment protocols* — agents that
+move money. This pass adds the layer underneath: agents that **read the file the
+bank sends and close the books against it**.
+
+### The survey finding that reframes the whole catalogue
+
+The Cambridge CCAF *2026 Global AI in Financial Services Report* (628
+institutions, vendors and regulators across 151 jurisdictions):
+
+| Finding | Figure |
+|---|---|
+| Firms adopting AI at some level | 81% |
+| Reporting advanced adoption | 40% |
+| Fintechs vs incumbents, advanced adoption | 47% vs 30% |
+| **Top-five AI use cases that are back-office functions** | **4 of 5** |
+| Top perceived risk: data privacy and protection | 73% |
+| Large institutions finding AI value hard to measure | 76% |
+
+**Four of the top five use cases are back-office, and before this pass the
+agents catalogue had zero back-office reconciliation rows.** The KB has been
+indexing where AI is *interesting* while the industry spends where AI is
+*boring*. Deloitte's March 2026 figure for at least moderate agentic adoption in
+financial services is 21%, slightly **below** the cross-industry average — so
+the gap is not that finance is ahead on agents, it is that finance is spending
+on operations.
+
+### New rows — the back-office and message tier
+
+Seven agents added to `agents/top.md`, every licence read byte-for-byte. The
+highest-leverage one is the least impressive on paper:
+`sebastienrousseau/bankstatementparser-mcp` (Apache-2.0, **3 stars**) exposes
+BAI2, MT940, camt.053 and OFX parsing as an **MCP server**. Three stars, and it
+is the difference between an agent that reasons over structured transactions and
+one that guesses at a PDF.
+
+`FoundrySoftHQ/agent-for-accounting` (MIT, 5 stars) is worth reading for its
+design statement rather than its code: *reconcile a month of bank and ledger
+CSVs and see only the lines that need a decision.* That is the correct
+architecture for this entire plane and it is the same one the legal KB arrived
+at independently — **rules do the arithmetic, the model handles the exception,
+a human decides.**
+
+### Traction here is low, and the reason is structural — second confirmation
+
+The legal KB (pass 8) found that the revenue plane of a law firm had an order of
+magnitude less social signal than contract review, because *people who bill
+hours do not browse GitHub*. Measured again here, in a second industry:
+
+| Plane | Representative asset | Stars |
+|---|---|---|
+| Trading agents | TradingAgents | ~123,000 |
+| Payment message layer (14 repos, combined) | — | ~2,700 |
+| Back-office reconciliation agents (7 repos, combined) | — | ~66 |
+| Verification of Payee (entire world, 2 repos) | — | **0** |
+
+**This is now a cross-industry regularity, not a finance observation.** A
+discovery process ranked by stars will find the operator plane last in every
+industry, and that is the plane with the budget. Any KB in this family that has
+spent three passes concluding "nothing new is being built" should test the
+claim against the vocabulary of its clients' operations before believing it.
+
+### Correction carried from `repos/trending.md`
+
+Pass 3's advice *"do not start an ISO 20022 build here"*, derived from one
+archived repository, is withdrawn. Fourteen permissive, maintained message-layer
+repositories, 0 archived. Details and the licence tiers 6 and 7 that came with
+them are in `repos/trending.md` and `repos/foundations.md`.
+
+---
+
 ## 2026-11-22
 
 Pass theme: **a category, not a catalogue refresh.** Twenty-four hours is below

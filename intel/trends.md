@@ -301,9 +301,98 @@ mandate record, the enforcement gateway, the audit trail per decision. That is
 unglamorous, scoped, fundable work — and every component for it in this KB is
 permissively licensed.
 
+## 16. The spending is in the back office; the catalogues are in the front
+
+The Cambridge CCAF *2026 Global AI in Financial Services Report* — 628
+institutions, vendors and regulators across 151 jurisdictions, and the most
+rigorous dataset available to this KB — finds **four of the top five AI use
+cases in financial services are back-office functions**. Deloitte (March 2026)
+puts at-least-moderate agentic adoption in financial services at 21%, slightly
+**below** the cross-industry average of 23%.
+
+Read together these say something specific: finance is not ahead on agents, it
+is **ahead on operations**. And until this pass, this KB's catalogue was the
+mirror image of the spending — ~123,000 stars of trading agents, zero
+reconciliation rows, zero rows that could read a bank statement file.
+
+The measurable form of the imbalance:
+
+| Plane | Combined stars |
+|---|---|
+| Trading and investment agents | ~123,000 (TradingAgents alone) |
+| Payment message layer (14 permissive repos) | ~2,700 |
+| Back-office reconciliation agents (7 repos) | ~66 |
+| Verification of Payee (the whole world, 2 repos) | **0** |
+
+**A discovery process ranked by stars will find the operator plane last, in
+every industry.** The legal KB measured the identical pattern on billable-hours
+tooling and explained it: the people who do this work do not browse GitHub.
+Second independent confirmation, different industry — this is now a cross-KB
+regularity and should be tested in the remaining ten.
+
+The corollary is commercial. CCAF also finds **76% of large institutions cannot
+easily measure AI value**. A reconciliation, screening or validation build has
+a baseline that already exists in the client's own operations — exception
+counts, touch rates, days-to-close, match rates. The boring plane is the one
+that can prove it worked.
+
+## 17. A date is not a durable fact — and this now extends past regulation
+
+Pass 2 of this KB established the rule after finding its own headline
+recommendation resting on an EU AI Act Annex III date that had been deferred to
+December 2027. **The same failure mode has now been measured on a
+market-infrastructure date**, which generalises it:
+
+- SWIFT's **CBPR+ MT/MX coexistence genuinely ended on 22 November 2025** —
+  passed, irreversible, exactly a year before this pass.
+- On **27 August 2026**, Swift deferred the remaining SR2026 payment changes
+  (including removal of unstructured postal addresses) and the Federal Reserve
+  rescheduled the corresponding **Fedwire release to November 2027**.
+- **Secondary sources still print 14, 16 and 23 November 2026 as live
+  deadlines.** This pass ran in the exact week those sources name.
+
+Two rules, both transferable to every industry KB in this family:
+
+1. **Any claim whose urgency rests on a date needs a second leg that does not
+   move.** Here the second leg is strong: coexistence *already ended*, so firms
+   are live and in the post-migration data-quality and reconciliation phase that
+   the BIS CPMI brief (April 2026) describes. That work does not evaporate when
+   a date slips.
+2. **The stale version of a deadline is better indexed than the correction.**
+   The deferral is eleven weeks old and the November 2026 articles still
+   dominate retrieval. Identical to the LATAM disinformation pattern the legal
+   KB recorded three passes running, where guides asserting Brazil and Mexico
+   have AI laws in force outrank the accurate sources.
+
+## 18. Licence evidence has seven tiers, and `NOASSERTION` is not a finding
+
+§14 recorded five tiers. Two more were measured this pass, both on
+high-traction repositories, both reported by GitHub as `NOASSERTION`:
+
+| Tier | Example | Evidence | Consequence |
+|---|---|---|---|
+| 6 — specification licence | `finos/common-domain-model` (296★) | **Community Specification License 1.0**, 16,142 B | A standards instrument with patent and contribution terms. The spec and an implementation of it are different legal objects |
+| 7 — permissive with advertising obligation | `quickfix-j/quickfixj` (1,161★, 679 forks) | **QuickFIX Software License 1.0**, 2,096 B, BSD-4-clause-shaped | Commercially usable, **but clause 3 requires acknowledging quickfixengine.org in end-user documentation**, and clauses 4–5 restrict naming. Adds a deliverable to every handover; GPL-incompatible |
+
+**The operative lesson is about the classifier, not the licences.**
+`NOASSERTION` means GitHub declined to classify — it is the absence of a
+finding, and this KB has now resolved it to: genuine Apache-2.0 with a
+copyright preamble (twice), MIT behind a trademark notice (once), a
+specification licence, a custom advertising-clause licence, and — in
+`visa/trusted-agent-protocol` — **a LICENSE file that grants nothing at all**.
+Five different realities behind one label. Every `NOASSERTION` row in every
+industry KB needs the file opened and its bytes counted.
+
+A third, smaller confirmation this pass: the byte-band rule predicted all
+**27 of 27** licences before any file was opened, and the 200-byte LICENSE in
+`sebastienrousseau/bankstatementparser` resolved, as the rule says a
+far-below-band count must, to a **pointer** — here to a genuine dual
+Apache/MIT grant (10,287 B and 1,075 B, both fetched). The rule's value is that
+it tells you to look, not that it predicts what you find.
+
 ---
 *Researched 2026-11-09; re-verified and corrected 2026-11-21; sections 12-15
-added 2026-11-22. The regulatory dates in section 5 supersede the 2026-11-09
+added 2026-11-22 (pass 3); sections 16-18 added 2026-11-22 (pass 4). The regulatory dates in section 5 supersede the 2026-11-09
 revision; section 13 supersedes section 7's conclusion. Sources are largely
 vendor and bank thought-leadership — with three exceptions now: the CCAF-led
 survey, the BoE/FCA survey of 26 October 2026, and ECB/EBA supervisory

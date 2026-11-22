@@ -9,6 +9,92 @@ updated: 2026-11-22
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-22 (pass 4)
+
+### A dead end this log published eleven hours earlier
+
+The section immediately below — *"The KB's largest named gap, closed — by
+changing the words, not the effort"* — is correct and stands. It also contains,
+in its own repo table, this row:
+
+> `moov-io/iso20022` | Apache-2.0 | 78 | 2023-01-12 | **ARCHIVED.** The one Moov
+> repo you would most want for an EMEA or LATAM rail build is the frozen one. Do
+> not start an ISO 20022 build here
+
+**The archive measurement is right. The advice is withdrawn.** The same pass
+that correctly refused to read "no results for AML" as "no AML platform" then
+read one archived repository as a frozen category. The error survived eleven
+hours because nobody re-queried after writing the sentence — the same mechanism
+that left a stale EU AI Act date in this KB for twelve days (pass 2 flagship).
+
+What a re-query found, all verified today by `ls-remote` + byte-read licence:
+
+| Repo | License (bytes) | Stars | Last push | Note |
+|---|---|---|---|---|
+| https://github.com/prowide/prowide-iso20022 | Apache-2.0 (11,357) | 240 | 2026-11-20 | Parser and business model for **all** ISO 20022 messages. Directly replaces the archived repo |
+| https://github.com/moov-io/iso8583 | Apache-2.0 (10,243) | 539 | 2026-11-22 | The **card** rail. Pushed today. Never in this KB |
+| https://github.com/moov-io/paygate | Apache-2.0 (11,357) | 133 | 2026-11-20 | ACH origination as a service. Never in this KB |
+| https://github.com/sebastienrousseau/bankstatementparser | Apache-2.0 OR MIT | 64 | 2026-11-18 | CAMT, pain.001, MT940/942, OFX, BAI2, CSV, PDF in one parser |
+| https://github.com/wolph/mt940 | BSD-3-Clause (1,490) | 106 | 2026-11-16 | MT940, Python, pushed last week |
+| https://github.com/ministryofjustice/bai2 | MIT (1,128) | 30 | 2026-03-01 | BAI2, copyright HM Government |
+| https://github.com/quickfix-j/quickfixj | Custom (2,096) | 1,161 | 2026-11-22 | FIX engine, 679 forks, pushed today. Licence is **not** Apache/MIT |
+
+Full table of 14 rows in `repos/foundations.md`.
+
+### The query that proves it was vocabulary, not scarcity
+
+| Query | total_count |
+|---|---|
+| `ISO 20022 agent LLM` | **1** |
+| `ISO 20022 message` | 227 |
+| `pain.001` | 223 |
+| `camt.053` | 154 |
+| `ISO 8583 message` | 245 |
+| `regulatory reporting automation bank` | **3** (all 0-star) |
+| `verification of payee VoP SEPA` | **2** (both 0-star) |
+
+**The single-digit result is the trap, not the answer.** This is P31 from the
+legal KB — *adding the industry or technology word to a standard's name is a
+filter, not a clarification* — now confirmed in a fourth industry. Two of the
+single-digit counts above are genuine gaps and one is an artefact, and **the
+count alone does not tell you which**. Only opening the results does.
+
+### Two new licence-evidence tiers, both on high-traction repos
+
+- **Community Specification License 1.0** — `finos/common-domain-model`
+  (296 stars), 16,142 B. A specification instrument, not a code grant.
+- **QuickFIX Software License 1.0** — `quickfix-j/quickfixj` (1,161 stars),
+  2,096 B. BSD-4-clause-shaped: **clause 3 requires an acknowledgment of
+  quickfixengine.org in end-user documentation**, clauses 4–5 restrict the name.
+  Commercially usable; not a drop-in.
+
+GitHub reports `NOASSERTION` for both. Running total: **seven** tiers of licence
+evidence in this KB family.
+
+### Byte bands, 27 of 27
+
+Every licence this pass was predicted by band before the file was opened and
+every prediction held: MIT 1,059–1,128 B (13 reads), Apache-2.0 10,173–11,357 B
+(11 reads), BSD-3 1,490 B (1), CC-BY-4.0 18,650 B (1), custom 2,096 B (1).
+
+Two refinements:
+
+1. **`moov-io` ships two different Apache files.** `ach`, `iso8583` and
+   `iso8583-connection` carry 10,243–10,246 B; `paygate` carries the canonical
+   11,357 B. Band membership is an **organisation-level** constant more often
+   than a project-level one, which makes an outlier inside one org worth a look.
+2. **The 200-byte pointer resolved exactly as the rule predicted.**
+   `sebastienrousseau/bankstatementparser` has a 200 B LICENSE reading *"dual-licensed
+   under either of: Apache License 2.0 — see LICENSE-APACHE; MIT — see
+   LICENSE-MIT"*. Both targets fetched: `LICENSE-APACHE` 10,287 B,
+   `LICENSE-MIT` 1,075 B. **Far-below-band means a pointer, and a pointer must
+   be followed before the row is written** — pass 2 wrote that rule from the
+   `visa/trusted-agent-protocol` case, where following the pointer found *no
+   grant at all*. Same shape, opposite outcome. The rule earns its keep by
+   telling you to look, not by predicting what you find.
+
+---
+
 ## 2026-11-22
 
 ### The KB's largest named gap, closed — by changing the words, not the effort

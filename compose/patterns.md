@@ -597,6 +597,151 @@ the CFO already tracks.
 
 ---
 
+## Pattern 13 — Bank-statement reconciliation agent that only shows you the exceptions
+
+**For:** any corporate or mid-market client whose finance team reconciles bank
+statements to a ledger by hand. This is the single most common instance of the
+back-office work CCAF measures at four of the top five AI use cases, and it was
+the largest hole in this KB before pass 4.
+
+**The architectural rule, inherited from the legal KB and unchanged here:**
+`MODELS READ, RULES DECIDE`. A statement file either parses or it does not; two
+amounts either tie or they do not. **Nothing deterministic goes to a model.**
+
+| Layer | Component | License |
+|---|---|---|
+| Ingest, any format | https://github.com/sebastienrousseau/bankstatementparser | Apache-2.0 OR MIT |
+| Same, as agent tooling | https://github.com/sebastienrousseau/bankstatementparser-mcp | Apache-2.0 |
+| EMEA statement formats | https://github.com/viafintech/camt_parser, https://github.com/wolph/mt940 | MIT, BSD-3-Clause |
+| US formats | https://github.com/ministryofjustice/bai2, https://github.com/moov-io/ach | MIT, Apache-2.0 |
+| LATAM returns | https://github.com/openboleto/OpenCnabPHP | MIT |
+| Ledger of record | https://github.com/formancehq/ledger or https://github.com/blnkfinance/blnk | MIT, Apache-2.0 |
+| Triage design to copy | https://github.com/FoundrySoftHQ/agent-for-accounting | MIT |
+
+**Wiring:**
+
+1. **Parse deterministically.** The statement goes through the parser for its
+   format. A file that fails to parse is an **operational incident**, not an
+   agent prompt — route it to a person with the parser's own error.
+2. **Match deterministically.** Exact matches on amount + date + reference
+   clear without a model ever seeing them. In most books this is the large
+   majority of lines, and every one of them is free.
+3. **The agent sees only the residue** — the lines that did not match — through
+   the MCP server, as structured transactions. Its job is to *propose* a
+   match or an explanation, each one citing the statement line id and the
+   ledger entry id.
+4. **A verifier drops any proposal whose cited ids do not resolve.** Same
+   mechanism as Pattern 6 and the legal KB's P29.
+5. **A human accepts or rejects.** Nothing posts to the ledger unattended.
+
+**Why it sells:** the baseline already exists in the client's close calendar —
+unmatched-line count, touch rate, days-to-close. Pattern 13 is the direct answer
+to the CCAF finding that **76% of large institutions cannot measure AI value**.
+
+**Honest limitation:** `billing-lint`'s README finding from the legal KB applies
+here verbatim — **batch LLM review is inconsistent**: the same defect gets
+flagged on line 3 and missed on line 47, and two runs over one extract
+disagree. In reconciliation that inconsistency is money. It is the reason steps
+1 and 2 are not negotiable.
+
+---
+
+## Pattern 14 — Verification of Payee: a mandated obligation with no incumbent
+
+**For:** any euro-area PSP, and the clearest greenfield opening this KB has
+measured in EMEA.
+
+**The demand is legal, dated and in force.** VoP has been mandatory for
+euro-area payment service providers since **9 October 2025** under the Instant
+Payments Regulation, on standard and instant transfers, with the result returned
+within **five seconds**. The supply, measured: **two repositories worldwide,
+both zero stars.**
+
+| Layer | Component | License |
+|---|---|---|
+| Scheme-aligned matcher to start from | https://github.com/softvasco/payee-match | MIT (1,068 B) |
+| Second reference implementation | https://github.com/untitledfinancial/dpx-compliance-public | BSD-3-Clause |
+| Name-matching engine (reuse, do not rebuild) | https://github.com/moov-io/watchman | Apache-2.0 |
+| Scoring API | https://github.com/apognu/motiva | MIT |
+| Recall measurement | https://github.com/Divine16/Sanctions-screening-benchmark | MIT |
+| Initiation files | https://github.com/sebastienrousseau/pain001, https://github.com/inisos/bank4j | Apache-2.0, MIT |
+
+**Wiring:**
+
+1. **Do not build a name matcher.** `moov-io/watchman` already does fuzzy name
+   matching at production quality for sanctions screening; VoP is the same
+   primitive against a different list. Reuse the engine, swap the corpus.
+2. **Make the outcome explainable by construction.** The EPC scheme needs
+   match / close-match / no-match, and a close match must be presentable to a
+   payer in the time they are staring at a confirmation screen.
+   `payee-match` is built around exactly this and is the reason to start there
+   rather than from scratch.
+3. **Budget the five seconds explicitly**, end to end, and test it as a hard
+   gate in CI. The latency budget is the requirement most likely to fail late.
+4. **Measure recall before anyone asks.** Adapt the sanctions benchmark's
+   method — transliteration, spelling and ordering variants — to payee names.
+   **A match engine without a published recall figure cannot clear a second-line
+   risk review**, and this is the cheapest part of the whole build.
+5. **Keep the model out of the decision.** It drafts the explanation shown to
+   the payer; deterministic scoring decides the outcome.
+
+**Where the care is needed:** the non-euro-area extension date is **contested
+in the sources** — the ECB gives 9 July 2027 for VoP in non-euro Member States,
+KPMG writes 1 January 2027 for the EEA. Cite the regulation text or the national
+supervisor, not a consultancy page, and note §17: **a date is not a durable
+fact.** The euro-area obligation, already in force, is the leg that does not
+move.
+
+---
+
+## Pattern 15 — Governance pack a bank's second line will actually accept
+
+**For:** the review that decides whether anything else in this file ships. Four
+passes of this KB catalogued what to build with and nothing about what gets
+approved.
+
+| Layer | Component | License |
+|---|---|---|
+| Control catalogue | https://github.com/finos/ai-governance-framework | **CC-BY-4.0** |
+| Catalogue, queryable by the agent | https://github.com/finos/aigf-mcp-server | Apache-2.0 |
+| Reference architectures | https://github.com/finos/ai-reference-architecture-library | Apache-2.0 |
+| Licence provenance evidence | Pattern 9 in this file | — |
+| Honest evaluation | https://github.com/Divine16/Sanctions-screening-benchmark, https://github.com/kingdee/lingee-bench | MIT, Apache-2.0 |
+
+**Wiring:**
+
+1. **Start from the FINOS catalogue, not from your own control list.** Its
+   authority is that **Citigroup, Morgan Stanley and Bank of America** back the
+   Common Controls work — the client's competitors wrote it. This is the same
+   dynamic the legal KB found with Singapore MinLaw's guidance: the short,
+   peer-authored, sector-specific document becomes the buying criterion.
+2. **Serve it through `aigf-mcp-server`** so the controls are queryable during
+   design and review, by the agent under review. "Show me the control that
+   applies to this component" becomes a tool call rather than a meeting.
+3. **Consolidate, do not duplicate.** EU AI Act Article 9(10) lets AI risk
+   management fold into existing **DORA** ICT processes. Map once, cite twice;
+   quoting the same obligation as two separate work packages is how a proposal
+   loses credibility with a second line that knows its own regime.
+4. **Attach licence provenance.** Pattern 9's byte-evidence audit drops
+   straight into the DORA third-party register the client must produce anyway —
+   and after this pass it must also resolve **seven** tiers of licence evidence,
+   including `NOASSERTION` rows like `quickfix-j/quickfixj`, whose
+   advertising clause creates a documentation deliverable nobody budgets for.
+5. **Attach a measured recall or accuracy figure.** See §16: the institutions
+   themselves say they cannot measure value. Arriving with the measurement is
+   the differentiator.
+
+**Two things to state plainly to the client, because they will find out
+anyway:** `ai-governance-framework` is **CC-BY-4.0, a content licence** — you
+adopt and attribute a document, you do not import a dependency. And **FINOS
+publishes a framework, not a certification**; no supervisor has endorsed it. Its
+value is as a defensible starting point in a space where **SR 26-2 and OCC
+Bulletin 2026-13 leave agentic AI outside model-risk guidance entirely**, so
+there is no examiner playbook to inherit and the first credible framework sets
+the de facto standard.
+
+---
+
 ## Cross-pattern rules
 
 1. **Never let an agent hold write access to the ledger.** Patterns 1, 3 and 4
@@ -648,3 +793,18 @@ the CFO already tracks.
     discovery metric said "finance AI agent". Both gaps closed on vocabulary,
     not on effort. A gap that has survived three passes is evidence about the
     query.
+11. **A repository's death is not a category's death.** Pass 3 measured
+    `moov-io/iso20022` as archived — correctly — and concluded "do not start an
+    ISO 20022 build here". Fourteen permissive, maintained message-layer
+    repositories say otherwise, including a direct replacement
+    (`prowide/prowide-iso20022`, Apache-2.0, 240 stars). The archived repo is a
+    fact about a repo. **Generalising it took one sentence and cost a
+    category**, in the same pass that correctly refused to generalise a
+    zero-result query into a missing platform.
+12. **Deterministic components first, and prefer the plane where correctness is
+    checkable.** A pain.001 validates or it does not; a CNAB segment parses or
+    it does not; two amounts tie or they do not. Patterns 13 and 14 put models
+    strictly downstream of components that cannot be wrong in an interesting
+    way. This is also the commercial argument: it is the plane where the client
+    already has a baseline, and §16 records that **76% of large institutions
+    say they cannot measure AI value**.

@@ -168,6 +168,59 @@ examiner playbook to inherit — a bank that writes its own defensible agent
 control framework now is setting the de facto standard rather than complying
 with one.
 
+#### Pass 4 (2026-11-22) — the deadline that moved, and the controls the banks wrote
+
+**A market-infrastructure deadline is not a durable fact either.** Pass 2 of
+this KB established that rule for *regulatory* dates, after finding its own
+headline recommendation built on an EU AI Act date that had been deferred. The
+same failure mode has now been measured on a **payments-infrastructure** date,
+which generalises the rule beyond regulation:
+
+| Milestone | Status as measured 2026-11-22 |
+|---|---|
+| SWIFT CBPR+ MT/MX coexistence ends | **Ended 22 November 2025** — a year ago today. Durable, passed, irreversible |
+| Fedwire Funds Service ISO 20022 cutover | **Done, 14 July 2025**, single-day cutover |
+| Fedwire structured/hybrid postal address release | **Deferred on 27 August 2026 to November 2027** |
+| SWIFT SR2026 payment changes (incl. removal of unstructured addresses) | **Deferred 27 August 2026**; no replacement date published as of this pass |
+
+**Many secondary sources still print 14, 16 or 23 November 2026 as live
+deadlines — that is, this very week.** They predate the August deferral. A
+pitch whose urgency rests on "the deadline is days away" will be corrected by
+the client's own payments team.
+
+The durable commercial leg is the opposite one: **coexistence already ended a
+year ago**, so institutions are live on ISO 20022 for cross-border payments and
+are now in the phase the BIS CPMI brief (April 2026) calls post-migration
+*stability, reconciliation and governance* — which is data-quality and
+exceptions work, not a cutover project. That is a better-funded and longer
+engagement than a deadline scramble, and it does not evaporate when a date
+moves.
+
+**Verification note:** `www.frbservices.org` does not resolve in this
+environment, so the Fedwire deferral rests on secondary sources that agree with
+each other but conflict on the exact 2027 day (22 November 2027 in one, aligned
+to Swift's then-planned 23 November 2026 date in another). **Confirm against the
+Federal Reserve's own notice before putting a date in a client document.** This
+is the second host-level research gap recorded for this KB, after
+`bankofengland.co.uk` in pass 3.
+
+**FINOS Common Controls for AI Services** — backed by Citigroup, Morgan Stanley
+and Bank of America — is the North American governance artefact this KB had
+missed entirely. Full write-up in `verticals/solutions.md`. It matters most here
+because **SR 26-2 and OCC Bulletin 2026-13 (17 April 2026) place generative and
+agentic AI outside existing model-risk guidance**: there is no examiner playbook
+to inherit, and a peer-authored control catalogue is the strongest available
+substitute.
+
+**CCAF 2026 (628 institutions, vendors and regulators, 151 jurisdictions)** —
+the most rigorous figures available this pass, and they point at operations:
+81% adopting AI at some level, 40% advanced, fintechs ahead of incumbents 47% to
+30%, **four of the top five use cases back-office**, data privacy the top
+perceived risk at 73%, and 76% of large institutions finding AI value hard to
+measure. That last number is the one to sell against: **a reconciliation or
+screening build has a measurable baseline**, which is precisely what the
+institutions say they are missing.
+
 ### EMEA
 
 **Regulatory posture: the most demanding in the world, with a hard date.**
@@ -305,6 +358,48 @@ is better qualified, not weaker:
    with named supervised providers. Per-decision audit trails for agent actions
    are a DORA deliverable regardless of what the AI Act does.
 
+#### Pass 4 (2026-11-22) — an obligation in force with two zero-star repos against it
+
+**Verification of Payee is the clearest open opportunity in this file.** Under
+the Instant Payments Regulation, VoP has been **mandatory for euro-area payment
+service providers since 9 October 2025**, on standard *and* instant transfers,
+with the name-match returned inside a **five-second** budget. The Eurosystem's
+own service builds on solutions developed by **Banco de Portugal and Latvijas
+Banka**, aligned to the European Payments Council's VOP scheme.
+
+Open source against that obligation, measured this pass:
+`verification of payee VoP SEPA` → **`total_count: 2` worldwide**, both zero
+stars (`softvasco/payee-match`, MIT, pushed 2026-11-21;
+`untitledfinancial/dpx-compliance-public`, BSD-3-Clause).
+
+A legally mandated, latency-bounded, name-matching problem — *explainable
+fuzzy matching*, which is squarely an AI engagement — with essentially no
+open supply. Compare the AML gap that took three passes to close and turned out
+to be a vocabulary artefact: this one was tested under the standard's own name,
+the scheme's name and the abbreviation, and it holds.
+
+**Dates to handle with care.** Sources conflict on the non-euro-area extension:
+the ECB gives **9 July 2027** for VoP in non-euro Member States (and 9 January
+2027 for receiving instant payments), while KPMG writes **1 January 2027** for
+the EEA extension. Published unresolved — check the regulation text or the
+national supervisor before citing either. This is the same discipline applied to
+the Colorado conflict in the gaming and legal KBs.
+
+**The format layer is European-built and permissive**, which makes an EMEA
+engagement unusually well-tooled: `viafintech/camt_parser` (MIT, Berlin),
+`inisos/bank4j` (MIT, France), `wolph/mt940` (BSD-3), and
+`ministryofjustice/bai2` (MIT) — the last **copyright HM Government, Ministry of
+Justice Digital & Technology**. A UK government department maintaining a bank-file
+parser in the open is a provenance argument that survives procurement review.
+
+**Adoption context (consultancy sources, treat as directional):** Deloitte
+reports growing model use among EMEA banks and insurers with the sharpest
+growth among smaller institutions, fraud detection and customer experience as
+the leading use cases, and persistent governance gaps. Celent, via AWS, puts
+67% of banks planning customer-facing generative AI services in 2026. These sit
+alongside the supervisor-published figures recorded in pass 3 (BoE/FCA 86%
+adoption, ~2% broad autonomy), which remain the more rigorous numbers.
+
 ### APAC
 
 **Regulatory posture: the most advanced on agentic specifically.**
@@ -409,6 +504,53 @@ to answer. The third-party accountability clause is the concrete sale: an
 institution that cannot swap its model provider under supervisory pressure is
 non-compliant by design, and provider-abstraction work is unglamorous, scoped
 and fundable.
+
+#### Pass 4 (2026-11-22) — new binding dates, and a measured tooling gap
+
+**Three regulatory movements not previously in this KB:**
+
+| Jurisdiction | Measure | Status |
+|---|---|---|
+| Singapore (MAS) | **AI-assisted red teaming** required of key institutions on critical internet-facing systems | **From 1 July 2026** |
+| South Korea | Basic Act on AI Development and Trust — the region's first comprehensive **binding** AI statute | Introduced January 2026 |
+| Australia (APRA) | Boards and senior management told to strengthen oversight of AI risk, across banks, insurers and superannuation trustees | Supervisory expectation |
+
+MAS red teaming is the actionable one: it names a **practice** rather than a
+principle, it is dated and already in force, and it creates a repeatable,
+scopeable engagement — adversarial testing of AI systems — rather than a
+documentation exercise. It also sits alongside the MAS Guidelines of 7 October
+2026 (implementation to 7 October 2027) already recorded here.
+
+**Japan's ISO 20022 position is specific and worth knowing:** Japan held to its
+original **November 2025** timeline for cross-border payments rather than
+following the deferrals, the **cross-border Zengin format is being retired**,
+and banks are steering corporate clients to XML. The displaced work lands in
+**treasury and ERP systems** — which is an integration engagement, and one with
+a defined trigger.
+
+**Measured tooling gap, stated rather than left silent.** On the payments
+message plane, APAC is the thinnest of the four regions:
+
+| Query | total_count | Best result |
+|---|---|---|
+| `UPI NPCI settlement` | 6 | all 0–1 stars |
+| `zengin format` | 12 | mostly unrelated (a game engine named ZenGin dominates the term) |
+
+The single APAC-anchored asset found on this plane is
+`adithyaathreya2264/payment-reconciliation-agent` (Apache-2.0, 7 stars,
+UPI/NEFT/PG settlement reconciliation). **This is an informed gap, not an
+unsearched one**: India and Japan run enormous domestic rails with essentially
+no permissive open tooling against them, in contrast to Brazil's CNAB ecosystem
+(629 stars, 434 forks) and EMEA's SEPA formats. For an APAC engagement, assume
+format tooling is **build, not adopt** — and note that the `zengin` term is a
+textbook case of the P31 trap, where a sector term collides with a far larger
+unrelated namespace.
+
+**Adoption:** APAC is uneven, with China and Singapore leading; FNZ/ThoughtLab
+rank Asia Pacific the most mature region for AI in **wealth and asset
+management** (500 firms, 155 in APAC). Deloitte projects up to US$4.8 trillion
+of economic value added by the region's financial services industry by 2035
+(vendor projection, long horizon — treat as directional).
 
 ### LATAM
 
@@ -524,6 +666,45 @@ Automático on the FAPI-BR profile; `ciro-maciel/awesome-open-finance-brasil`
 indexes the whole BCB regulatory corpus under CC0. Nothing equivalent exists for
 EMEA's PSD2 at official-source level. Details and licence caveats in
 `verticals/solutions.md`.
+
+#### Pass 4 (2026-11-22) — the rail underneath Pix
+
+**This KB's LATAM coverage has been Pix-shaped for four passes, and Pix is not
+where a corporate client's reconciliation pain lives.** Brazilian collections
+and payables still move on **CNAB 240/400 remessa and retorno files** and on
+**boletos**, and that ecosystem is permissive, mature and has the highest
+traction of any LATAM asset found in any pass of this KB:
+`eduardokum/laravel-boleto` (MIT, 629 stars, **434 forks**),
+`openboleto/OpenCnabPHP` (MIT, 214 stars, reads *and* writes CNAB 240/400). In
+Mexico, `Angle/sat-cfdi` (MIT) validates **CFDI 4.0** against SAT rules.
+
+Full table in `verticals/solutions.md`. The engagement shape this implies:
+**AR/AP reconciliation against CNAB returns and CFDI matching**, not another Pix
+integration. It is the back-office plane the CCAF survey says is four of the top
+five use cases, placed in the region.
+
+**The transferable rule, confirmed from the legal KB in the opposite
+direction.** That KB found porting a US standard (LEDES) into LATAM was the
+wrong work because the regional equivalent is the **national electronic fiscal
+invoice**. Here the same rule says: do not assume a LATAM reconciliation build
+needs ISO 20022 tooling. It needs CNAB, boleto and CFDI — which already exist
+under MIT.
+
+**Adoption and measurement:** Evident launched an **AI maturity index covering
+20 major LATAM banks** in July 2026 (transparency, leadership, innovation,
+talent) — a public, named-institution scorecard a client can be benchmarked
+against, which is rare for the region. A Finnosummit post reports Mexican
+adoption rising from 60% (2025) to 77% (2026); **that is a conference blog and
+is published here marked as unverified**, consistent with this KB's handling of
+vendor figures. UBS names the barriers as infrastructure gaps, implementation
+cost, talent retention and regulatory uncertainty.
+
+**Regulatory shape is unchanged from pass 3 and does not need re-verifying:**
+decentralised, Pix-centred, no general AI statute in Brazil (PL 2.338/2023
+passed the Senate, still in the Chamber) or Mexico. The disinformation pattern
+recorded for three consecutive passes in the legal KB — compliance guides
+asserting that Brazil and Mexico already have AI laws in force — applies here
+too and remains false in both.
 
 ### Global / cross-region
 
