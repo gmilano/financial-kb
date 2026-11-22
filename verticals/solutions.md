@@ -310,3 +310,77 @@ This pass: **Tazama** added and the KB's largest named gap closed with it;
 with its non-standard Swiss-law rider read out of the file; insurance declared a
 **measured** gap rather than an open question; the grant-by-reference licence
 pattern documented across three unrelated projects.*
+
+---
+
+## Compliance filing and e-invoicing platforms — new 2026-11-22 (pass 5)
+
+Every platform in this file so far is a system a bank *runs*: core banking,
+CRM, ERP, financial crime. This section covers the systems a financial
+institution — or the corporate client it serves — is **obliged to file into**.
+It is the most under-rated engagement surface in the KB because the deadline
+is external, the output is machine-checkable, and the client cannot decide to
+skip it.
+
+| Platform / library | Repo | License | Stars | Region | What it covers |
+|---|---|---|---|---|---|
+| einvoicing | https://github.com/josemmo/einvoicing | MIT | 180 | EMEA | **EN 16931** — the European electronic-invoicing semantic standard. Read and create compliant invoices in PHP |
+| ubl-invoice | https://github.com/num-num/ubl-invoice | MIT | 143 | EMEA | UBL and **Peppol BIS 3** document construction and validation |
+| ixbrl-parse | https://github.com/kanedata/ixbrl-parse | MIT | 72 | EMEA | Inline XBRL extraction — UK statutory accounts as filed to Companies House and HMRC |
+| edinet-tools | https://github.com/matthelmer/edinet-tools | MIT | 59 | APAC | Japan EDINET, 42 disclosure document types as typed Python objects |
+| SAF-T | https://github.com/SimansoftMZ/SAF-T | MIT | 8 | EMEA | OECD Standard Audit File for Tax generator in .NET |
+| metro2 | https://github.com/moov-io/metro2 | Apache-2.0 | 130 | North America | Metro 2 consumer credit-history reporting to the US bureaus |
+| metro_2 | https://github.com/teamupstart/metro_2 | MIT | 23 | North America | Ruby Metro 2 file construction. Permissive second implementation — useful as a cross-check oracle |
+| fincen | https://github.com/moov-io/fincen | Apache-2.0 | 36 | North America | FinCEN BSA E-Filing forms — SAR and CTR |
+
+### Two implementations of one format is a testing asset, not redundancy
+
+`moov-io/metro2` (Go, Apache-2.0) and `teamupstart/metro_2` (Ruby, MIT) build
+the same file from the same spec under compatible licences. For a format where
+the regulator's validator is not something you can run in CI — and FCRA
+accuracy liability attaches to what you file — **generating a batch through
+both and diffing the output is a correctness oracle you get for free.** The
+same move is available for ISO 20022 (`moov-io/rtp20022` vs
+`prowide/prowide-iso20022`, already in this KB) and for EN 16931
+(`josemmo/einvoicing` vs `num-num/ubl-invoice`).
+
+This belongs in the engagement as a deliverable, not just a technique: a
+differential conformance harness is something a client's second line can read
+and a regulator can be shown.
+
+### Where this plugs into the platforms above
+
+`apache/fineract` and `FinAegis/finaegis` are systems of record with no
+statutory-filing layer — Fineract keeps the loan, it does not write the Metro 2
+file the bureaus need, nor the SAR. `odoo/odoo`, `frappe/erpnext` and
+`aureuserp/aureuserp` keep the books but ship country-specific fiscal modules
+of wildly uneven quality under mixed licences.
+
+The shape that works is **system of record → format library → filing agent**,
+with the format library permissive and separate. It keeps the copyleft and the
+country-specific churn out of the core, and it means the filing agent can be
+tested against the format library's own fixtures without standing up the
+platform.
+
+### Measured: the accounting-filing gap is regional, and it inverts the rails picture
+
+| Region | Payment rails in this KB | Accounting/statutory filing in this KB |
+|---|---|---|
+| North America | ACH, Fedwire, RTP, ISO 8583 — all Apache-2.0, maintained | Metro 2 ×2, FinCEN BSA — all permissive, maintained |
+| EMEA | PSD2/XS2A, SEPA, `pain.001`, `camt.053` | EN 16931, Peppol BIS, iXBRL, SAF-T — all MIT |
+| APAC | thin: `fzn0x/idx` (Indonesia), `kingdee/lingee-bench` | EDINET ×2 (Japan only) — MIT and Apache-2.0 |
+| LATAM | **strongest in the KB**: `bacen/pix-api` (3,010★), CNAB, boleto, `sat-cfdi` | **effectively nothing** — see `repos/foundations.md` |
+
+LATAM leads the KB on payment rails and is last on accounting filing. Brazil's
+SPED/ECD returns six repositories, the best of them LGPL-3.0 with four stars
+and no commit since July 2024; Mexico's contabilidad electrónica returns three,
+the best GPL-2.0 and last touched in 2015. Both mandates predate Pix.
+
+The reason is structural and worth stating before anyone treats it as an
+opportunity: **EN 16931, Peppol and SAF-T are multi-country formats, SPED and
+CFDI are single-country ones.** A permissive library for a multi-country format
+is written once and used in a dozen jurisdictions; one for a single-country
+format serves one market, where commercial fiscal-emitter vendors already own
+the ground. For a LATAM engagement the realistic shape is **integrate with the
+fiscal emitter the client is already obliged to use** and put the agent layer
+above it — not rebuild the emitter.

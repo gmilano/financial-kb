@@ -9,6 +9,122 @@ updated: 2026-11-22
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-22 (pass 5)
+
+### The byte-count rule this log published yesterday is wrong — use line count
+
+Pass 4 set the rule: *"Apache-2.0 ≈ 11,358 B with appendix / 10,173 B
+without"* and *"a byte count within ~50 B of a canonical length is a
+whitespace question"*. Two repos found this pass break it.
+
+| Repo | LICENSE bytes | Lines | `APPENDIX` present | Truth |
+|---|---|---|---|---|
+| `moov-io/fincen` | 10,246 | **201** | **yes** | Full Apache-2.0, left-aligned |
+| `moov-io/pinblock` | 10,246 | **201** | **yes** | Full Apache-2.0, left-aligned |
+| `ajtgjmdjp/edinet-mcp` | 10,179 | **176** | **no** | Apache-2.0, appendix removed |
+| `moov-io/metro2` | 11,357 | 201 | yes | Full Apache-2.0, canonical indentation |
+
+`fincen` sits **67 bytes** from `edinet-mcp` and they are different documents.
+Under the published rule `fincen` reads as "Apache without appendix"; it is
+1,111 B below canonical, far outside the ±50 B whitespace tolerance, so it
+would have been flagged as a truncated or suspect grant and a clean Apache-2.0
+asset demoted. The entire difference is leading indentation on 201 lines.
+
+**Rule change: identify a licence by line count plus a marker grep.** Line
+count is invariant to indentation; byte count is not. MIT = **21 lines**
+(3 of 3 readings this pass, bytes 1,067–1,078, an 11 B spread). Apache-2.0
+full = **201 lines** (4 of 4, bytes 10,246–11,444, a **1,198 B** spread —
+11.7%). Apache minus appendix = 176 lines. LGPL-3.0 = 187 lines. Byte counts
+keep one job: a count *above* canonical means text was added, and that text
+must be read.
+
+**Copy to every industry KB.** Pattern 9 ships the byte-band check as a
+runnable script in eight KBs; it should become a line check with a marker
+grep. The failure it prevents is the expensive direction — silently dropping
+a genuinely permissive asset.
+
+### Licence correction — `ledger/ledger` is BSD-3-Clause
+
+GitHub reports `NOASSERTION` on a **6,078-star** repository. The file is
+`LICENSE.md`, 1,492 B, opening `Copyright (c) 2003-2025, John Wiegley. All
+rights reserved. / Redistribution and use in source and binary forms…` —
+verbatim BSD-3-Clause, inside the 1.5 kB band. **Fully permissive and
+usable.** Fourth consecutive pass in which `NOASSERTION` resolved to a real
+permissive grant; first in which the cause was only the `.md` extension.
+
+### Fifth channel defect — absence cannot be measured without a control file
+
+`OpenPeppol/peppol-bis-invoice-3`: 158★, 5.2 MB, pushed 2026-11-06,
+`ls-remote` resolves. Every root-path probe 404s on `master`, `main`,
+`release-3` and `gh-pages` — `README.md`, `readme.md`, `index.md`, `LICENSE`,
+`LICENSE.md`, `LICENCE`, `license.txt`, `NOTICE`. **No control file returned
+200, so absence is not measured.** When a repository keeps no files at its
+root, `raw.githubusercontent.com` cannot tell "no licence file" from "nothing
+at this path". Recorded as **licence not determinable**, not as unlicensed.
+
+### Twelve Moov repos the KB never listed — all Apache-2.0, all live
+
+`moov-io` has 60 repositories; this KB listed seven.
+
+| Repo | Stars | Last push | What |
+|---|---|---|---|
+| `moov-io/metro2` | 130 | 2026-11-22 | Metro 2 consumer credit reporting |
+| `moov-io/rtp20022` | 90 | 2026-11-20 | **ISO 20022 for TCH Real Time Payments — live** |
+| `moov-io/achgateway` | 86 | 2026-11-22 | Distributed ACH operations gateway |
+| `moov-io/imagecashletter` | 78 | 2026-11-20 | X9 Check 21 image cash letter |
+| `moov-io/fincen` | 36 | 2026-11-20 | FinCEN BSA E-Filing — SAR, CTR |
+| `moov-io/bai2` | 27 | 2026-11-20 | BAI2 / X9.121 BTR3 cash management |
+| `moov-io/x12` | 23 | 2026-11-21 | ASC X12 EDI |
+| `moov-io/pinblock` | 17 | 2026-11-21 | ISO 9564 PIN block |
+| `moov-io/dukpt` | 17 | 2026-11-20 | ANSI X9.24 DUKPT key management |
+| `moov-io/ach-test-harness` | 17 | 2026-11-20 | ACH returns / NOC / reconciliation scenarios |
+| `moov-io/fedwire20022` | 12 | 2026-11-21 | ISO 20022 Fedwire |
+| `moov-io/cadeft` | 11 | 2026-11-20 | **Canada CPA-005 1464-byte EFT file** |
+
+Two follow-ons for the archived-`moov-io/iso20022` correction the section
+below makes: the live successors are **`rtp20022` (90★)** and
+**`fedwire20022` (12★)**. `moov-io/wire` is also archived — the FAIM format
+was deprecated in July 2025. `moov-io/customers`, `moov-io/accounts` and
+`moov-io/irs` are archived too.
+
+`moov-io/awesome-fintech` (409★) has **no licence file** — index, not
+dependency.
+
+### Canada: the twice-measured gap closed by enumeration, not search
+
+Two prior passes searched Canada by region and OSFI by name and got nothing.
+The asset is `moov-io/cadeft` at **11 stars** — invisible to any regional
+query, found by enumerating an org the KB already cited seven repos from.
+**When a region has returned nothing twice, stop querying by region and
+enumerate the organisations the KB already trusts.**
+
+### Also new this pass
+
+| Repo | Licence | Stars | Note |
+|---|---|---|---|
+| `bex-co/beancount-io` | MIT (1,078 B) | 748 | Plain-text double-entry positioned for **AI agents** — a text book of record is diffable and git-versioned, i.e. an audit trail by construction |
+| `zhang-accounting/zhang` | Apache-2.0 | 200 | Beancount-compatible double-entry in Rust, server + web UI |
+| `josemmo/einvoicing` | MIT (1,124 B) | 180 | EN 16931 European e-invoicing |
+| `manusimidt/py-xbrl` | **GPL-3.0** (35,148 B) | 154 | Best XBRL parser in the category — listed as a licensing decision, not a default |
+| `num-num/ubl-invoice` | MIT (1,070 B) | 143 | UBL and Peppol BIS |
+| `kanedata/ixbrl-parse` | MIT (1,067 B) | 72 | UK iXBRL — Companies House, HMRC |
+| `matthelmer/edinet-tools` | MIT (1,071 B) | 59 | Japan EDINET, 42 document types typed |
+| `teamupstart/metro_2` | MIT (1,074 B) | 23 | Ruby Metro 2 — **adopted as a differential oracle, not a dependency** |
+| `SimansoftMZ/SAF-T` | MIT (1,066 B) | 8 | OECD SAF-T generator, .NET |
+| `arnobotha/IFRS9-SICR-Definitions-Logit` | MIT (1,067 B) | 8 | Peer-reviewed IFRS 9 SICR research code — the only permissive IFRS 9 asset found |
+
+### Informed gap — LATAM's accounting-filing plane
+
+Searched in the region's own vocabulary, not translated US terms.
+`SPED ECD contabil` → 6 results, best is `nfephp-org/sped-ecd`, **LGPL-3.0**
+(187 lines; GitHub said `NOASSERTION`), 4★, no commit since 2024-07-01.
+`contabilidad electronica SAT XML` → 3 results, best is GPL-2.0 and last
+pushed in **2015**. Both mandates are older and more universal than Pix.
+
+Not a build opportunity: EN 16931, Peppol and SAF-T are **multi-country**
+formats and attract permissive libraries; SPED and CFDI are single-country,
+and commercial fiscal emitters own that ground. Integrate above the emitter.
+
 ## 2026-11-22 (pass 4)
 
 ### A dead end this log published eleven hours earlier

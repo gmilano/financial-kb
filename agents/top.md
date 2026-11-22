@@ -323,3 +323,104 @@ measured (`visa/trusted-agent-protocol` — a LICENSE file that grants nothing);
 "grant by reference" separated out as a third licence-evidence tier; Dexter
 downgraded from "chase the maintainer" to "read-only reference" on a measured
 two-month silence.*
+
+---
+
+## The servicing plane — agents for after the payment clears (2026-11-22, pass 5)
+
+The KB now has agents that **move** money (pass 3: agentic payment protocols)
+and agents that **read the rail file** (pass 4: message-layer agents). It had
+none for the plane where money is **disputed, reported and booked**.
+
+Every row below is byte-verified MIT or Apache-2.0 and live. **Read the star
+counts before the descriptions** — they are the finding.
+
+| Agent | Repo | License | Stars | Last push | What it does |
+|---|---|---|---|---|---|
+| dispute-agent | https://github.com/opensyndicate/dispute-agent | MIT (1,076 B) | 1 | 2026-08-21 | Triages a payment dispute **by reason code** and assembles chargeback representment evidence |
+| reg-e-timing | https://github.com/dleonard-data/reg-e-timing | MIT (1,071 B) | 1 | 2026-09-19 | **Regulation E §1005.11 dispute timing rules as testable code.** Institution-configurable. Provisional-credit and investigation clocks, deterministic |
+| mcp-three-way-match | https://github.com/zovo-one/mcp-three-way-match | MIT (1,071 B) | 0 | 2026-10-26 | MCP server for supplier-invoice / PO / goods-receipt matching |
+| reconcile-mcp | https://github.com/sebastienrousseau/reconcile-mcp | Apache-2.0 | 1 | 2026-11-18 | MCP server reconciling `camt.053` statements against expected `pain.001` payments. Same author as the `pain001` and `bankstatementparser` rows this KB already carries |
+| edinet-mcp | https://github.com/ajtgjmdjp/edinet-mcp | Apache-2.0 | 20 | 2026-10-26 | Japanese EDINET XBRL filings behind an MCP server — a regulator's corpus already agent-addressable |
+
+Five rows, five real repos, five verified licences. **Four of the five are
+under two stars.** That is not a sampling accident and it is the most useful
+thing in this file.
+
+### The law this KB can now state with numbers: supply follows the file format
+
+Twenty-one GitHub searches this pass, split by whether the work has a
+**byte-level specification** or is a **judgement**. The column that matters is
+not the result count — it is what the *top* repository looks like.
+
+**Work defined by a file format — mature, permissive, maintained:**
+
+| Query | Results | Top repo | Stars | Licence | Last push |
+|---|---|---|---|---|---|
+| `double-entry ledger accounting` | 809 | `ledger/ledger` | 6,078 | BSD-3-Clause | 2026-11-21 |
+| `Peppol invoice` | 316 | `josemmo/einvoicing` | 180 | MIT | 2026-11-07 |
+| `XBRL filing` | 262 | `manusimidt/py-xbrl` | 154 | GPL-3.0 | 2026-11-09 |
+| `ISO 8583 message` | 245 | `moov-io/iso8583` | 539 | Apache-2.0 | 2026-11-22 |
+| `MT940 parser` | 74 | `wolph/mt940` | 106 | BSD-3-Clause | 2026-11-16 |
+| `Metro 2 credit reporting` | 10 | `moov-io/metro2` | 130 | Apache-2.0 | 2026-11-22 |
+
+**Work defined by a judgement — nothing above a hobby project:**
+
+| Query | Results | Top repo | Stars | Licence | Note |
+|---|---|---|---|---|---|
+| `cash flow forecasting treasury` | 47 | `DaveVoyles/Cash-forecasting` | 7 | none | — |
+| `bank reconciliation agent LLM` | 36 | `adithyaathreya2264/payment-reconciliation-agent` | 7 | Apache-2.0 | already in this KB |
+| `IFRS 9 impairment` | 16 | `naenumtou/ifrs9` | 135 | **none** | no licence file |
+| `CECL expected credit loss` | 15 | `rkhuran/CECL-Modelling-Implementation` | 14 | **none** | last push 2019 |
+| `accounts payable invoice extraction agent` | 13 | `tahasiddiquii/invoice-ap-agent` | 5 | MIT | — |
+| `three-way match invoice purchase order` | 12 | `aditya-technophile-06/three-way-match-engine` | 1 | **none** | — |
+| `chargeback representment evidence` | 10 | `opensyndicate/dispute-agent` | 1 | MIT | best in category |
+| `loan servicing amortization schedule` | 9 | `HimathKc/Loan-Repayment-Calculator` | 1 | **none** | — |
+| `dunning collections invoice` | 8 | `itsroshanharry/AR-Collections-agent` | 1 | **none** | — |
+| `Regulation E dispute` | 6 | `dleonard-data/reg-e-timing` | 1 | MIT | best in category |
+| `chart of accounts agent LLM posting` | **0** | — | — | — | — |
+
+`Metro 2` returns ten results and has a 130-star Apache-2.0 library.
+`cash flow forecasting treasury` returns forty-seven and has nothing above
+seven stars. **Result count predicts nothing; the existence of a specification
+predicts everything.**
+
+The mechanism is plain once stated. A file format is an *obligation shared by
+every institution in a jurisdiction*: the format is published, conformance is
+binary, and one correct implementation serves everyone — so it gets written
+once and starred. A judgement — which invoices to chase first, whether this
+chargeback is worth representing, what the cash position will be in 30 days —
+is **specific to one institution's data, policy and risk appetite**, cannot be
+validated against a published spec, and has no shared artefact to converge on.
+Nobody open-sources it because there is nothing general to open-source.
+
+### What this means for an engagement, and it is the build-vs-buy line
+
+**Adopt the parser. Build the decision.**
+
+- Everything with a format — ACH, ISO 8583, ISO 20022, Metro 2, BAI2, X12,
+  EN 16931, iXBRL, SAF-T, CPA-005 — is **solved, permissive and free**.
+  Writing one of these is rework, and reviewers will find the library you
+  should have used.
+- Everything that is a judgement is **greenfield**, and it is where the
+  client's margin is. There is no incumbent open-source answer to displace and
+  no community to keep pace with.
+
+This also sets the honest expectation for the five agent rows above. They are
+not platforms. They are **design references and prototyping seeds**: read
+`reg-e-timing` for how a regulatory clock is expressed as testable code, read
+`dispute-agent` for a reason-code taxonomy, then build on the client's data.
+The rule this KB applied to `virattt/dexter` applies here with more force —
+**prototype yes, vendor into a client deliverable no.** `moov-io/metro2` at
+130 stars under an Apache-2.0 grant from an organisation maintaining 60 repos
+is a different proposition from a one-star personal project, and the KB should
+not flatten the two into one table row.
+
+### Counter-check: is this just "the back office is early"?
+
+No, and the test is in the same data. `moov-io/ach-test-harness` (17 stars) and
+`moov-io/bai2` (27) are deeply back-office, barely starred, and both are
+production-grade, validated and maintained — because both have specifications.
+Meanwhile `IFRS 9 impairment` returns a **135-star** top repo that ships **no
+licence file at all**: plenty of attention, no convergence, nothing adoptable.
+Maturity in this plane tracks the specification, not the attention.

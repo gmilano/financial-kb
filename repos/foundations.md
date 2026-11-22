@@ -262,3 +262,223 @@ message-layer rows, 0 archived, every licence read by bytes — catalogued licen
 evidence tiers 6 and 7 (Community Specification License; QuickFIX advertising
 clause), narrowed the SEPA-initiation gap to its bank-connected leg, and opened
 a new measured gap on Verification of Payee.*
+
+---
+
+## The servicing and reporting backbone — new 2026-11-22 (pass 5)
+
+Passes 3 and 4 catalogued the rails that **carry** money: ACH, ISO 8583,
+ISO 20022, Pix, `pain.001`, `camt.053`. This pass catalogues the plane where
+money is **disputed, reported and booked** — and it was empty. A term census
+across all eight files before this pass:
+
+| Term | Occurrences before this pass |
+|---|---|
+| `chargeback` | 0 |
+| `general ledger` | 0 |
+| `accounts payable` / `accounts receivable` | 0 / 0 |
+| `three-way` match | 0 |
+| `dunning` | 0 |
+| `loan servicing` / `mortgage` | 0 / 0 |
+| `interchange` / `card issuing` / `EMV` / `tokeniz` | 0 / 0 / 0 / 0 |
+| `CECL` / `IFRS 9` / `stress test` | 0 / 0 / 0 |
+| `cash forecast` / `FP&A` | 0 / 0 |
+| `XBRL` | 1 (prose, no repo) |
+
+Twelve zeroes. This is the fourth consecutive pass in this KB, and the fifth
+across the KB family, to find that **the catalogue was built from the
+vocabulary of the product and never from the vocabulary of the client's
+ledger.** The remedy each time is the same and costs one pass.
+
+### Moov's unlisted two-thirds — twelve Apache-2.0 repos, all live
+
+`moov-io` has 60 repositories. Before this pass the KB listed seven of them.
+Every repo below is Apache-2.0, byte-verified, **not archived**, and pushed
+within the last four days.
+
+| Repo | License | Stars | Forks | Last push | What it is |
+|---|---|---|---|---|---|
+| https://github.com/moov-io/metro2 | Apache-2.0 | 130 | 59 | 2026-11-22 | **Metro 2 consumer credit-history reporting.** The file format every US lender must send to Equifax/Experian/TransUnion. FCRA accuracy liability attaches to this file |
+| https://github.com/moov-io/fincen | Apache-2.0 | 36 | 20 | 2026-11-20 | **FinCEN BSA E-Filing forms.** SAR and CTR construction — the filing end of every AML programme this KB already covers on the detection end |
+| https://github.com/moov-io/imagecashletter | Apache-2.0 | 78 | 64 | 2026-11-20 | X9 Image Cash Letter / Check 21. Cheques are not dead in US commercial banking |
+| https://github.com/moov-io/bai2 | Apache-2.0 | 27 | 12 | 2026-11-20 | BAI2 and X9.121 BTR3 cash-management balance reporting — reader, writer **and validator**. The corporate-treasury statement format |
+| https://github.com/moov-io/x12 | Apache-2.0 | 23 | 8 | 2026-11-21 | ASC X12 EDI reader/writer. Remittance advice (820/835) and enrolment |
+| https://github.com/moov-io/achgateway | Apache-2.0 | 86 | 49 | 2026-11-22 | Distributed, fault-tolerant ACH operations gateway — the service layer above `moov-io/ach` |
+| https://github.com/moov-io/ach-test-harness | Apache-2.0 | 17 | 11 | 2026-11-20 | **Programmatic ACH returns, NOC/corrections and reconciliation scenarios.** A test rig for the failure paths, which is where servicing agents actually break |
+| https://github.com/moov-io/rtp20022 | Apache-2.0 | 90 | 17 | 2026-11-20 | ISO 20022 for TCH Real Time Payments, in Go. **Live, 90 stars** |
+| https://github.com/moov-io/fedwire20022 | Apache-2.0 | 12 | 9 | 2026-11-21 | ISO 20022 Fedwire. Supersedes `moov-io/wire` (archived — the FAIM format was deprecated July 2025) |
+| https://github.com/moov-io/pinblock | Apache-2.0 | 17 | 9 | 2026-11-21 | PIN block management and security — ISO 9564 |
+| https://github.com/moov-io/dukpt | Apache-2.0 | 17 | 11 | 2026-11-20 | ANSI X9.24 DUKPT key management. With `pinblock` and `iso8583`, this is the card-acceptance cryptography plane |
+| https://github.com/moov-io/cadeft | Apache-2.0 | 11 | 6 | 2026-11-20 | **Canadian Payments Association CPA-005, 1464-byte EFT file** |
+
+### Canada: the twice-measured gap, closed
+
+`intel/market.md` records Canada as a gap searched across two passes that
+"produced ~nothing both times", with the instruction to target OSFI by name.
+The instruction was right about the method and wrong about the layer: the
+Canadian asset is not a regulator document, it is `moov-io/cadeft`, a
+**parser for the CPA-005 EFT file every Canadian direct-deposit and
+pre-authorised-debit batch is written in.** It has 11 stars, so no regional
+query would ever surface it; it is reachable only by enumerating an org that
+the KB already trusted for one repo in seven.
+
+**Generalisable:** when a region has been searched twice and returned nothing,
+stop searching by region and **enumerate the orgs the KB already cites.** A
+national payment format is maintained by whoever maintains the other national
+payment formats, not by someone who tags their repo with the country.
+
+### `moov-io/fincen` and the zero-result trap, measured a third time
+
+Two functional queries run this pass:
+
+| Query | `total_count` |
+|---|---|
+| `BSA SAR suspicious activity report filing` | **0** |
+| `chart of accounts agent LLM posting` | **0** |
+
+A zero that looks like proof the category does not exist. `moov-io/fincen`
+builds **exactly** BSA E-Filing forms, has 36 stars and was pushed two days
+ago. It is invisible to the query because a library that implements FinCEN
+forms is named after the agency, not after the sentence a consultant would
+write. This is the same failure the legal KB published as P31 (`LEDES legal
+billing` = 6 results and excludes the only usable asset) and it has now been
+measured in a second industry.
+
+**Single-digit `total_count` is a symptom of a bad query far more often than
+evidence of an empty category.** Before writing down "measured gap", re-run as
+`{standard-or-agency-name} + {artefact noun}`: `FinCEN form`, `Metro 2
+report`, `BAI2 statement`, `X12 remittance`.
+
+## The ledger and books tier — new 2026-11-22 (pass 5)
+
+The KB had transaction ledgers (`tigerbeetle`, `formancehq/ledger`,
+`blnkfinance/blnk`). It had no **accounting** ledger — the double-entry book
+of record with a chart of accounts, which is what every reconciliation,
+close and audit agent has to post into.
+
+| Repo | License | Stars | Last push | Note |
+|---|---|---|---|---|
+| https://github.com/ledger/ledger | **BSD-3-Clause** | 6,078 | 2026-11-21 | The original plain-text double-entry engine, C++. See the licence correction below |
+| https://github.com/bex-co/beancount-io | MIT | 748 | 2026-11-22 | Plain-text double-entry, MIT at 1,078 B. Readme positions it explicitly for **AI agents** as well as humans — a text-file book of record is trivially diffable, reviewable and git-versioned, which is the audit trail an agent needs by construction |
+| https://github.com/zhang-accounting/zhang | Apache-2.0 | 200 | 2026-11-22 | Beancount-compatible double-entry in Rust, with a server and web UI. Apache-2.0 verified at 11,357 B |
+| https://github.com/manusimidt/py-xbrl | GPL-3.0 | 154 | 2026-11-09 | XBRL/iXBRL parser. **GPL-3.0 at 35,148 B — a licensing decision, not a default.** Listed because it is the most capable parser in the category, not because it is safe to vendor |
+
+### Licence correction — `ledger/ledger` is BSD-3-Clause, not unlicensed
+
+GitHub reports `NOASSERTION` for a 6,078-star repository. The file is at
+`LICENSE.md`, 1,492 B, and opens:
+
+> `Copyright (c) 2003-2025, John Wiegley.  All rights reserved.`
+> `Redistribution and use in source and binary forms, with or without`
+> `modification, are permitted provided that the following conditions are met:`
+
+That is verbatim BSD-3-Clause, inside the 1.5 kB BSD band this KB already
+records. **Fully permissive and usable.** This is the fourth consecutive pass
+in which `NOASSERTION` resolved to a genuine permissive grant, and the first
+in which the cause was simply the `.md` extension on the filename.
+
+### The byte-count rule this KB published yesterday is wrong — use line count
+
+`repos/foundations.md` (pass 4) sets: *"Apache-2.0 ≈ 11,358 B with appendix /
+10,173 B without"*, and *"a byte count within ~50 B of a canonical length is a
+whitespace question"*. Two repos found this pass break it:
+
+| Repo | LICENSE bytes | Lines | `APPENDIX` present? | Truth |
+|---|---|---|---|---|
+| `moov-io/fincen` | 10,246 | **201** | **yes** | Full Apache-2.0, left-aligned |
+| `moov-io/pinblock` | 10,246 | **201** | **yes** | Full Apache-2.0, left-aligned |
+| `ajtgjmdjp/edinet-mcp` | 10,179 | **176** | **no** | Apache-2.0 with the appendix removed |
+| `moov-io/metro2` | 11,357 | 201 | yes | Full Apache-2.0, canonical indentation |
+
+`fincen` at 10,246 B sits **67 bytes** from `edinet-mcp` at 10,179 B. Under
+the published rule both read as "Apache without appendix" — and the ~1,100 B
+gap from canonical is far outside the ±50 B whitespace tolerance, so
+`fincen` would instead have been flagged as a suspect or truncated grant and
+the asset demoted. It is a complete, verbatim Apache-2.0; the entire 1,111 B
+difference is the leading indentation on 201 lines.
+
+**Rule change, and it is cheaper than the one it replaces:** identify a
+licence by **line count plus a marker grep**, not by bytes. Line count is
+invariant to indentation; byte count is not.
+
+| Licence | Lines | Marker to grep |
+|---|---|---|
+| MIT | **21** | `Permission is hereby granted, free of charge` |
+| Apache-2.0, full | **201** | `APPENDIX: How to apply the Apache License` |
+| Apache-2.0, appendix stripped | **176** | `Licensed under the Apache License` and no `APPENDIX` |
+| BSD-3-Clause | ~28 | `Redistribution and use in source and binary forms` |
+| LGPL-3.0 | **187** | `GNU LESSER GENERAL PUBLIC LICENSE` |
+| GPL-3.0 | ~674 | `GNU GENERAL PUBLIC LICENSE` + `Version 3` |
+| AGPL-3.0 | ~661 | `GNU AFFERO GENERAL PUBLIC LICENSE` |
+
+Measured this pass: MIT = 21 lines in 3 of 3 readings across unrelated repos
+(1,067 / 1,071 / 1,078 B — a 11 B spread). Apache full = 201 lines in 4 of 4
+(10,246 / 11,357 / 11,357 / 11,444 B — a **1,198 B** spread, 11.7%). The byte
+count varies by two orders of magnitude more than the line count does.
+
+Byte counts keep their one remaining job: a count **above** canonical means
+text was added, and that text must be read.
+
+**Copy this correction to every industry KB.** Pattern 9 (the licence-hygiene
+CI gate) ships the byte-band logic as a runnable script in eight KBs; the
+band check should become a line check with a marker grep. The failure mode it
+prevents is the expensive direction — silently dropping a genuinely permissive
+asset.
+
+## Regulatory and statutory reporting — new 2026-11-22 (pass 5)
+
+Filing is the one agent workload with a **hard external deadline, a machine-checkable
+output and a named regulator** — the strongest possible shape for a first
+engagement, and the KB had one prose mention of XBRL and no repo.
+
+| Repo | License | Stars | Last push | Region | Note |
+|---|---|---|---|---|---|
+| https://github.com/kanedata/ixbrl-parse | MIT | 72 | 2026-10-16 | EMEA | iXBRL extraction in Python. The format UK statutory accounts are filed to Companies House and HMRC in |
+| https://github.com/matthelmer/edinet-tools | MIT | 59 | 2026-10-13 | APAC | Japan's EDINET disclosures, **42 document types parsed as typed Python objects** |
+| https://github.com/ajtgjmdjp/edinet-mcp | Apache-2.0 | 20 | 2026-10-26 | APAC | EDINET XBRL parser **and MCP server** — a Japanese filing corpus already wired for agents |
+| https://github.com/josemmo/einvoicing | MIT | 180 | 2026-11-07 | EMEA | Read and create **EN 16931**-compliant European electronic invoices. MIT at 1,124 B |
+| https://github.com/num-num/ubl-invoice | MIT | 143 | 2026-11-03 | EMEA | UBL and **Peppol BIS** documents in PHP. MIT at 1,070 B |
+| https://github.com/SimansoftMZ/SAF-T | MIT | 8 | 2026-10-19 | EMEA | .NET generator for SAF-T (Standard Audit File for Tax). Mozambique/Portugal lineage; the OECD format adopted across Portugal, Poland, Norway, Angola |
+| https://github.com/arnobotha/IFRS9-SICR-Definitions-Logit | MIT | 8 | 2026-01-22 | EMEA | R codebase behind a peer-reviewed article on defining SICR events under IFRS 9. **Research code, not a product** — the only permissive IFRS 9 asset found |
+
+### `OpenPeppol/peppol-bis-invoice-3` — licence not determinable, stated as such
+
+158 stars, 5.2 MB, pushed 2026-11-06, `git ls-remote` resolves. Every root-path
+probe returns 404 across `master`, `main`, `release-3` and `gh-pages`:
+`README.md`, `readme.md`, `index.md`, `LICENSE`, `LICENSE.md`, `LICENCE`,
+`license.txt`, `NOTICE`.
+
+Under this KB's own rule, absence is "measured" only when a control file in the
+same repo returns 200. **No control file returned 200, so absence is not
+measured** — and this is a fifth channel defect worth recording: when a
+repository keeps no files at its root, `raw.githubusercontent.com` cannot
+distinguish "no licence file" from "nothing at this path". Treat as the
+normative Peppol BIS 3 specification, **read-only, do not vendor**; build
+against `josemmo/einvoicing` or `num-num/ubl-invoice`, both of which carry a
+filed MIT licence.
+
+### The measured gap: LATAM's accounting plane
+
+Searched this pass with the region's own vocabulary, not translated US terms:
+
+| Query | `total_count` | Best result |
+|---|---|---|
+| `SPED ECD contabil` | 6 | `nfephp-org/sped-ecd` — **LGPL-3.0** (8,851 B / 187 lines, GitHub said `NOASSERTION`), 4 stars, last push 2024-07-01 |
+| `contabilidad electronica SAT XML` | 3 | `albertotrece/sat` — GPL-2.0, 19 stars, last push **2015** |
+
+**This is an informed gap, and it is the inverse of the region's payments
+picture.** LATAM is the best-tooled region in this KB for payment rails —
+`bacen/pix-api` is a central bank's own spec repo at 3,010 stars, and the
+CNAB/boleto layer is live. For the *accounting* file the same company must
+file — Brazil's SPED/ECD, Mexico's contabilidad electrónica — there is one
+copyleft library two years stale and one abandoned in 2015. The mandate is
+older and more universal than Pix; the open-source supply is absent.
+
+Do not read this as "build a LATAM SPED parser". Read it with the EMEA rows
+above: EN 16931, Peppol and SAF-T are **multi-country formats with one
+implementation each**, which is why permissive libraries exist for them.
+SPED and CFDI are single-country formats, so the addressable developer
+population for a shared library is one country wide, and the work has gone
+into commercial fiscal-emitter products instead. The same conclusion the
+legal KB reached about porting LEDES to LATAM applies: **the format does not
+transfer, the semantics do.**

@@ -398,3 +398,85 @@ vendor and bank thought-leadership — with three exceptions now: the CCAF-led
 survey, the BoE/FCA survey of 26 October 2026, and ECB/EBA supervisory
 publications. Those three are the rigorous datasets in this KB and are cited as
 such.*
+
+## 19. Open-source supply follows the file format, not the decision
+
+**Measured this pass over 21 GitHub searches; the full tables are in
+`agents/top.md`.** This is the first trend in this file that is a law about
+the supply side rather than an observation about demand.
+
+Where the work is defined by a **byte-level specification**, the top repository
+is mature, permissive and maintained:
+
+| Category | Top repo | Stars | Licence |
+|---|---|---|---|
+| Double-entry accounting | `ledger/ledger` | 6,078 | BSD-3-Clause |
+| ISO 8583 card messaging | `moov-io/iso8583` | 539 | Apache-2.0 |
+| EN 16931 e-invoicing | `josemmo/einvoicing` | 180 | MIT |
+| XBRL parsing | `manusimidt/py-xbrl` | 154 | GPL-3.0 |
+| Metro 2 credit reporting | `moov-io/metro2` | 130 | Apache-2.0 |
+
+Where the work is a **judgement**, nothing exists above a hobby project:
+three-way invoice matching tops out at **1 star**, dunning at **1**, chargeback
+representment at **1**, loan-servicing amortisation at **1**, cash forecasting
+at **7**; `chart of accounts agent LLM posting` returns **zero results**; the
+most-starred IFRS 9 repository has 135 stars and **no licence file at all**.
+
+Result count is not the signal. `Metro 2 credit reporting` returns ten results
+and a 130-star Apache-2.0 library. `cash flow forecasting treasury` returns
+forty-seven and nothing usable.
+
+**The mechanism.** A format is an obligation shared by every institution in a
+jurisdiction: published, binary conformance, one correct implementation serves
+everyone — so it is written once and starred. A judgement is specific to one
+institution's data, policy and risk appetite, has no published spec to validate
+against and no shared artefact to converge on. There is nothing general to
+open-source, so nobody does.
+
+**Consequence: adopt the parser, build the decision.** Everything with a format
+— ACH, ISO 8583, ISO 20022, Metro 2, BAI2, X12, EN 16931, iXBRL, SAF-T,
+CPA-005 — is solved and free, and writing one is rework. Everything that is a
+judgement is greenfield with no incumbent to displace, and it is where the
+client's margin is.
+
+**Corollary that resolves trend #1's value-measurement problem.** CCAF reports
+55% of industry, 63% of regulators and 76% of large institutions find AI value
+hard to measure. Format work is measurable by construction — the file either
+conforms or it does not. Judgement work is precisely what resists measurement.
+So the engagement that starts at the format layer **has a defensible number on
+day one and can fund the judgement layer from it**, which is a sequencing
+argument this KB has not previously been able to make with evidence.
+
+**To test in the other eleven industries.** The prediction is specific and
+falsifiable: in any industry, permissive mature open source clusters on
+published interchange formats (HL7/FHIR, EDIFACT/GS1, IEC 61850/CIM,
+OpenTravel/NDC) and is absent from the decision layer above them. The legal KB
+already produced this result without naming it — SALI LMSS exists, UTBMS
+judgement tooling does not.
+
+## 20. The adoption/assurance balance inverts by region — and it changes the pitch
+
+Three regional surveys this pass, read together, show the same gap opening from
+opposite directions:
+
+| Region | Adoption | Assurance |
+|---|---|---|
+| APAC | **most mature globally** for AI in wealth and asset management (FNZ/ThoughtLab, 500 firms); 61.2% of organisations already using AI/ML (Money20/20 Asia) | only ~half of firms have a fully established AI assurance programme, against 59% globally (ComplyAdvantage) |
+| EMEA | 61% in-house adoption, the highest in the world | **14%** have specialised AI actually implemented; 56% are using generic tools |
+| North America | strongest optimism among surveyed finance leaders | genAI and agentic placed *outside* model-risk guidance — **no examiner playbook exists to inherit** |
+
+Every region has the same deficit and arrives at it differently: APAC by
+out-running its own governance, EMEA by adopting generic tools under the
+world's strictest documentation regime, North America by regulatory vacuum.
+
+**This changes what leads a pitch, by region.** APAC leads with evidence and
+auditability against declared adoption. EMEA leads with documentation against a
+binding regime. North America leads with **writing the control framework first**,
+because whoever writes a defensible one sets the de facto standard.
+
+All three converge on the same deliverable — a control and evidence layer — so
+the engineering is shared across regions even though the sales argument is not.
+
+**Caveat, stated because it matters:** every figure in the table is a vendor or
+consultancy survey with its own sampling and commercial interest. They are
+directionally useful and should be quoted with attribution, never as fact.

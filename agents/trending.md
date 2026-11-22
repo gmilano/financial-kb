@@ -9,6 +9,65 @@ updated: 2026-11-22
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-22 (pass 5)
+
+Pass theme: **the plane where money is disputed, reported and booked.** Pass 3
+added agents that move money; pass 4 added agents that read the rail file.
+Neither touched what happens afterwards. A term census over all eight files
+before this pass returned **twelve zeroes**: `chargeback`, `general ledger`,
+`accounts payable`, `accounts receivable`, `three-way`, `dunning`,
+`loan servicing`, `mortgage`, `interchange`, `card issuing`, `CECL`,
+`cash forecast`.
+
+### New agent rows — five, all byte-verified, and the star counts are the finding
+
+| Agent | Licence | Stars | What it does |
+|---|---|---|---|
+| `opensyndicate/dispute-agent` | MIT (1,076 B) | 1 | Chargeback triage by reason code, representment evidence assembly |
+| `dleonard-data/reg-e-timing` | MIT (1,071 B) | 1 | Regulation E §1005.11 dispute clocks as institution-configurable testable code |
+| `zovo-one/mcp-three-way-match` | MIT (1,071 B) | 0 | MCP server for invoice / PO / goods-receipt matching |
+| `sebastienrousseau/reconcile-mcp` | Apache-2.0 | 1 | MCP server reconciling `camt.053` against expected `pain.001` |
+| `ajtgjmdjp/edinet-mcp` | Apache-2.0 | 20 | Japan EDINET XBRL parser **and MCP server** |
+
+**Four of five are under two stars.** Recorded as design references and
+prototyping seeds, not dependencies — the `virattt/dexter` rule, applied for
+maturity rather than licence.
+
+### The finding: supply follows the file format, not the decision
+
+Twenty-one searches, split by whether the work has a byte-level spec. Where
+one exists the top repo is mature and permissive (`ledger/ledger` 6,078★
+BSD-3, `moov-io/iso8583` 539★ Apache-2.0, `josemmo/einvoicing` 180★ MIT,
+`moov-io/metro2` 130★ Apache-2.0). Where the work is a judgement, nothing
+clears a hobby project (three-way match 1★, dunning 1★, chargeback
+representment 1★, cash forecasting 7★, `chart of accounts agent LLM posting`
+**0 results**, and the top IFRS 9 repo has 135★ and **no licence file**).
+
+Result count predicts nothing: `Metro 2 credit reporting` returns 10 results
+and a 130-star library; `cash flow forecasting treasury` returns 47 and
+nothing usable. Full tables in `agents/top.md`; stated as trend #19.
+
+**Consequence for every engagement in this KB: adopt the parser, build the
+decision.**
+
+### Counter-check against this KB's own "the flow has dried up" trend
+
+`moov-io/ach-test-harness` (17★) and `moov-io/bai2` (27★) are deeply
+back-office, barely starred and both production-grade — because both have
+specs. So low star counts in this plane do not mean immaturity, and the
+drought this KB has reported three passes running is again partly a
+**vocabulary artefact**: querying `financial agent` never reaches a library
+named after a FinCEN form.
+
+### Measured a third time: the zero-result trap
+
+`BSA SAR suspicious activity report filing` → **0 results**. `moov-io/fincen`
+builds exactly those forms, has 36 stars and was pushed two days ago. Same
+shape as the legal KB's P31 (`LEDES legal billing` = 6 results and excludes
+the only usable asset). **A single-digit `total_count` is a symptom of a bad
+query far more often than evidence of an empty category.** Re-run as
+`{standard-or-agency-name} + {artefact noun}` before writing "measured gap".
+
 ## 2026-11-22 (pass 4)
 
 Pass theme: **the plane where the money moves had no agents in this KB at all.**

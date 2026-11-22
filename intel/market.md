@@ -221,6 +221,63 @@ measure. That last number is the one to sell against: **a reconciliation or
 screening build has a measurable baseline**, which is precisely what the
 institutions say they are missing.
 
+
+#### Pass 5 (2026-11-22) — the filing plane, and Canada closed with a parser
+
+**The opportunity shape this region offers that no other does: three statutory
+filings with permissive open-source libraries already written.**
+
+| Obligation | Who it binds | Library | Licence |
+|---|---|---|---|
+| Metro 2 consumer credit reporting | every US lender reporting to Equifax / Experian / TransUnion | `moov-io/metro2` (130★), `teamupstart/metro_2` (23★) | Apache-2.0, MIT |
+| FinCEN BSA E-Filing — SAR, CTR | every US bank, MSB and broker-dealer | `moov-io/fincen` (36★) | Apache-2.0 |
+| Reg E §1005.11 dispute clocks | every US consumer account issuer | `dleonard-data/reg-e-timing` (1★) | MIT |
+
+Metro 2 is the one to lead with. **FCRA accuracy liability attaches to the
+contents of that file**, it is produced monthly by every lender, the format is
+published, and two independently-written permissive implementations exist in
+different languages — which means a differential conformance harness is
+available at no cost (see `verticals/solutions.md`). An engagement that offers
+a client evidence their bureau file is correct is selling against a liability
+they already carry, not against a competitor.
+
+Reg E is the opposite scale and still worth naming: §1005.11 is a set of
+**deterministic clocks** — provisional credit, investigation windows — and
+`reg-e-timing` expresses them as institution-configurable testable code. One
+star. It is a design reference, not a dependency. The legal KB reached the
+identical conclusion about court-deadline calculation: *the deadline is the
+first thing an agent should be trusted with and the last thing it should
+decide, because the rule is arithmetic and the liability is total.*
+
+**Canada — the twice-measured gap, now closed, and the method was wrong not
+the search.** Two previous passes searched Canada by region and OSFI by name
+and returned effectively nothing. The Canadian asset is `moov-io/cadeft`
+(Apache-2.0, 11★, pushed 2026-11-20): a parser for **CPA-005, the 1464-byte
+Canadian Payments Association EFT file** that carries every Canadian direct
+deposit and pre-authorised debit. At 11 stars it is invisible to any regional
+or thematic query. It was found by enumerating an organisation the KB already
+cited for seven other repos.
+
+> **Method, generalisable to all twelve KBs:** when a region has returned
+> nothing twice, stop querying by region and enumerate the organisations the
+> KB already trusts. National payment and filing formats are maintained by
+> whoever maintains the other national formats — not by someone who tags a
+> repo with the country name.
+
+**Context, all secondary sources, read accordingly.** The Cambridge CCAF 2026
+report has regulators well behind industry on AI adoption (only ~20% of
+regulators at advanced adoption against 40% of firms). Baker McKenzie expects
+deregulation to gain momentum in 2026, led by the US — which, combined with
+the SR 26-2 / OCC Bulletin 2026-13 position already recorded above (genAI and
+agentic placed *outside* model risk guidance), keeps the conclusion this KB
+already drew: **there is no examiner playbook to inherit, so whoever writes a
+defensible agent control framework sets the de facto standard.** Industry is
+moving on that: Citigroup, Morgan Stanley and Bank of America are reported to
+back a *Common Controls for AI Services* initiative aiming at vendor-neutral
+controls — reported in trade coverage, **not verified against a primary
+source, do not cite to a client without checking.** Bank of America's CashPro
+Chat is the most-cited named deployment.
+
 ### EMEA
 
 **Regulatory posture: the most demanding in the world, with a hard date.**
@@ -400,6 +457,49 @@ the leading use cases, and persistent governance gaps. Celent, via AWS, puts
 alongside the supervisor-published figures recorded in pass 3 (BoE/FCA 86%
 adoption, ~2% broad autonomy), which remain the more rigorous numbers.
 
+
+#### Pass 5 (2026-11-22) — e-invoicing is the region's agent surface, and it is already permissive
+
+EMEA is the only region where the **statutory document formats are
+multi-country**, and that single structural fact is why it has the best
+permissive filing tooling in this KB.
+
+| Format | Scope | Library | Licence | Stars |
+|---|---|---|---|---|
+| EN 16931 | EU semantic standard for electronic invoicing | `josemmo/einvoicing` | MIT | 180 |
+| Peppol BIS 3 / UBL | the Peppol network, EU-wide plus AU/NZ/SG | `num-num/ubl-invoice` | MIT | 143 |
+| Inline XBRL | UK statutory accounts → Companies House, HMRC | `kanedata/ixbrl-parse` | MIT | 72 |
+| SAF-T | OECD tax audit file — PT, PL, NO, AO and others | `SimansoftMZ/SAF-T` | MIT | 8 |
+
+A library for EN 16931 serves every EU member state; a library for Brazil's
+SPED serves Brazil. The addressable developer population differs by an order
+of magnitude, and the open-source supply tracks it exactly. **This is why an
+EMEA filing engagement starts from adoption and a LATAM one starts from
+integration** — see the regional comparison in `verticals/solutions.md`.
+
+The normative Peppol specification repository, `OpenPeppol/peppol-bis-invoice-3`
+(158★), carries **no determinable licence**: every root-path probe returns 404
+across all four branches, so absence is not even measured. Treat as
+specification, read-only; build against the two MIT libraries.
+
+**Adoption and governance, secondary sources.** Deloitte's EMEA Model Risk
+Management survey puts fraud detection and customer experience as the most
+frequent AI use cases with governance gaps persisting, and has smaller
+institutions closing the gap on larger ones. A Celent figure relayed by AWS has
+**67% of banks planning to launch customer-facing generative AI services in
+2026**. Deloitte also notes the UK and EU are diverging on AI-specific rules
+while existing conduct, operational-resilience and GDPR obligations continue to
+bind regardless — consistent with the DORA consolidation point this file
+already records under AI Act Art. 9(10). CCAF has **data privacy and protection
+as the top perceived AI risk at 73%**, which is the single most quotable number
+for a European client conversation.
+
+The region's own numbers already in this file stand and are the stronger
+argument: 61% in-house adoption, the highest in the world, against **only 14%
+with specialised legal/financial AI actually implemented**. Four of five
+institutions using AI cannot document what it does, in the jurisdiction that
+requires documentation.
+
 ### APAC
 
 **Regulatory posture: the most advanced on agentic specifically.**
@@ -551,6 +651,57 @@ rank Asia Pacific the most mature region for AI in **wealth and asset
 management** (500 firms, 155 in APAC). Deloitte projects up to US$4.8 trillion
 of economic value added by the region's financial services industry by 2035
 (vendor projection, long horizon — treat as directional).
+
+
+#### Pass 5 (2026-11-22) — one country's filings are tooled, the rest are not
+
+**Measured this pass.** APAC's statutory-filing tooling is Japan and nothing
+else:
+
+| Target | Result |
+|---|---|
+| Japan EDINET | `matthelmer/edinet-tools` (MIT, 59★, 42 document types as typed Python objects) and `ajtgjmdjp/edinet-mcp` (Apache-2.0, 20★, **parser plus MCP server**) |
+| India account aggregator | 9 results, best usable is a 1-star MIT personal project; `Codexxa-Business-Solution/account-aggregator-sdk` has **no licence file** |
+| India UPI libraries | 5 results, nothing above 0 stars |
+| China, Australia, Korea filing formats | no permissive library surfaced |
+
+`ajtgjmdjp/edinet-mcp` is the most interesting single asset in the region: a
+**regulator's full disclosure corpus already exposed through MCP**, under
+Apache-2.0. For a Japanese engagement that is a working agent data source on
+day one, not a build.
+
+India is the notable negative given the size of the market and the maturity of
+the rails. The Account Aggregator framework is live and consent-based, and
+there is **no permissive open-source SDK with traction against it** — the same
+read-is-solved-initiation-is-not asymmetry this KB measured for SEPA and Pix,
+one layer earlier. Recorded as an informed gap, searched, not inferred.
+
+**Adoption, all secondary.** The FNZ / ThoughtLab study of 500 investment firms
+(155 in APAC) ranks the region **most mature globally for AI in wealth and
+asset management**, with generative-AI use among regional leaders projected to
+go from 43% to 75% over three years. Money20/20 Asia reports **61.2% of
+regional organisations have already adopted AI or ML**. Against that,
+ComplyAdvantage's 2026 survey finds only about half of APAC firms have a fully
+established AI assurance programme versus 59% globally, and Sumsub with the
+Singapore FinTech Association report a widening gap between reliance on AI and
+the ability to evidence what it does.
+
+**That gap is the engagement.** The region leads on adoption and trails on
+assurance, which is the exact inverse of EMEA's regulatory-pressure-first
+posture, and it means an APAC pitch leads with **evidence and auditability**
+rather than capability.
+
+**Regulatory, reconciled against what this file already holds.** Korea's
+general binding AI statute from January 2026 remains the region's only one.
+APRA has pressed boards on AI risk oversight. The MAS Guidelines of
+2026-10-07 with implementation to 2027-10-07 stand as recorded. One new item
+from a Deloitte SEA regulatory round-up: **MAS requiring key financial
+institutions to run AI-assisted red teaming on critical internet-facing
+systems from 2026-07-01** — secondary source, consistent with the MAS
+direction already recorded, **but not confirmed against a MAS primary
+document; verify before citing.** The unverified "binding MAS Supervisory
+Notice on Governance of Autonomous AI Agents, August 2026" recorded in a
+previous pass remains uncorroborated and still must not be cited.
 
 ### LATAM
 
@@ -706,6 +857,54 @@ recorded for three consecutive passes in the legal KB — compliance guides
 asserting that Brazil and Mexico already have AI laws in force — applies here
 too and remains false in both.
 
+
+#### Pass 5 (2026-11-22) — the region leads on rails and is last on books
+
+**The sharpest regional contrast in this KB, and it reverses the usual
+picture.** LATAM has the best payment-rail tooling here — `bacen/pix-api` is a
+central bank's own OpenAPI spec at 3,010 stars with no EMEA equivalent, plus
+CNAB, boleto and `sat-cfdi`. For the *accounting* file the same company is
+obliged to produce, measured this pass with the region's own vocabulary rather
+than translated US terms:
+
+| Query | Results | Best available |
+|---|---|---|
+| `SPED ECD contabil` (Brazil) | 6 | `nfephp-org/sped-ecd` — LGPL-3.0 (187 lines, GitHub reported `NOASSERTION`), 4★, **no commit since 2024-07-01** |
+| `contabilidad electronica SAT XML` (Mexico) | 3 | `albertotrece/sat` — GPL-2.0, 19★, **last push 2015** |
+
+One stale copyleft library and one abandoned nine years ago, for mandates that
+are **older and more universal than Pix**.
+
+**Do not read this as a build opportunity.** The structural reason is in the
+EMEA section above: EN 16931, Peppol and SAF-T are multi-country formats and
+attract permissive libraries; SPED and CFDI are single-country, so the
+addressable population for a shared library is one market wide and commercial
+fiscal-emitter vendors already own it. The realistic shape for a LATAM
+engagement is **integrate with the fiscal emitter the client is already
+required to use, and put the agent above it** — the same conclusion the legal
+KB reached about porting LEDES into LATAM. The format does not transfer; the
+semantics do.
+
+**Adoption, secondary sources.** Finnovista's Fintech Radar has Mexico's
+fintech AI adoption rising **from 60% in 2025 to 77% in 2026**, the fastest in
+the region, with Colombia at 66% in 2025. Evident launched an **AI Index for
+Banks in Latin America in July 2026 ranking 20 major regional banks** on
+transparency, leadership, innovation and talent — the first regional
+benchmark a client can be positioned against, and worth reading directly
+before any LATAM banking pitch. UBS frames AI as narrowing the region's
+digital gap, with marketing/sales, process automation and threat detection as
+the leading use cases.
+
+**Regulatory, consistent with what this file already holds.** Mexico still has
+no dedicated AI regulation for financial services; supervisors review model
+governance, explainability and bias under existing risk-management and
+consumer-protection rules — which matches the CNBV/FIDUZ precedent recorded
+above and is the reason that precedent is worth more than a statute would be.
+Mexico's **Open Finance secondary rules remain unfinalised, with only open-data
+obligations in force as of early 2026** — so an open-finance pitch in Mexico
+is a readiness engagement, not a compliance one. Trade coverage notes
+stablecoin growth outpacing rulebooks dating to the 2010s.
+
 ### Global / cross-region
 
 - **Agentic governance is the universal gap.** Accenture recommends a dedicated
@@ -714,6 +913,44 @@ too and remains false in both.
   credit decisions, by different legal routes.
 - **The back-office finding is region-independent** and is the most reliable
   commercial signal in this file.
+
+
+#### Pass 5 (2026-11-22) — open-source supply follows the file format, not the decision
+
+A market-structure finding, measured over 21 GitHub searches and tabulated in
+full in `agents/top.md`. It applies to every region and sets the build-vs-buy
+line for every engagement in this KB.
+
+Where a **byte-level specification** exists, the top repository is mature,
+permissive and maintained — `ledger/ledger` 6,078★ BSD-3, `moov-io/iso8583`
+539★ Apache-2.0, `josemmo/einvoicing` 180★ MIT, `moov-io/metro2` 130★
+Apache-2.0. Where the work is a **judgement**, nothing exists above a hobby
+project — three-way matching tops out at 1 star, dunning at 1, chargeback
+representment at 1, cash forecasting at 7, and `chart of accounts agent LLM
+posting` returns **zero results**.
+
+Result counts predict nothing: `Metro 2 credit reporting` returns ten results
+and a 130-star Apache-2.0 library; `cash flow forecasting treasury` returns
+forty-seven and nothing above seven stars.
+
+**Why:** a format is an obligation shared by every institution in a
+jurisdiction — published, binary conformance, one implementation serves all,
+so it gets written once and starred. A judgement is specific to one
+institution's data, policy and risk appetite, cannot be validated against a
+published spec, and has no shared artefact to converge on.
+
+**Commercial consequence, and it is the single most useful sentence in this
+file: adopt the parser, build the decision.** The format layer is free and
+writing it is rework a reviewer will catch. The judgement layer is greenfield
+with no open-source incumbent to displace — and it is where the client's
+margin sits.
+
+This also explains the CCAF value-measurement problem recorded above (55% of
+industry respondents, 63% of regulators and 76% of large institutions find AI
+value hard to measure). Format work is measurable by construction: the file
+either conforms or it does not. Judgement work is what resists measurement —
+so an engagement that starts at the format layer **has a defensible number on
+day one**, and can fund the judgement layer from it.
 
 ## Regional asymmetry — the summary
 

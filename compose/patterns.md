@@ -808,3 +808,162 @@ the de facto standard.
     way. This is also the commercial argument: it is the plane where the client
     already has a baseline, and §16 records that **76% of large institutions
     say they cannot measure AI value**.
+
+---
+
+## Pattern 16 — Metro 2 bureau-file assurance with a differential oracle
+
+**Problem.** Every US lender sends a Metro 2 file to Equifax, Experian and
+TransUnion each month. FCRA accuracy liability attaches to its contents, and
+the bureaus' own validators are not something the lender can run in CI. Defects
+surface as consumer disputes months later, by which time the wrong data has
+propagated to three bureaus and any number of downstream decisions.
+
+**Why this is the best first engagement in the KB.** The obligation is
+external, the output is machine-checkable, the client cannot opt out, and —
+uniquely — **two independently written permissive implementations exist**, so
+correctness can be demonstrated rather than asserted.
+
+**Wiring.**
+
+1. **Two generators, one spec.**
+   `moov-io/metro2` (Go, Apache-2.0, 130★) and `teamupstart/metro_2`
+   (Ruby, MIT, 23★) build the same Metro 2 file from the same published
+   layout. Feed both from one canonical account extract.
+2. **Differential oracle.** Diff the two outputs field by field. A divergence
+   is either a spec ambiguity or a bug in one library — both are findings, and
+   neither requires the bureaus. This is the whole trick and it costs one
+   afternoon.
+3. **Deterministic validation first.** Field-level rules — date coherence,
+   account-status transitions that the layout forbids, balance versus
+   scheduled-payment arithmetic, required-field presence per segment — run as
+   code. **No model involved.** The arithmetic must be reproducible to the
+   cent and the same input must always produce the same verdict.
+4. **Model only where there is judgement.** Narrative and free-text segments,
+   and the triage of *which* divergences matter, go to a model that must cite
+   the specific account id and segment it is talking about. A verifier drops
+   any finding whose citation does not resolve.
+5. **Human gate.** Divergences are proposals. A credit-operations analyst
+   accepts or rejects; the decision and its evidence are written to an
+   append-only log keyed by account id and cycle date.
+6. **Run it in CI, on the extract** — not at submission time. The point is to
+   fail before the file leaves the building.
+
+**Deliverable the client keeps.** A conformance harness with a dated evidence
+trail per cycle. It is directly usable as FCRA reasonable-procedures evidence
+and it is the kind of artefact a second line and an examiner can both read.
+
+**Expectation setting.** `moov-io/metro2` is production-grade. `teamupstart/metro_2`
+at 23 stars is adopted here as an **oracle, not a dependency** — if it is wrong,
+the diff tells you, which is exactly the job it is being given.
+
+**Transfers to:** ISO 20022 (`moov-io/rtp20022` vs `prowide/prowide-iso20022`),
+EN 16931 (`josemmo/einvoicing` vs `num-num/ubl-invoice`), ACH
+(`moov-io/ach` vs `RiverFinancial/nacha`). **Any format with two permissive
+implementations gets a free correctness oracle.** Check for a second
+implementation before writing a validator.
+
+---
+
+## Pattern 17 — Dispute and chargeback triage on a deterministic clock
+
+**Problem.** A card dispute has two separable halves that firms routinely merge
+and then get wrong. One half is **arithmetic**: Regulation E §1005.11 sets hard
+clocks — acknowledgement, provisional credit, investigation windows — and
+missing one is a compliance failure regardless of the dispute's merits. The
+other half is **judgement**: whether a chargeback is worth representing, and
+what evidence supports it.
+
+**The architecture rule, stated once: clocks are code, merits are judgement,
+and they never share a code path.**
+
+**Wiring.**
+
+1. **Clock engine — deterministic, no model.**
+   `dleonard-data/reg-e-timing` (MIT, 1★) expresses §1005.11 timing as
+   institution-configurable testable code. **Read it, do not depend on it** —
+   one star and one contributor. Lift the rule shapes and the test cases,
+   reimplement against the client's calendar, product set and cut-off times.
+   Every clock gets a unit test with a named regulatory citation.
+2. **Case intake and reason-code taxonomy.**
+   `opensyndicate/dispute-agent` (MIT, 1★) triages by reason code and
+   assembles representment evidence. Same status: **design reference**. Its
+   value is the taxonomy and the evidence checklist per reason code, which is
+   otherwise scattered across scheme manuals.
+3. **Ground every case in the ledger.** Each dispute references a posted
+   entry. With `moov-io/iso8583` for the original authorisation message and
+   `moov-io/ach` or `moov-io/imagecashletter` for the settlement leg, the
+   agent can cite **the actual message fields**, not a summarised description
+   of them. An assertion that does not resolve to a message field is dropped.
+4. **Model proposes, never decides.** The model drafts the representment
+   narrative and ranks cases by expected recovery. It may not start a clock,
+   stop one, issue provisional credit, or close a case.
+5. **Two queues.** Clock-driven actions execute automatically and are logged.
+   Merit decisions go to a human with the evidence pack attached.
+
+**Why build rather than buy.** Per trend #19, this is a judgement layer: the
+best open-source asset in the category has **one star**. There is no incumbent
+to displace and no community to keep pace with — and the client's own dispute
+history is the asset that makes it work.
+
+**Sales line that is true.** Not "AI resolves disputes faster". It is **"no
+clock is ever missed, and every representment cites the message field it rests
+on"** — the first half is a compliance guarantee and the second is a recovery
+argument, and both are verifiable by the client in an afternoon.
+
+---
+
+## Pattern 18 — Statutory filing agent, regionalised
+
+**Problem.** A financial institution or its corporate client must file
+machine-readable statutory documents on an external deadline. The format is
+published, conformance is binary, and nobody gets to skip it. This is the
+highest-certainty agent workload in the KB and it is **the same engagement in
+four regions with a different format library swapped in**.
+
+**The invariant pipeline.**
+
+```
+system of record  ->  format library (permissive, separate)  ->  conformance
+gate (deterministic)  ->  judgement layer (model, cited)  ->  human sign-off
+->  append-only filing log
+```
+
+Keep the format library **outside** the core. It isolates country-specific
+churn and any copyleft, and it lets the conformance gate be tested against the
+library's own fixtures without standing up the platform.
+
+**The regional swap — everything else is identical.**
+
+| Region | Filing | Format library | Licence |
+|---|---|---|---|
+| North America | Metro 2 to the bureaus; FinCEN SAR/CTR | `moov-io/metro2`, `moov-io/fincen` | Apache-2.0 |
+| EMEA | EN 16931 / Peppol BIS e-invoice; UK iXBRL accounts; SAF-T | `josemmo/einvoicing`, `num-num/ubl-invoice`, `kanedata/ixbrl-parse`, `SimansoftMZ/SAF-T` | MIT |
+| APAC | Japan EDINET disclosures | `matthelmer/edinet-tools`, `ajtgjmdjp/edinet-mcp` | MIT, Apache-2.0 |
+| LATAM | SPED/ECD (BR), contabilidad electrónica (MX) | **no viable permissive library — integrate the client's fiscal emitter** | — |
+
+**LATAM is not a gap to fill, it is a different shape.** The only candidates
+are one stale LGPL-3.0 library (4★, no commit since July 2024) and one
+abandoned in 2015. The structural reason is in `intel/market.md`: EN 16931,
+Peppol and SAF-T are multi-country formats and attract permissive libraries;
+SPED and CFDI are single-country and the ground is owned by commercial fiscal
+emitters the client is already obliged to use. **Integrate above the emitter;
+do not rebuild it.** The pipeline is unchanged — only the first box is a
+vendor API instead of a library.
+
+**Where APAC has an unfair advantage.** `ajtgjmdjp/edinet-mcp` ships the
+regulator's corpus **behind an MCP server** under Apache-2.0. For a Japanese
+engagement the data source is a configuration step, not a build.
+
+**Licence discipline, measured.** `OpenPeppol/peppol-bis-invoice-3` (158★) has
+**no determinable licence** — every root-path probe 404s on all four branches,
+so absence is not even measured. It is the normative spec: read it, never
+vendor it. Build against the two MIT libraries. Apply the same rule to
+`moov-io/awesome-fintech` (409★, no licence file) — a useful index, not a
+dependency.
+
+**Why this closes better than a judgement pattern.** The deliverable is a
+conformance gate with a dated evidence trail. It produces a number in week one
+— files conforming, defects caught before submission — which per trend #19 is
+exactly what the 76% of large institutions who cannot measure AI value are
+missing, and it is what funds the judgement work above it.
