@@ -1,7 +1,7 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # Foundational Repositories — Financial Services
@@ -61,6 +61,51 @@ Eleven rows, all MIT / Apache-2.0 / BSD, all maintained.
 | https://github.com/SantanderAI/gen-fraud-graph | Apache-2.0 | 296 | 2026-10-01 | Synthetic fraud **graph** generator for benchmarking, published by Santander. Permissive, bank-authored, and it solves the first blocker on every AML engagement: you cannot test a fraud agent on real customer data. Generates the topology, not just rows |
 | https://github.com/kingdee/lingee-bench | Apache-2.0 | 190 | 2026-11-06 | Enterprise benchmark that evaluates whether AI agents deliver business value, from Kingdee (China). APAC-authored; useful as an evaluation harness when a client asks for proof rather than a demo |
 
+## Payments and compliance infrastructure — new 2026-11-22
+
+The KB had pricing, risk, market data, backtesting and ledgers. It had **no
+payments rails and no sanctions screening**, which is what an engagement at a
+bank, a PSP or a wallet actually touches first. All five rows are Apache-2.0,
+all were read byte-for-byte today, and four of the five were pushed this week.
+
+| Repo | License | Stars | Last push | Role in a build |
+|---|---|---|---|---|
+| https://github.com/moov-io/watchman | Apache-2.0 | 524 | **2026-11-22** | **Sanctions and watchlist screening** against OFAC SDN, consolidated and non-SDN lists, EU and UK lists, with fuzzy name matching over an HTTP API. Pushed today. This is the piece of an AML stack that is hardest to justify building and easiest to drop in |
+| https://github.com/moov-io/ach | Apache-2.0 | 572 | 2026-11-21 | Reader, writer and validator for **NACHA ACH files** — the US batch payment rail. Turns a format that is normally a vendor dependency into a library |
+| https://github.com/moov-io/fed | Apache-2.0 | 131 | 2026-11-20 | Lookup service over the **FedACH and Fedwire participant directories**: routing number to institution, with search. The small unglamorous dependency every US payment build needs |
+| https://github.com/blnkfinance/blnk | Apache-2.0 | 598 | 2026-11-18 | **Double-entry ledger for wallets, balances and reconciliation**, API-first. Sits between TigerBeetle (storage engine) and Fineract (full application) alongside `formancehq/ledger`, with wallet/multi-currency modelling as its emphasis |
+| https://github.com/tazama-lf/frms-coe-lib | Apache-2.0 | 5 | 2026-11-01 | Shared library of the Tazama fraud-risk platform (see `verticals/solutions.md`): typed message contracts, database and NATS plumbing. Only interesting if you are building *into* Tazama, in which case it is mandatory |
+
+**On `moov-io` as an organisation.** It is the main open source payments
+ecosystem in the United States and it is permissive throughout. One caution
+measured this pass: **`moov-io/iso20022` is ARCHIVED** (78 stars, last push
+2023-01-12). ISO 20022 is the rail that matters most for the next five years in
+EMEA and increasingly in LATAM, so the one Moov repo you would most want is the
+one that is frozen. Do not start an ISO 20022 build there.
+
+### Byte-checksum refinement — whitespace, measured
+
+`repos/trending.md` and `agents/top.md` carry a byte-count checksum for licence
+identification (MIT ≈ 1.05–1.1 kB, Apache-2.0 ≈ 11,358 B with appendix /
+10,173 B without). Two rows this pass sat **34 bytes under** canonical Apache
+and would have been flagged: `x402-foundation/x402` and `coinbase/x402`, both
+11,324 B.
+
+Diffed against a known-canonical file (`moov-io/watchman`, 11,357 B) with
+leading whitespace normalised, **the difference is zero**. The 33–34 bytes are
+leading indentation on the heading lines, nothing else; both grants are
+verbatim Apache-2.0.
+
+**Rule change:** a byte count within ~50 B of a canonical length is a
+*whitespace* question, not a licence question, and the comparison that settles
+it is `diff <(sed 's/^[[:space:]]*//' candidate) canonical`. Reserve the
+"appended terms" reading — the NVIDIA case recorded in the gaming KB — for
+counts that are **above** canonical, where bytes have genuinely been added.
+Three byte-count sizes now have three different meanings: below canonical means
+whitespace, above canonical means added terms, far below canonical (≈400–800 B)
+means a grant by reference or, as with `visa/trusted-agent-protocol`, no grant
+at all.
+
 ## Flagged — real repos, but do not start here
 
 | Repo | License | Stars | Why flagged |
@@ -72,13 +117,22 @@ Eleven rows, all MIT / Apache-2.0 / BSD, all maintained.
 
 ## Still genuinely open — stated, not padded
 
-- **No permissive, high-traction agentic AML/transaction-monitoring platform.**
-  The best functional match, `jube-home/aml-fraud-transaction-monitoring`
-  (116 stars, pushed 2026-11-18), is **AGPL-3.0** — see `verticals/solutions.md`.
-  Everything permissive in this space is a portfolio demo: measured this pass,
-  the candidates were 0–83 stars with no LICENSE file at all. This gap is
-  **verified open by function**, not merely unsearched, and it is the single
-  biggest build-vs-buy opening in the financial KB.
+- **~~No permissive, high-traction agentic AML/transaction-monitoring
+  platform.~~ CLOSED 2026-11-22 — it exists and it is Apache-2.0.** The gap was
+  real as *stated* and wrong as *searched*: the queries used "AML" and
+  "transaction monitoring", and the platform that fills it calls itself a
+  **financial crime risk management (FRMS)** system. **Tazama**
+  (https://github.com/tazama-lf, a Linux Foundation project) is a complete
+  real-time fraud and AML transaction-monitoring platform — rules engine,
+  typology processor, case management, rule studio, Mojaloop adapter — under
+  Apache-2.0, with 25+ repos pushed within the last week. Full write-up,
+  including a licence-filing defect in three of its runtime repos, is in
+  `verticals/solutions.md`. `jube-home/aml-fraud-transaction-monitoring`
+  (AGPL-3.0, 116 stars) is no longer the only maintained option, and
+  `moov-io/watchman` (Apache-2.0, above) covers the sanctions-screening half.
+  **What stays open is traction, not licence:** Tazama's busiest repo has 57
+  stars. This is now a "will the client accept a low-star LF project" decision,
+  which is a completely different conversation from "nothing permissive exists".
 - **No permissive SEPA or Pix payment-*initiation* agent.** Reading is solved in
   both regions (BankMCP and the open-banking.io MCP for PSD2; the BACEN spec for
   Pix). Initiating a payment is not, and that asymmetry is a product decision by
@@ -86,6 +140,9 @@ Eleven rows, all MIT / Apache-2.0 / BSD, all maintained.
   approves first.
 
 ---
-*Re-verified and extended 2026-11-21. One named gap closed, two gaps re-tested by
-function and confirmed open. See `verticals/solutions.md` for full platforms
-rather than libraries.*
+*Re-verified and extended 2026-11-22 (prior passes 2026-11-21, 2026-11-09).
+This pass: a payments-and-compliance infrastructure tier added (5 permissive
+rows, 4 pushed this week); the AML/transaction-monitoring gap **closed** by
+Tazama after being re-tested under the vocabulary the industry actually uses;
+one archived repo caught (`moov-io/iso20022`); the byte-checksum rule refined so
+that sub-canonical counts are read as whitespace rather than as defects.*

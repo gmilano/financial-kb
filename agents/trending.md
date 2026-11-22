@@ -1,13 +1,81 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # Financial AI Agents — Trending Log
 
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
+
+## 2026-11-22
+
+Pass theme: **a category, not a catalogue refresh.** Twenty-four hours is below
+this catalogue's noise floor, so nothing here is a star-count story. What
+changed is that the KB gained a tier it did not have, and learned why it did not
+have it.
+
+### The metric that replicated and the conclusion that did not
+
+`finance AI agent created:>2026-08-01 stars:>=80` returned `total_count: 4` on
+2026-11-21 and returns **the same 4 repositories** today: `open-net-worth`
+(660), `fzn0x/idx` (235), `kingdee/lingee-bench` (190),
+`Yunfan-Wang/Scalable-Agentic-Market-Simulator` (83). A clean replication.
+
+It is still blind to more than 15,000 stars of permissive, actively-maintained
+financial agent infrastructure, because none of it says "finance AI agent". See
+`intel/trends.md` §13.
+
+### New tier — agentic payment and commerce protocols
+
+All measured 2026-11-22; licences read byte-for-byte.
+
+| Agent / protocol | Repo | License | Stars | Created | Last push |
+|---|---|---|---|---|---|
+| x402 | https://github.com/x402-foundation/x402 | Apache-2.0 | 6,820 | 2025-02-21 | 2026-11-20 |
+| AP2 | https://github.com/google-agentic-commerce/AP2 | Apache-2.0 | 3,283 | 2025-05-30 | **2026-06-17** |
+| Solana Pay | https://github.com/solana-foundation/pay | MIT | 1,810 | 2021-10-19 | 2026-11-09 |
+| ACP | https://github.com/agentic-commerce-protocol/agentic-commerce-protocol | Apache-2.0 | 1,609 | 2025-09-29 | 2026-07-18 |
+| AgentKit | https://github.com/coinbase/agentkit | Apache-2.0 (571 B, by reference) | 1,359 | — | 2026-11-10 |
+| a2a-x402 | https://github.com/google-agentic-commerce/a2a-x402 | Apache-2.0 | 572 | — | 2026-11-11 |
+| AgentPay SDK | https://github.com/worldliberty/agentpay-sdk | MIT | 460 | — | 2026-11-16 |
+| Trusted Agentic Commerce | https://github.com/forter/trusted-agentic-commerce-protocol | MIT | 180 | — | 2026-07-08 |
+| agent-payment-node | https://github.com/nuanu-ai/agent-payment-node | MIT | 73 | — | 2026-11-19 |
+| agentcash-router | https://github.com/Merit-Systems/agentcash-router | MIT | 32 | — | 2026-07-20 |
+| awesome-agentic-payments | https://github.com/bitrefill/awesome-agentic-payments | CC0-1.0 | 27 | — | 2026-06-29 |
+
+**Divergence worth acting on:** AP2 is the protocol everyone cites for
+authorisation and its repository has been silent for five months, while x402 —
+twice the stars — was pushed two days ago. Google's org has one other repo and
+it is active (`a2a-x402`), so the organisation is working; the AP2 reference
+repository is not where.
+
+### Also newly recorded
+
+| Agent | Repo | License | Stars | Last push | Why it is here |
+|---|---|---|---|---|---|
+| Claude for Financial Services | https://github.com/anthropics/financial-services | Apache-2.0 | **41,441** | 2026-11-12 | Ten named workflow agents, five of them back-office (GL Reconciler, Month-End Closer, Statement Auditor, Valuation Reviewer, KYC Screener). The KB has argued "pitch the back office" since 2026-11-09 and had nothing to point at |
+| agent-safe-pipeline | https://github.com/decionis/agent-safe-pipeline | Apache-2.0 | 661 | 2026-11-21 | Authorization gateway in front of every agent action. The enforcement point this KB kept recommending in prose |
+| CloddsBot | https://github.com/alsk1992/CloddsBot | MIT | 3,123 | 2026-11-13 | Autonomous trading agent across prediction markets and 1,000+ venues. Front-office counterweight, recorded not recommended |
+
+### Hard exclusion, measured
+
+| Asset | Repo | Finding |
+|---|---|---|
+| Visa Trusted Agent Protocol | https://github.com/visa/trusted-agent-protocol | `LICENSE.md` is 398 B and grants nothing — it points at the Visa Developer Center Terms of Use. **Not open source.** 223 stars, no push since 2025-10-28. A file in the right place with the right name and the wrong content |
+
+### Drift on the existing top set, for the record
+
+TradingAgents 123,393 (+90), Kronos 48,059 (+24, still no push since
+2026-04-13), ccxt 44,950 (+10), qlib 50,481 (+26), Vibe-Trading 38,652 (+31,
+pushed 2026-11-21), FinGPT 21,661 (+66), hummingbot 21,337 (+19), FinRL 17,158
+(+6), ai-hedge-fund 64,796 (+16), FinRobot 8,461 (+4). OpenBB not measurable —
+`search/repositories` false negative again, `git ls-remote` confirms live.
+
+**New staleness flag:** `virattt/dexter` (27,988) has not been pushed since
+2026-09-23. The previous pass recommended chasing the maintainer for a LICENSE
+file; that advice is downgraded — there may be nobody to chase.
 
 ## 2026-11-21
 

@@ -1,3 +1,9 @@
+---
+industry: financial
+region: Global
+updated: 2026-11-22
+---
+
 # 💹 Financial Services KB
 
 > Knowledge base de la industria **Financial Services** para Globant AI Studios.

@@ -1,13 +1,112 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # Financial Repos — Trending Log
 
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
+
+## 2026-11-22
+
+### The KB's largest named gap, closed — by changing the words, not the effort
+
+`repos/foundations.md` has carried this since 2026-11-09 and restated it
+yesterday as "the single biggest build-vs-buy opening in the financial KB":
+
+> **No permissive, high-traction agentic AML/transaction-monitoring platform.**
+> … This gap is **verified open by function**, not merely unsearched.
+
+**It is closed. The platform is `tazama-lf` — a Linux Foundation project,
+Apache-2.0, 25+ repositories, most pushed within the last week.**
+
+The gap was real as stated and wrong as searched. Three passes queried "AML"
+and "transaction monitoring". The project describes itself as **financial crime
+risk management (FRMS)**. Nothing about the world changed between yesterday and
+today; the vocabulary did.
+
+| Component | Repo | License | Stars | Last push |
+|---|---|---|---|---|
+| Docs / project entry point | https://github.com/tazama-lf/docs | Apache-2.0 | 57 | 2026-10-29 |
+| Deployment (Compose) | https://github.com/tazama-lf/tazama-stack | Apache-2.0 (SPDX header, no file) | 26 | 2026-11-17 |
+| Demo front end | https://github.com/tazama-lf/tazama-demo | Apache-2.0 | 15 | 2026-11-19 |
+| Case management | https://github.com/tazama-lf/case-management-system | Apache-2.0 | 12 | 2026-11-20 |
+| Rule authoring | https://github.com/tazama-lf/rule-studio | Apache-2.0 | 12 | 2026-11-19 |
+| Admin service | https://github.com/tazama-lf/admin-service | Apache-2.0 | 12 | 2026-11-19 |
+| Config studio | https://github.com/tazama-lf/configuration-studio | Apache-2.0 | 11 | 2026-11-20 |
+| Connection studio | https://github.com/tazama-lf/connection-studio | Apache-2.0 | 11 | 2026-11-19 |
+| BI / analytics | https://github.com/tazama-lf/biar | Apache-2.0 | 10 | 2026-11-19 |
+| Event monitoring | https://github.com/tazama-lf/event-monitoring-service | Apache-2.0 | 9 | 2026-11-19 |
+| Transaction monitoring core | https://github.com/tazama-lf/tms-service | Apache-2.0 (SPDX header + `package.json`, **no LICENSE file**) | 6 | 2026-11-19 |
+| Typology scoring | https://github.com/tazama-lf/typology-processor | Apache-2.0, same form | 4 | 2026-11-19 |
+| Routing | https://github.com/tazama-lf/event-director | Apache-2.0, same form | 1 | 2026-11-19 |
+| Shared library | https://github.com/tazama-lf/frms-coe-lib | Apache-2.0 | 5 | 2026-11-01 |
+| Mojaloop adapter | https://github.com/tazama-lf/payment-platform-adapter | Apache-2.0 (SPDX header) | 3 | 2026-10-27 |
+
+**Licence defect, measured in both directions.** Four repos — including the
+three that carry the runtime — have **no LICENSE file**; six filename and case
+variants were probed on each and all returned 404 while control files in the
+same repos returned 200, so the absence is measured. They are nonetheless
+Apache-2.0: `package.json` carries `"license": "Apache-2.0"` and source files
+open with `// SPDX-License-Identifier: Apache-2.0` (verified in
+`tms-service/src/index.ts` and `event-director/src/index.ts`). That is the form
+the SPDX and REUSE specs prescribe, so it is **stronger** evidence than the
+README-prose tier this KB already tracks — and still invisible to GitHub's
+classifier. Worth an upstream issue; for an LF project it is a defect its own
+governance would want fixed.
+
+**What stays open is traction, not licence.** The busiest Tazama repo has 57
+stars. `verticals/solutions.md` says so in the recommendation rather than
+burying it.
+
+### Payments and compliance infrastructure — the other missing layer
+
+| Repo | License | Bytes | Stars | Last push | Role |
+|---|---|---|---|---|---|
+| https://github.com/moov-io/watchman | Apache-2.0 | 11,357 | 524 | **2026-11-22** | OFAC/EU/UK sanctions and watchlist screening with fuzzy matching, over HTTP |
+| https://github.com/moov-io/ach | Apache-2.0 | 10,243 | 572 | 2026-11-21 | NACHA ACH file reader, writer and validator |
+| https://github.com/moov-io/fed | Apache-2.0 | 11,357 | 131 | 2026-11-20 | FedACH and Fedwire participant directory lookup |
+| https://github.com/blnkfinance/blnk | Apache-2.0 | 10,749 | 598 | 2026-11-18 | Double-entry ledger for wallets, balances and reconciliation |
+| https://github.com/mojaloop/central-ledger | Apache-2.0 by reference (756 B) | 756 | 60 | 2026-11-20 | Instant-payment switch: ledger component of the Mojaloop hub |
+| https://github.com/openimis/openimis-be_py | **AGPL-3.0 + Swiss-law rider** (1,852 B) | 1,852 | 13 | 2026-11-21 | Health-insurance scheme administration; the only maintained open insurance core found |
+
+### Archived, caught this pass
+
+| Repo | License | Stars | Last push | Note |
+|---|---|---|---|---|
+| https://github.com/moov-io/iso20022 | Apache-2.0 | 78 | 2023-01-12 | **ARCHIVED.** The one Moov repo you would most want for an EMEA or LATAM rail build is the frozen one. Do not start an ISO 20022 build here |
+
+### Byte-checksum refinement, measured
+
+`x402-foundation/x402` and `coinbase/x402` both read **11,324 B** against a
+canonical Apache-2.0 of 11,357–11,358 — 33 bytes short, which the KB's checksum
+rule would flag. Diffed against `moov-io/watchman`'s canonical file with leading
+whitespace normalised, **the difference is zero**: the 33 bytes are indentation.
+
+Rule, now in `repos/foundations.md`: **below canonical means whitespace, above
+canonical means appended terms, 400–800 B means a grant by reference.** Only the
+middle case is a licence finding.
+
+### Full-KB URL sweep — replicated clean
+
+All 66 unique `github.com/<owner>/<repo>` URLs re-checked by `git ls-remote` ref
+count. **63 live, 3 dead — the same three** already recorded as deleted in the
+2026-11-21 section below (`Devsinfin/bank-churn-random-forest`,
+`sammygallant214/CryptoDesk-ai`, `skstmdals1-ctrl/bybit-dashboard`). No new
+deaths, no new renames.
+
+### Channel note — `gh api repos/<slug>` is not available here
+
+`gh api -X GET search/repositories` works. **`gh api repos/<owner>/<repo>`
+returns HTTP 403** ("GitHub access to this repository is not enabled for this
+session"), as does `curl https://api.github.com/repos/...`. So the three
+channels documented in `agents/top.md` — search for metadata, `git ls-remote`
+for existence, `raw.githubusercontent.com` for licence bytes — are the complete
+set, and there is no fallback for stars when search returns its known false
+negative. `OpenBB-finance/OpenBB` and `FinAegis/finaegis` were both unmeasurable
+for stars again this pass for exactly that reason.
 
 ## 2026-11-21
 

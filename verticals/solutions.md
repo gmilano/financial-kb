@@ -1,7 +1,7 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # Vertical Platforms — Financial Services
@@ -36,6 +36,124 @@ design for the agent layer.** Read how FinAegis models banking operations as
 tools, and implement that shape against Fineract's REST API. At 212 stars,
 putting FinAegis itself under a client's ledger is a decision to make with eyes
 open, not a default.
+
+## Financial crime and payment switching — new 2026-11-22
+
+Two Apache-2.0 platforms that between them cover the two things a central bank,
+a national switch or a digital-payments client actually asks for: **move the
+payment**, and **stop the bad one in real time**. Neither was in this KB before
+today. Both are low-star and institutionally backed, which is an unusual
+combination and has to be read carefully.
+
+| Platform | Repo / org | License | Stars | Stack | Use case |
+|---|---|---|---|---|---|
+| Tazama | https://github.com/tazama-lf | Apache-2.0 | 57 (docs), 26 (stack), 12 (case management) | TypeScript microservices, NATS, ArangoDB, Docker/Helm | **Real-time financial crime risk management.** Open source transaction monitoring at payment-switch scale: rules, typologies, case management, rule authoring UI. A Linux Foundation project |
+| Mojaloop | https://github.com/mojaloop | Apache-2.0, by reference | 328 (hub), 60 (central-ledger) | Node.js microservices, ISO 20022 alignment, Kubernetes | **Interoperable instant-payment switch.** The open source reference implementation behind several national real-time payment schemes, aimed at interoperability between banks, mobile money and fintechs |
+| openIMIS | https://github.com/openimis | **AGPL-3.0 + Swiss-law rider** | 19 (docker dist), 13 (backend) | Python/Django backend, React frontend, modular | Health insurance and social-protection scheme administration: enrolment, policies, claims. Deployed in national schemes; the only maintained open source *insurance* core found |
+
+### Tazama — the gap this KB named as its biggest, measured closed
+
+`repos/foundations.md` carried this as "the single biggest build-vs-buy opening
+in the financial KB": no permissive, maintained AML/transaction-monitoring
+platform exists. **It exists.** The reason three passes missed it is worth more
+than the finding: the searches said *AML* and *transaction monitoring*, and the
+project calls itself **FRMS — financial crime risk management**. The vocabulary
+chose the result.
+
+What is actually in the org, all pushed within the last week unless noted:
+
+| Component | Repo | What it does |
+|---|---|---|
+| Transaction monitoring service | `tazama-lf/tms-service` | The ingress: accepts ISO 20022-shaped transaction messages and starts evaluation |
+| Event director | `tazama-lf/event-director` | Routes a transaction to the rules that the active network map says apply to it |
+| Rule processors | `tazama-lf/rule-901`, `tazama-lf/rule-902`, … | **One rule per repository** — e.g. 901 "amount of transactions debtor made", 902 "number of transactions creditor received". Rules are deployable units, not rows in a table |
+| Typology processor | `tazama-lf/typology-processor` | Combines rule outcomes into a typology score — the "is this a known fraud shape" layer |
+| Case management | `tazama-lf/case-management-system` | Investigation queue and case workflow for the humans downstream |
+| Rule Studio | `tazama-lf/rule-studio`, `tazama-lf/simulation-service` | Authoring and **simulation** of rules before they go live |
+| Configuration / connection studios | `tazama-lf/configuration-studio`, `tazama-lf/connection-studio` | Web UIs for platform and integration configuration |
+| BI and analytics | `tazama-lf/biar` | Reporting layer |
+| Payment platform adapter | `tazama-lf/payment-platform-adapter` | **Adapter for Mojaloop** — the two platforms in this section are designed to meet |
+| Deployment | `tazama-lf/tazama-stack`, `tazama-lf/tazama-helm` | Docker Compose and Helm for the whole platform |
+
+**Why the architecture matters for an AI engagement.** Rules are repositories
+and typologies are composed from rule outcomes, which means a rule is a
+versioned, reviewable, independently deployable artefact with its own history.
+That is exactly the audit surface a supervisor asks for when a model influences
+an outcome — and it is the shape an agent can safely *propose into*: an agent
+drafts a rule, Rule Studio simulates it against historical traffic, a human
+approves the merge. The agent never touches the live decision path. Compare the
+contortions needed to get the same evidence out of a monolithic rules engine.
+
+**The licence defect, measured in both directions.** The periphery is cleanly
+licensed — `docs`, `rule-studio`, `admin-service`, `case-management-system`,
+`biar`, `frms-coe-lib` and the rule repos all carry Apache-2.0 and GitHub
+classifies them correctly. **Three runtime repos — `tms-service`,
+`typology-processor`, `event-director` — plus `tazama-stack` have no LICENSE
+file at all.** Six filename and case variants were probed on each; all 404
+while control files in the same repos returned 200, so the absence is measured,
+not assumed.
+
+They are **not** unlicensed. Both machine-readable channels agree:
+
+- `package.json` carries `"license": "Apache-2.0"` in all three service repos.
+- Source files open with `// SPDX-License-Identifier: Apache-2.0`, verified in
+  `tms-service/src/index.ts` and `event-director/src/index.ts`; the READMEs
+  carry the same tag as an HTML comment.
+
+A per-file SPDX identifier plus a package manifest is the form the SPDX and
+REUSE specifications actually prescribe, so this is **stronger** evidence than
+the README-prose case (`virattt/dexter`) this KB already separates out, and much
+stronger than a shields.io badge (`bacen/pix-api`). **Globant verdict:
+Apache-2.0, usable.** Two process notes: tell the client's counsel where the
+grant is before they go looking for a file that is not there, and raise the
+upstream issue — for a Linux Foundation project this is a defect its own
+governance would want fixed, and it is a cheap, visible contribution.
+
+### Mojaloop — and the same grant-by-reference pattern
+
+Every `mojaloop/*` repo reports SPDX `NOASSERTION` because `LICENSE.md` is
+**756 bytes**: a copyright line for the Mojaloop Foundation and the standard
+"made available … under the Apache License, Version 2.0 … you may obtain a copy
+of the License at" paragraph. Apache-2.0 by reference, the same shape as
+`coinbase/agentkit` (`agents/top.md`). Not a concern; just not something a
+classifier can see.
+
+`mojaloop/central-ledger` was pushed 2026-11-20 and the org is active. The
+combination that is interesting for a LATAM or African engagement is
+**Mojaloop as the switch, Tazama as the real-time fraud layer** — the adapter
+between them is maintained by the Tazama side, so the integration is not
+speculative.
+
+### openIMIS — read the rider, not just the badge
+
+`openimis/openimis-be_py` and `openimis-fe_js` both report `NOASSERTION`. The
+file is 1,852 bytes and is **AGPL-3.0 by reference** — plus a disclaimer of
+warranty, a limitation of liability, **and a clause the AGPL does not contain**:
+"In case of dispute arising out or in relation to the use of the program, it is
+subject to the public law of Switzerland. The place of jurisdiction is Berne."
+
+So it is not plain AGPL-3.0; it is AGPL-3.0 with a governing-law and forum
+rider. For an engagement that means two separate questions for counsel — the
+AGPL network-copyleft question this KB already flags on Firefly III and
+Ghostfolio, and a jurisdiction question that is unusual enough that nobody will
+have a template answer. Both repos were pushed 2026-11-21, so the project is
+alive.
+
+### Insurance — a measured gap, not an unsearched one
+
+Searching GitHub for insurance core platforms (policy, claims, underwriting,
+actuarial) sorted by stars returns, below openIMIS, **nothing but portfolio
+demos**: the top results were 0–2 stars, several of them the same ASP.NET or
+Django coursework project under different owners. There is no permissive
+insurance equivalent of Fineract.
+
+Stated precisely so a future pass does not re-walk it: **openIMIS is the only
+maintained open source insurance core found, it is AGPL-3.0 with a Swiss-law
+rider, and it is scoped to health and social protection — not P&C, not life,
+not commercial lines.** For a P&C or life insurer engagement there is no open
+starting point; the composition is a general ERP or CRM (Aureus, Krayin — both
+MIT, above) plus a custom domain model. That is a build, and it should be
+priced as one.
 
 ## Corrections to the previous revision
 
@@ -99,6 +217,9 @@ The pattern that works is to leave the system of record alone and wrap it:
 Concrete wiring, with named repos, is in `compose/patterns.md`.
 
 ---
-*Re-verified and extended 2026-11-21. Three permissive platforms added
-(Krayin MIT, Aureus ERP MIT, FinAegis Apache-2.0), two listicle license claims
-corrected, one archived repo caught, LATAM rails section added.*
+*Re-verified and extended 2026-11-22 (prior passes 2026-11-21, 2026-11-09).
+This pass: **Tazama** added and the KB's largest named gap closed with it;
+**Mojaloop** added as the switching half of the same build; **openIMIS** added
+with its non-standard Swiss-law rider read out of the file; insurance declared a
+**measured** gap rather than an open question; the grant-by-reference licence
+pattern documented across three unrelated projects.*

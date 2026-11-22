@@ -1,7 +1,7 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # Financial Services AI Agents — Curated Top Set
@@ -48,24 +48,33 @@ check does not work in this environment; the three channels above replace it.
   plus three copyright lines), `bacen/pix-api` (no file at all, but an Apache-2.0
   badge in the readme). Same classifier output, three different realities.
 
-## Agents and agentic platforms — 11 permissive, re-measured 2026-11-21
+## Agents and agentic platforms — 11 permissive, re-measured 2026-11-22
 
 | Agent | Repo | License | Stars | Last push | What it is |
 |---|---|---|---|---|---|
-| TradingAgents | https://github.com/TauricResearch/TradingAgents | Apache-2.0 | 123,303 | 2026-11-17 | Multi-agent LLM trading framework that simulates the roles of a trading firm (analyst, researcher, trader, risk manager) |
+| TradingAgents | https://github.com/TauricResearch/TradingAgents | Apache-2.0 | 123,393 | 2026-11-17 | Multi-agent LLM trading framework that simulates the roles of a trading firm (analyst, researcher, trader, risk manager) |
 | OpenBB | https://github.com/OpenBB-finance/OpenBB | Apache-2.0 | 75,600 | active | Open data platform for analysts, quants and AI agents — the de facto open market-data access layer |
-| ai-hedge-fund | https://github.com/virattt/ai-hedge-fund | MIT | 64,780 | 2026-11-09 | An AI hedge fund team: LLM agents modelled on named investor styles, debating and voting on positions |
-| qlib | https://github.com/microsoft/qlib | MIT | 50,455 | 2026-11-04 | AI-oriented quant investment platform from Microsoft; supervised learning, market-dynamics modelling and RL, with RD-Agent for automated research |
-| Kronos | https://github.com/shiyu-coder/Kronos | MIT | 48,035 | 2026-04-13 | Foundation model for "the language of financial markets" — pretrained on market series rather than text. **See the staleness flag below** |
-| ccxt | https://github.com/ccxt/ccxt | MIT | 44,940 | 2026-11-20 | Unified trading API across 100+ crypto exchanges and prediction markets (JS/TS, Python, C#, PHP, Go, Java, Rust) |
-| Vibe-Trading | https://github.com/HKUDS/Vibe-Trading | MIT | 38,621 | 2026-11-20 | Personal trading agent from HKU Data Science lab; natural-language strategy authoring |
-| FinGPT | https://github.com/AI4Finance-Foundation/FinGPT | MIT | 21,595 | 2026-11-18 | Open financial LLMs with released weights on HuggingFace; sentiment, NER and forecasting heads |
-| hummingbot | https://github.com/hummingbot/hummingbot | Apache-2.0 | 21,318 | 2026-11-20 | Framework to build and deploy high-frequency crypto market-making and arbitrage bots |
-| FinRL | https://github.com/AI4Finance-Foundation/FinRL | MIT | 17,152 | 2026-11-18 | Financial reinforcement learning library — environments, agents and backtests for RL-driven portfolio policies |
-| FinRobot | https://github.com/AI4Finance-Foundation/FinRobot | Apache-2.0 | 8,457 | 2026-10-24 | Agent platform for financial applications: equity research, report drafting and decision workflows over LLMs |
+| ai-hedge-fund | https://github.com/virattt/ai-hedge-fund | MIT | 64,796 | 2026-11-09 | An AI hedge fund team: LLM agents modelled on named investor styles, debating and voting on positions |
+| qlib | https://github.com/microsoft/qlib | MIT | 50,481 | 2026-11-04 | AI-oriented quant investment platform from Microsoft; supervised learning, market-dynamics modelling and RL, with RD-Agent for automated research |
+| Kronos | https://github.com/shiyu-coder/Kronos | MIT | 48,059 | 2026-04-13 | Foundation model for "the language of financial markets" — pretrained on market series rather than text. **See the staleness flag below** |
+| ccxt | https://github.com/ccxt/ccxt | MIT | 44,950 | 2026-11-20 | Unified trading API across 100+ crypto exchanges and prediction markets (JS/TS, Python, C#, PHP, Go, Java, Rust) |
+| Vibe-Trading | https://github.com/HKUDS/Vibe-Trading | MIT | 38,652 | 2026-11-21 | Personal trading agent from HKU Data Science lab; natural-language strategy authoring |
+| FinGPT | https://github.com/AI4Finance-Foundation/FinGPT | MIT | 21,661 | 2026-11-18 | Open financial LLMs with released weights on HuggingFace; sentiment, NER and forecasting heads |
+| hummingbot | https://github.com/hummingbot/hummingbot | Apache-2.0 | 21,337 | 2026-11-20 | Framework to build and deploy high-frequency crypto market-making and arbitrage bots |
+| FinRL | https://github.com/AI4Finance-Foundation/FinRL | MIT | 17,158 | 2026-11-18 | Financial reinforcement learning library — environments, agents and backtests for RL-driven portfolio policies |
+| FinRobot | https://github.com/AI4Finance-Foundation/FinRobot | Apache-2.0 | 8,461 | 2026-10-24 | Agent platform for financial applications: equity research, report drafting and decision workflows over LLMs |
 
 All 11 are MIT or Apache-2.0 — usable as a Globant starting point with no
 copyleft contamination.
+
+**24-hour drift, measured 2026-11-22:** +90 TradingAgents, +66 FinGPT, +31
+Vibe-Trading (which also pushed yesterday), +26 qlib, +24 Kronos, +19
+hummingbot, +16 ai-hedge-fund, +10 ccxt, +6 FinRL, +4 FinRobot. Nothing moved
+more than 0.3%, nothing changed licence, nothing was archived. **OpenBB could
+not be re-measured** — `search/repositories` returned the same false negative
+documented above, and `git ls-remote` confirms it live. One day is below this
+catalogue's noise floor; the pass value is in the two tiers added below, not in
+these numbers.
 
 ## Region-placed agents — new this pass
 
@@ -97,7 +106,7 @@ collapsing it into either one is wrong.
 
 | Asset | Repo | Declared | Filed | Stars | Measurement |
 |---|---|---|---|---|---|
-| Dexter | https://github.com/virattt/dexter | MIT, in the README body ("This project is licensed under the MIT License") | **No LICENSE file** | 27,975 | Probed 11 filename and case variants across HEAD, main and master; all 404 while `README.md` and `package.json` returned 200. `package.json` has **no** `license` field. SPDX from search: `None` |
+| Dexter | https://github.com/virattt/dexter | MIT, in the README body ("This project is licensed under the MIT License") | **No LICENSE file** | 27,988 | Probed 11 filename and case variants across HEAD, main and master; all 404 while `README.md` and `package.json` returned 200. `package.json` has **no** `license` field. SPDX from search: `None`. **Re-measured 2026-11-22: still no file, and the repo has now gone cold — last push 2026-09-23, two months** |
 | Pix API spec | https://github.com/bacen/pix-api | Apache-2.0, via a shields.io badge in `readme.md` | **No LICENSE file** | 3,010 | Root listing is `openapi.yaml`, `readme.md`, `changelog.md`, `.gitignore`, `.github/`. Sidebar shows no license name |
 
 **How to treat them.** A README sentence is a real statement of intent from the
@@ -105,8 +114,10 @@ copyright holder, but it is not a license text: there is no copyright line, no
 warranty disclaimer and no grant wording, and GitHub's classifier reads nothing.
 For Globant that means: fine to read, fine to prototype against, **not** clean
 enough to vendor into client deliverables until upstream adds the file or
-confirms in writing. Dexter at 27,975 stars is the one worth actually chasing —
-it is a one-line fix for the maintainer and it unblocks a top-20 asset.
+confirms in writing. Dexter at 27,988 stars was the one worth chasing —
+a one-line fix for the maintainer that unblocks a top-20 asset. **Downgraded
+2026-11-22:** the repo has not been pushed since 2026-09-23, so there may be no
+maintainer attention to chase. Treat it as read-only reference material.
 
 This also corrects a prior record: earlier rotation notes carried
 "Dexter (MIT, ~27k stars)" as settled fact. The license was never filed.
@@ -115,7 +126,7 @@ This also corrects a prior record: earlier rotation notes carried
 
 | Agent | Repo | License | Stars | Flag |
 |---|---|---|---|---|
-| Kronos | https://github.com/shiyu-coder/Kronos | MIT | 48,035 | **Last push 2026-04-13 — seven months cold**, while every other top row pushed within the last three weeks. It is a published foundation model (AAAI 2026), so a frozen artefact is defensible, but do not plan on upstream fixes |
+| Kronos | https://github.com/shiyu-coder/Kronos | MIT | 48,059 | **Last push 2026-04-13 — seven months cold**, while every other top row pushed within the last three weeks. It is a published foundation model (AAAI 2026), so a frozen artefact is defensible, but do not plan on upstream fixes |
 
 ## Reference lists, not agents
 
@@ -124,6 +135,110 @@ This also corrects a prior record: earlier rotation notes carried
 | awesome-ai-in-finance | https://github.com/georgezouq/awesome-ai-in-finance | CC0-1.0 | 6,700 | Curated index of LLM / DL strategies and tools in financial markets. A discovery feed, not something to build on |
 | awesome-open-finance-brasil | https://github.com/ciro-maciel/awesome-open-finance-brasil | CC0-1.0 | 0 | Open Finance and Open Insurance in Brazil: BCB norms, official specs, open data, aggregators, open code. **0 stars**, updated 2026-11-10. The best single entry point to the LATAM regulatory corpus found this pass |
 | awesome-pix | https://github.com/ciro-maciel/awesome-pix | CC0-1.0 | 1 | Pix for integrators: Central Bank norms, APIs, SDKs, providers, in Portuguese plus 14 languages. Companion to the above |
+
+## Agentic payment and commerce protocols — the tier this KB did not have (2026-11-22)
+
+**How it was missed, stated plainly.** `intel/trends.md` §7 concluded from
+`finance AI agent created:>2026-08-01 stars:>=80` returning `total_count: 4`
+that new financial-agent creation "has largely stopped at any scale that
+matters". **That query was re-run today and returns exactly the same 4 repos** —
+the measurement replicates. The inference did not survive. An entire permissive,
+actively-maintained category worth **more than 15,000 stars** was invisible to
+it, because none of these repos contain the phrase "finance AI agent" and all
+but one were created before the date window. The metric answered the question
+asked; the question was vocabulary-shaped. **Discovery debt, not an ecosystem
+stall, was the dominant term.**
+
+This is the layer that moves money when an agent decides to spend. It is where
+"agentic money" in `intel/trends.md` §3 stopped being a narrative.
+
+| Asset | Repo | License | Stars | Created | Last push | Layer |
+|---|---|---|---|---|---|---|
+| x402 | https://github.com/x402-foundation/x402 | Apache-2.0 | 6,820 | 2025-02-21 | 2026-11-20 | **Settlement.** HTTP `402 Payment Required` turned into a working payment protocol; a facilitator settles. The neutral-governance home of the spec |
+| AP2 | https://github.com/google-agentic-commerce/AP2 | Apache-2.0 | 3,283 | 2025-05-30 | **2026-06-17** | **Authorization.** Agent Payments Protocol: signed Intent, Cart and Payment mandates that carry the user's authority to the merchant. **See the staleness finding below** |
+| Solana Pay | https://github.com/solana-foundation/pay | MIT | 1,810 | 2021-10-19 | 2026-11-09 | **Client.** CLI and spec that now covers agentic payments (x402, MPP, AP2) as well as its original QR/transfer flow |
+| ACP | https://github.com/agentic-commerce-protocol/agentic-commerce-protocol | Apache-2.0 | 1,609 | 2025-09-29 | 2026-07-18 | **Checkout.** Interaction model connecting an agent to a merchant's existing checkout. Four months since last push |
+| AgentKit | https://github.com/coinbase/agentkit | Apache-2.0 (short form) | 1,359 | — | 2026-11-10 | **Wallet/tooling.** Gives an agent on-chain capabilities. SPDX reads `NOASSERTION`; see the licence note below |
+| a2a-x402 | https://github.com/google-agentic-commerce/a2a-x402 | Apache-2.0 | 572 | — | 2026-11-11 | **Bridge.** x402 as an A2A extension, so agent-to-agent messaging can carry payment. The only *active* repo in Google's agentic-commerce org |
+| AgentPay SDK | https://github.com/worldliberty/agentpay-sdk | MIT | 460 | — | 2026-11-16 | **Wallet/tooling.** MCP server plus SDK: wallets, x402 payments, market data |
+| Trusted Agentic Commerce | https://github.com/forter/trusted-agentic-commerce-protocol | MIT | 180 | — | 2026-07-08 | **Trust.** Authentication and payload encryption between agent, merchant and processor. Vendor-authored (Forter), four months cold |
+| agent-payment-node | https://github.com/nuanu-ai/agent-payment-node | MIT | 73 | — | 2026-11-19 | **Runtime.** Local-first payment runtime for agents |
+| agentcash-router | https://github.com/Merit-Systems/agentcash-router | MIT | 32 | — | 2026-07-20 | **Routing.** Routes agent payments across facilitators. Small and quiet |
+| awesome-agentic-payments | https://github.com/bitrefill/awesome-agentic-payments | CC0-1.0 | 27 | — | 2026-06-29 | **Index, not code.** Curated list of the protocols and SDKs in this tier |
+
+Eleven rows, all permissive, every licence read byte-for-byte today.
+
+### The measurement that changes which one you build on
+
+**AP2 (3,283 stars) has not been pushed since 2026-06-17 — five months.
+x402 (6,820 stars) was pushed two days ago.** Both are Apache-2.0 and both are
+in every "agentic payment stack" explainer as co-equal layers. They are not
+co-equal by maintenance.
+
+Two qualifiers, because this is a recommendation and not a verdict:
+
+- Google's agentic-commerce org has **one other repo and it is active**:
+  `a2a-x402`, pushed 2026-11-11. So the organisation is working; the AP2
+  reference repository specifically is not where the work is landing.
+- A protocol specification can legitimately freeze once published, the same
+  argument this KB accepts for Kronos. The difference is that AP2 is sold as an
+  implementable stack with SDKs, and SDKs rot.
+
+**Practical reading for an engagement:** take the *mandate shape* from AP2 — an
+intent mandate, a cart mandate and a payment mandate, each signed — because that
+is the right model for "what did the human actually authorise", and it is
+exactly the artefact MAS's SAFR and OSFI's 2026 bulletin ask you to produce.
+Take the *running code* from x402 and `a2a-x402`.
+
+### Hard exclusion, measured — a LICENSE file that is not a licence
+
+| Asset | Repo | What the file contains | Verdict |
+|---|---|---|---|
+| Visa Trusted Agent Protocol | https://github.com/visa/trusted-agent-protocol | `LICENSE.md` is **398 bytes** and grants nothing: "By using, downloading, or installing this code, you agree to the terms and conditions contained in the Visa Developer Center Terms of Use (including the related Visa Trusted Agent Protocol Product Terms)." | **Not open source.** 223 stars, no push since 2025-10-28. Read the spec; do not vendor the code |
+
+This is a **new failure shape for this KB** and the inverse of the
+`virattt/dexter` case. There, a permissive grant existed in prose with no file.
+Here a file exists, in the expected place, with the expected name — and it is a
+click-through pointer to commercial terms. SPDX reports `NOASSERTION` for both.
+A pipeline that treats "has a LICENSE file" as evidence passes this row.
+
+### Licence note — grant by reference is a third evidence tier
+
+`coinbase/agentkit` ships `LICENSE.md` at **571 bytes**: the Apache-2.0 title,
+a copyright line, and the standard "Licensed under the Apache License,
+Version 2.0 … You may obtain a copy of the License at
+http://www.apache.org/licenses/LICENSE-2.0" paragraph. That is a real and
+conventional Apache-2.0 grant — the full terms are incorporated by reference —
+but GitHub's classifier needs the full text and so reports `NOASSERTION`.
+
+For Globant this is **usable**, with one process consequence: a vendoring step
+that copies `LICENSE*` into a client deliverable copies an incomplete file.
+Attach the full Apache-2.0 text yourself. `mojaloop/*` (756 B) uses the same
+pattern; see `verticals/solutions.md`.
+
+## Back-office agent suites — new 2026-11-22
+
+`intel/market.md` has said since 2026-11-09 that four of the top five
+financial-services AI use cases are back-office, and that a back-office pitch is
+pitching where the budget already is. The KB had **no back-office agent asset**
+to point at. It does now, and the largest one is the fourth most-starred repo in
+this entire knowledge base.
+
+| Agent suite | Repo | License | Stars | Last push | What it is |
+|---|---|---|---|---|---|
+| Claude for Financial Services | https://github.com/anthropics/financial-services | Apache-2.0 | 41,441 | 2026-11-12 | Ten named workflow agents plus the skills and connectors under them. Back-office set: **GL Reconciler** (finds breaks, traces root cause, routes for sign-off), **Month-End Closer** (accruals, roll-forwards, variance commentary), **Statement Auditor**, **Valuation Reviewer**, **KYC Screener**. Front-office set: Pitch Agent, Model Builder (DCF/LBO/3-statement in Excel), Earnings Reviewer, Market Researcher, Meeting Prep. Apache-2.0 verified at 11,358 B |
+| agent-safe-pipeline | https://github.com/decionis/agent-safe-pipeline | Apache-2.0 | 661 | 2026-11-21 | Gateway that puts an authorization decision in front of **every** action an agent takes. Created 2026-08-13 and pushed yesterday. This is the missing piece in every "keep the agent out of the write path" recommendation in this KB — the enforcement point, rather than the discipline |
+| CloddsBot | https://github.com/alsk1992/CloddsBot | MIT | 3,123 | 2026-11-13 | Autonomous trading agent across prediction markets and 1,000+ venues. MIT verified at 1,065 B. Listed for completeness as a *front-office* counterweight; nothing in this KB is authorised to move money |
+
+**What the first row is and is not.** It is a set of prompt-and-skill agent
+definitions with connectors — not a platform, not a model, and not a ledger. Its
+value to a studio engagement is that the workflow decomposition has already been
+done by people who sell into these desks, and it is Apache-2.0, so the
+decomposition can be lifted and re-implemented against a client's own stack and
+its own model provider. Read it as a **requirements document that happens to
+run**. The repository states its agents stage output for human sign-off and do
+not execute transactions or post to a ledger — which is the same boundary
+`verticals/solutions.md` recommends, arrived at independently.
 
 ## What is deliberately NOT here
 
@@ -152,6 +267,12 @@ This also corrects a prior record: earlier rotation notes carried
   Every figure in this file was measured, not quoted.
 
 ---
-*Re-measured and extended 2026-11-21 (prior full rewrite 2026-11-09). 11 permissive
-global rows re-verified, 4 region-placed rows added, 2 declared-but-not-filed
-licenses newly separated out, 1 staleness flag raised.*
+*Re-measured and extended 2026-11-22 (prior passes 2026-11-21, 2026-11-09).
+This pass: 10 of 11 global rows re-measured for drift; a new **agentic payment
+and commerce protocol** tier of 11 permissive rows added, which the KB's own
+discovery metric could not see; a **back-office agent suite** tier added,
+including the 41,441-star `anthropics/financial-services`; one hard exclusion
+measured (`visa/trusted-agent-protocol` — a LICENSE file that grants nothing);
+"grant by reference" separated out as a third licence-evidence tier; Dexter
+downgraded from "chase the maintainer" to "read-only reference" on a measured
+two-month silence.*

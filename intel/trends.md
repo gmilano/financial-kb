@@ -1,14 +1,16 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # Financial Services AI — Current Trends
 
-> Researched 2026-11-09, re-verified and corrected 2026-11-21. Repo figures in
-> this file were measured directly (method in `agents/top.md`), not quoted from
-> roundups.
+> Researched 2026-11-09, re-verified and corrected 2026-11-21, extended
+> 2026-11-22. Repo figures in this file were measured directly (method in
+> `agents/top.md`), not quoted from roundups. **§7 is partly superseded by §13:
+> its measurement replicates exactly and its conclusion about the ecosystem does
+> not.**
 
 ## 1. The pilot-to-production line has been crossed — unevenly
 
@@ -177,8 +179,133 @@ any AML engagement, which is that you cannot test on real customer data — and
 `kingdee/lingee-bench` (Apache-2.0, 190 stars) evaluates whether agents deliver
 business value at all.
 
+## 12. The agentic payment stack is the part of "agentic money" that shipped
+
+§3 of this file described "agentic money" as a consultancy narrative and noted
+the measured counterweight: every permissive open-banking asset in this KB is
+read-only. That was true of the *open-banking* corner and wrong about the
+market. A permissive, multi-vendor **payment protocol stack** has been shipping
+for eighteen months and this KB had none of it.
+
+Three layers, each with a live Apache-2.0 or MIT repository (full table in
+`agents/top.md`):
+
+1. **Authority** — Google's **AP2** (3,283 stars): signed Intent, Cart and
+   Payment mandates that record what the human actually authorised.
+2. **Settlement** — **x402** (6,820 stars), now under neutral governance: HTTP
+   `402 Payment Required` as a working payment protocol with facilitators.
+3. **Checkout** — **ACP** (1,609 stars): connecting an agent to a merchant's
+   existing checkout.
+
+Around them: wallets and tooling (`coinbase/agentkit` 1,359,
+`worldliberty/agentpay-sdk` 460), routing, local runtimes, and a CC0 index.
+
+**The measurement that matters more than the taxonomy:** AP2's repository has
+**not been pushed since 2026-06-17** while x402 was pushed two days ago. The
+layer everyone quotes as the authorisation standard is the quiet one. Take the
+mandate *shape* from AP2 — it is the right answer to "what did the human
+authorise", and it is the artefact MAS SAFR and OSFI's July 2026 bulletin both
+ask for — and take the running code from x402.
+
+**Security caveat, from the literature rather than from vendors.** Academic
+work on x402 reports practical attacks and concludes it is not yet secure by
+construction, and a red-team analysis of AP2 makes the sharper point for
+anything agentic: **cryptographic signing protects execution correctness while
+prompt injection manipulates the reasoning that happens before the signature**.
+A signed mandate proves what was authorised, not that the authorisation was
+sound. This is the argument for an enforcement point in front of the agent —
+`decionis/agent-safe-pipeline` (Apache-2.0, 661 stars) is the first such
+component in this KB.
+
+## 13. Discovery debt is vocabulary-shaped — measured twice in one pass
+
+§7 of this file inferred, from `finance AI agent created:>2026-08-01
+stars:>=80` returning `total_count: 4`, that new financial-agent creation had
+"largely stopped at any scale that matters".
+
+Re-run on 2026-11-22: **the same query returns the same 4 repositories.** The
+measurement replicates perfectly. The inference does not survive, because two
+large permissive categories were invisible to it:
+
+- **Agentic payments** (§12) — over 15,000 stars across eleven repos, none of
+  which contains the phrase "finance AI agent".
+- **Real-time AML** — Tazama, a Linux Foundation platform with 25+ Apache-2.0
+  repositories pushed this week, which this KB had declared **verified open by
+  function** as its biggest build-vs-buy gap. Three passes of queries said
+  "AML" and "transaction monitoring"; the project says **financial crime risk
+  management (FRMS)**.
+
+Both were missed the same way, and neither was a search-effort problem. The
+rule that falls out, and that belongs in every industry KB in this family:
+
+> A keyword metric measures the vocabulary, not the world. Before concluding
+> that a category is empty, re-run the query **in the words the practitioners
+> in that category use about themselves** — and when a gap has survived three
+> passes, suspect the query before you believe the gap.
+
+A corollary for this KB specifically: the same failure may be hiding Canadian
+rules, where OSFI reportedly writes **"autonomous decision making"** rather than
+"agentic AI". A keyword sweep for "agentic" over Canadian regulation would
+return a confident and false zero.
+
+## 14. Licence evidence now has five tiers, not two
+
+Three passes have turned this from a footnote into a classification. Every tier
+here is held by a real asset measured in this KB:
+
+| Tier | What is on disk | Exemplar | Verdict |
+|---|---|---|---|
+| 1. Filed licence | Full canonical text | 50+ rows in this KB | Use it |
+| 2. Grant by reference | 400–800 B: copyright line plus "Licensed under the Apache License, Version 2.0 … obtain a copy at …" | `coinbase/agentkit` (571 B), every `mojaloop/*` (756 B) | **Valid grant.** Classifier says `NOASSERTION`. Attach the full text when vendoring |
+| 3. Machine-readable identifier, no file | `SPDX-License-Identifier` headers in source plus `"license"` in `package.json` | `tazama-lf/tms-service`, `typology-processor`, `event-director` | **Valid and standards-compliant.** Strongest of the no-file cases; raise it upstream anyway |
+| 4. Prose only | A sentence in the README, nothing machine-readable | `virattt/dexter` (27,988 stars, and now cold since 2026-09-23), `bacen/pix-api` (badge) | Read and prototype; **do not vendor** |
+| 5. A LICENSE file that is not a licence | 398 B pointing at a vendor's commercial Terms of Use | `visa/trusted-agent-protocol` | **Not open source.** Hard exclusion |
+
+Tiers 2, 3 and 5 all report SPDX `NOASSERTION`. **Two of them are safe and one
+is a trap**, so `NOASSERTION` carries no information at all until the file is
+opened — and tier 5 is the one that defeats a pipeline checking merely that a
+LICENSE file exists.
+
+A refinement to the byte-count checksum, also measured this pass: both x402
+repositories read **11,324 B** against a canonical Apache-2.0 of 11,357–11,358.
+Diffed with leading whitespace normalised, the difference is **zero** — 33 bytes
+of indentation. **Below canonical means whitespace; above canonical means
+appended terms; 400–800 B means a grant by reference.** Three directions, three
+meanings.
+
+## 15. Agent autonomy is now measured, and it is ~2%
+
+The single most useful number this pass, because it is the one a client's board
+will ask about. From the BoE/FCA survey published 26 October 2026: about **80%
+of responding firms have AI agents in production** — and about **2% run agents
+with broad autonomy**. Generative AI is 56% of reported AI systems, up from 17%
+for foundation models in 2024.
+
+Three independent confirmations that the ceiling is deliberate, not temporary:
+
+- **ECB, November 2026 FSR:** euro-area banks are in operational deployment for
+  generative AI while **agentic AI is largely pilot or planning**, with autonomy,
+  model drift and unexplainable *actions* named as the distinct risks.
+- **OSFI, July 2026 bulletin:** treat AI outputs as **decision inputs**, keep
+  human oversight for high-impact decisions, approval checkpoints before
+  high-impact actions.
+- **LATAM, in production:** Brazilian and Mexican open-banking initiators
+  (Iniciador, Bipa, Fintoc) require the customer to confirm **each** payment by
+  biometrics or in-app, even where agent-initiated payment already works at
+  scale.
+
+A supervisor, a central bank, a survey and a live market on three continents
+all land on **agent proposes, human releases**. The commercial consequence is
+that the sellable unit is not autonomy, it is the **approval rail**: the
+mandate record, the enforcement gateway, the audit trail per decision. That is
+unglamorous, scoped, fundable work — and every component for it in this KB is
+permissively licensed.
+
 ---
-*Researched 2026-11-09; re-verified, corrected and extended 2026-11-21. The
-regulatory dates in section 5 supersede the 2026-11-09 revision. Sources are
-largely vendor and bank thought-leadership; the CCAF-led survey is the one
-rigorous dataset and is cited as such.*
+*Researched 2026-11-09; re-verified and corrected 2026-11-21; sections 12-15
+added 2026-11-22. The regulatory dates in section 5 supersede the 2026-11-09
+revision; section 13 supersedes section 7's conclusion. Sources are largely
+vendor and bank thought-leadership — with three exceptions now: the CCAF-led
+survey, the BoE/FCA survey of 26 October 2026, and ECB/EBA supervisory
+publications. Those three are the rigorous datasets in this KB and are cited as
+such.*

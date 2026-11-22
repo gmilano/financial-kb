@@ -1,16 +1,21 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-21
+updated: 2026-11-22
 ---
 
 # Financial Services AI — Market Intelligence
 
-> Researched 2026-11-09, **re-verified and corrected 2026-11-21**. The
-> correction this pass is material and is flagged in place: the EU AI Act
+> Researched 2026-11-09, re-verified and corrected 2026-11-21, **extended
+> 2026-11-22**. Two corrections are flagged in place. (1) The EU AI Act
 > high-risk deadline that the 2026-11-09 revision called "the strongest
-> near-term regional play in this whole file" **has been deferred by 16 months**.
-> See the EMEA section.
+> near-term regional play in this whole file" **has been deferred by 16 months**
+> — see the EMEA section. (2) The 2026-11-21 conclusion that EMEA adoption
+> figures **do not exist publicly** is withdrawn: they are published by
+> supervisors rather than market researchers, and both the UK and euro-area
+> numbers are now in the EMEA section. Canada, declared a twice-measured gap
+> yesterday, is closed in the North America section and turns out to hold the
+> strictest binding model-risk rule in the Americas.
 
 ## The one number that matters
 
@@ -93,6 +98,67 @@ and it is what the repos in this KB are for.
   intermediary blogs and conflicts with the CCAF survey's measured 52% adopting
   and under 25% at advanced maturity.
 
+#### Canada — the twice-measured gap, closed 2026-11-22
+
+The 2026-11-21 revision recorded Canada as a **twice-measured gap** and
+prescribed the fix: "OSFI should be targeted directly by name in a future pass
+rather than through regional queries, which is what has failed twice." That was
+done this pass and it worked immediately. The gap was never about Canada being
+quiet; it was about the query.
+
+- **Guideline E-23 (Model Risk Management) takes effect 1 May 2027** and
+  extends model-risk requirements to **every AI and machine-learning model** at
+  federally regulated financial institutions, **including vendor-supplied
+  models**. Reported requirements: an enterprise-wide model inventory,
+  risk-based governance, lifecycle documentation and validation, and oversight
+  of third-party models. Published 11 September 2025.
+- **Guideline B-10 (Third-Party Risk)** applies when an institution brings in
+  external AI services, so outsourcing cannot be used to thin out risk
+  management or resilience.
+- **A Technology Risk Bulletin on "Generative and Agentic Artificial
+  Intelligence: Implications for Technology, Cyber Security, and Operational
+  Resilience"** was issued in **July 2026**. It is supervisory guidance rather
+  than a new binding guideline: it maps existing obligations (B-13, E-21, B-10,
+  with model risk pointed at E-23) onto AI-specific scenarios, and it asks
+  institutions to **treat AI outputs as decision inputs, keep human oversight
+  for high-impact decisions, and apply approval checkpoints before high-impact
+  actions**.
+- OSFI's semi-annual risk outlook now treats **frontier AI as a growing source
+  of cyber, third-party and reputational risk** while describing the system as
+  resilient, and the regulator is reported to be weighing whether Canada's
+  financial system needs an **AI safety code** setting a minimum safety level
+  across supervised institutions. Commentary also expects more aggressive use of
+  administrative monetary penalties in 2026.
+- One secondary reading worth checking against the text: E-23 reportedly avoids
+  the term "agentic AI" and uses **"autonomous decision making"** and
+  **"autonomous re-parametrization"** instead. If accurate, keyword searches for
+  "agentic" against Canadian rules will return a false negative — the same
+  vocabulary failure that hid Tazama from this KB for three passes.
+
+**Sourcing caveat, stated because it matters for advice.** Everything above is
+from law-firm, consultancy and vendor commentary; **OSFI's own pages did not
+appear in the results**, and this environment cannot reach many primary hosts
+(see the EMEA note below). The dates and the 1 May 2027 effective date are
+consistent across independent sources; verify against osfi-bsif.gc.ca before
+putting any of it in a client deliverable.
+
+**The consequence is the most useful thing in this section.** The North
+American regulatory border now runs straight through model risk, and the two
+sides moved in opposite directions in the same year:
+
+| | United States | Canada |
+|---|---|---|
+| Model-risk instrument | SR 26-2 / OCC Bulletin 2026-13, 17 April 2026 | Guideline E-23, effective 1 May 2027 |
+| Generative and agentic AI | **Excluded from scope** | **In scope** — all AI/ML models, including vendor models |
+| Agent-specific supervisory text | None | Technology Risk Bulletin, July 2026 |
+| Practical effect | No examiner playbook to inherit, no safe harbour | A dated, binding programme with 17 months to run |
+
+A North American client with operations on both sides of the border cannot run
+one model-governance programme and call it done — and the Canadian requirement
+is the stricter one, so **building to E-23 satisfies both**. That is a concrete,
+schedulable, fundable engagement with a date attached, and it is the only one in
+North America that has a date at all.
+
 **Opportunity:** adverse-action reason generation that is defensible to an
 examiner — the ECOA duty survives even where disparate-impact liability does not.
 A 50-state patchwork also makes jurisdiction-aware model governance a sellable
@@ -151,6 +217,69 @@ with one.
   financial-services requirements already exist — so the compliance work
   consolidates rather than doubling. For high-risk AI in finance the **national
   financial supervisor is generally the market surveillance authority**.
+
+#### EMEA adoption numbers — the "does not exist publicly" gap, closed 2026-11-22
+
+The 2026-11-21 revision closed with: *"Four searches across two passes have
+produced regulation in depth and no reliable EMEA-specific adoption statistics…
+An informed gap: the EMEA adoption number does not appear to exist publicly at
+region-segmented granularity."* **That conclusion was wrong, and the correction
+is instructive: the numbers are published by supervisors, not by market
+researchers, so a market-research query will never find them.**
+
+**United Kingdom — Bank of England / FCA, *Artificial intelligence in UK
+financial services 2026*, published 26 October 2026.** The third edition of a
+survey that is the single best region-segmented AI dataset in this file:
+
+| Measure | 2026 | Prior |
+|---|---|---|
+| Firms using AI | **86%** | 75% (2024 survey) |
+| Respondents | 196 total; 105 on the full questionnaire | — |
+| Firms with **AI agents in production** | **~80%** (of full-survey respondents), mostly decision support | not asked in 2024 |
+| Agents running with **broad autonomy** | **~2%** | — |
+| Generative AI as a share of reported AI systems | **56%** | 17% foundation models (2024) |
+| Firms with firm-wide AI policies | 94% (full-survey) | — |
+| Firms with centralised AI/model-risk governance forums | 84% | — |
+| Citing information security and operational resilience as the main third-party AI obstacle | 40% | — |
+
+Two figures that look like the headline but are not: among short-form
+respondents the adoption figure is **73%**, and for small firms specifically it
+is also **73%**. Quoting 86% at a small firm overstates its peer group by 13
+points. Sources also disagree on two secondary figures — "every responding UK
+and international bank uses AI, 93% of insurers", and third-party share of key
+systems at 53% — which are recorded here as **unconfirmed**.
+
+**Euro area — ECB.** A February 2026 ECB Banking Supervision speech states that
+**more than 85% of significant institutions already use AI in some form**, with
+adoption rising year on year. The **November 2026 Financial Stability Review**
+adds the maturity split: euro-area banks have moved from experimentation to
+operational deployment, mostly generative AI, while **agentic AI remains
+largely at pilot or planning stage**, with banks naming autonomy, model drift
+and lack of explainability of *actions* as the distinctly agentic risks. The
+ECB's Supervisory Board is reported to have asked significant institutions for
+an **action plan on AI-related risk by 31 October 2026** — a dated supervisory
+demand that has already fallen due.
+
+**EBA / operational resilience.** The share of banks reporting no attack that
+resulted in, or could have resulted in, a major ICT incident **rose to 56% in
+H1 2026 from 49%** in the previous half; roughly **one in five bank cyber
+incidents originates at a third-party provider**. That second number is the
+DORA third-party argument in one statistic, and it is a supervisor's number
+rather than a vendor's.
+
+**Why this is better evidence than the global survey.** Three independent
+supervisory sources in two jurisdictions converge on the same picture: adoption
+**85–86%**, agents widely present but **~2% autonomous**, third parties as the
+binding constraint. The UK 86% and the euro-area 85% are measured on different
+populations and agree anyway.
+
+**Measurement caveat, declared.** `bankofengland.co.uk` **does not resolve from
+this environment** — it is outside the session's allowed network domains — so
+the primary PDF could not be opened. Every figure above is from secondary
+reporting, four independent outlets agreeing on the headline numbers. This is a
+**declared gap, not a primary verification**, and it should be re-run from a
+session that can reach the primary host before any figure is put in front of a
+client.
 
 **Opportunity, restated after the deferral.** The honest read is that the
 time-boxed compliance scramble this file previously sold has been pushed to
@@ -226,6 +355,52 @@ is better qualified, not weaker:
   whether agents deliver business value). Both in `agents/top.md` and
   `repos/foundations.md`.
 
+#### Japan and India — added 2026-11-22
+
+Both were effectively absent from this file, which had APAC meaning Singapore
+plus a sentence each on Hong Kong and Australia.
+
+**Japan — FSA, technology-neutral and therefore easy to under-rate.** The
+FSA's **AI Discussion Paper v1.1 is dated 3 March 2026**. Japan has
+deliberately **not** written finance-specific generative-AI rules; it applies
+existing conduct and risk rules in a technology-neutral way. The two positions
+that bind in practice:
+
+- **AI-driven advice does not reduce the firm's suitability obligation or its
+  duty to explain.** A robo-adviser or an agent is the firm acting, not a
+  third party the firm can point at.
+- Law-firm reviews read **agentic AI as the next real test** of that integrated
+  model, with customer-facing generative and agentic systems in 2026–2027 as
+  the proving ground. One secondary source reports the FSA also expecting
+  **explainability for AI-driven credit scoring**; it rests on a single
+  unconfirmed source and is recorded as unverified.
+
+The commercial point: in Japan there is no AI compliance deadline to sell
+against, so the sale is the **evidence** that an existing duty is still being
+met once an agent is in the loop — suitability files, explanation records, and
+the trail showing which agent action produced which customer outcome.
+
+**India — RBI, framework published, agents still open.** The RBI's **FREE-AI
+(Framework for Responsible and Ethical Enablement of Artificial Intelligence)
+committee report was finalised in August 2025** and is the reference document
+for supervised entities. Alongside it sit long-standing **payment-data
+localisation** expectations, which constrain where an agent stack may run far
+more concretely than any AI principle does. One report that the RBI plans to
+make **AI-based bank-account verification mandatory** across banks could not be
+confirmed and is recorded as unverified.
+
+This sharpens rather than replaces the finding this file already carried:
+**NPCI is still examining a framework for AI agents** while Singapore has
+published one. So India has an AI framework (FREE-AI) and no *agent* framework,
+and the UPI–PayNow linkage means somebody has to reconcile that with MAS's
+published position.
+
+**Wider APAC, for completeness:** HKMA's generative-AI principles (2024) and
+sandbox, ASIC Report 798 (October 2024), and MAS's FEAT principles and Veritas
+toolkit remain the other named instruments. Reports that regulators are
+collecting industry input on extending supervision to **multi-agent systems**
+are secondary and unconfirmed.
+
 **Opportunity:** Singapore is the reference implementation. Build an
 SAFR-aligned agentic control layer once in Singapore and it becomes the template
 to carry into jurisdictions still drafting — India above all, where the
@@ -288,6 +463,50 @@ and fundable.
   tooling. The figure is vendor-sourced and unverified, but the direction is
   corroborated across LATAM fraud coverage.
 
+#### Agentic payments are already live in LATAM — and the region chose the safe shape (2026-11-22)
+
+The most commercially relevant LATAM finding this pass is not regulatory.
+
+- **Mastercard is reported to have completed agent-initiated payments with 17
+  banks and processors in the region in March 2026.** Vendor-adjacent reporting,
+  not a primary source, and recorded as such — but if even directionally right
+  it means agentic payment is in production in LATAM while EMEA and North
+  America are still writing rules about it.
+- **The design pattern the region settled on is per-payment human confirmation.**
+  Open-banking initiators **Iniciador** and **Bipa** in Brazil and **Fintoc** in
+  Mexico are reported to require the person to confirm **each** payment with
+  biometrics or inside their own banking app. The agent assembles the payment;
+  the human releases it.
+
+**Three sources, three continents, one answer.** That LATAM pattern is the same
+boundary as the BoE/FCA measurement that **~2%** of UK firms let agents run with
+broad autonomy, and the same as OSFI's July 2026 bulletin asking for approval
+checkpoints before high-impact actions. The market, the supervisors and the
+engineers have independently converged on *agent proposes, human releases*. A
+pitch that promises autonomous payment execution is arguing against all three.
+
+**Regulatory status, updated:**
+
+- **Brazil:** the BCB's head of regulation is reported to have said there will
+  be **no formal central-bank AI rules before the end of 2026**. That is
+  consistent with everything this file already records and it is useful
+  negatively: in Brazil the binding surface remains the Open Finance
+  explainability requirement and the BCB's model-risk expectations, not a
+  forthcoming AI rulebook.
+- **Chile — sources conflict and the conflict is left visible.** One LATAM
+  technology newsletter refers to a general risk-tiered AI law approved in
+  October 2025; a law-firm outlook states that Chilean law provides **no
+  comprehensive statutory regime specifically addressing AI in financial
+  services**. Weight the counsel view, as this file did for Mexico. What is not
+  in dispute: the **Fintech Law and the CMF's NCG 514** are in force, and one
+  assessment is that Chile now has **more regulation in place than capacity to
+  implement it** — which is itself a market signal for delivery help.
+- **Adoption, secondary:** Finnovista's Fintech Radar 2026 is cited for **77% of
+  Mexican fintechs using AI** — the same figure this file already flagged as
+  vendor-cited, now attributed to a named study. A Febraban/Deloitte survey is
+  reported to put **generative AI as a priority for 84% of Brazilian banks**,
+  with sector technology budgets up 8% year on year. Both are second-hand.
+
 **Opportunity:** three distinct ones. (1) Brazil's explainable-AI requirement
 inside Open Finance plus the BCB's explainability expectation on credit **and
 fraud** decisions is a compliance surface that already exists and already binds
@@ -319,13 +538,16 @@ EMEA's PSD2 at official-source level. Details and licence caveats in
 
 | Region | Binding AI-in-finance rules | Hard date to sell against | Posture |
 |---|---|---|---|
-| EMEA | Yes — EU AI Act Art.50 + DORA + CCD | **CCD in force 20 Nov 2026**; watermarking 2 Dec 2026; **Annex III deferred to 2 Dec 2027** | Strictest, but the credit-scoring deadline moved — demand is now DORA- and CCD-driven |
-| APAC | Supervisory expectation — MAS Guidelines + SAFR (not a statute) | Issued 7 Oct 2026, **implementation to 7 Oct 2027** | Most mature on *agentic* specifically |
-| North America | Voluntary federally; binding at state level | Colorado 30 Jun 2026 | Permissive, fragmented, examiner-driven |
-| LATAM | Mostly no; Peru and Brazil Open Finance excepted | Peru 22 Jan 2026 (in force) | Rails-led, not rules-led |
+| EMEA | Yes — EU AI Act Art.50 + DORA + CCD | **CCD in force 20 Nov 2026**; watermarking 2 Dec 2026; **Annex III deferred to 2 Dec 2027**; ECB AI action plans were due 31 Oct 2026 | Strictest, but the credit-scoring deadline moved — demand is now DORA- and CCD-driven. Adoption **86% UK / >85% euro area**, agents ~2% autonomous |
+| APAC | Supervisory expectation — MAS Guidelines + SAFR (not a statute); Japan FSA technology-neutral; India RBI FREE-AI | Issued 7 Oct 2026, **implementation to 7 Oct 2027** | Most mature on *agentic* specifically. Japan sells evidence, not deadlines; India has an AI framework and no agent framework |
+| North America — US | Voluntary federally; binding at state level | Colorado 30 Jun 2026 | Permissive, fragmented, examiner-driven; genAI and agentic **excluded** from model risk |
+| North America — Canada | **Yes — OSFI Guideline E-23, all AI/ML models incl. vendor models** | **E-23 effective 1 May 2027**; agentic bulletin July 2026 | The strictest binding model-risk regime in the Americas. Build to E-23 and the US is covered |
+| LATAM | Mostly no; Peru and Brazil Open Finance excepted; BCB signals no AI rules before end-2026 | Peru 22 Jan 2026 (in force) | Rails-led, not rules-led — and **already running agent-initiated payments** with per-payment human confirmation |
 
 **No region returned nothing.** Every one of the four produced at least one
-dated, binding or near-binding instrument.
+dated, binding or near-binding instrument — and after this pass, every one of
+the four also has at least one **measured adoption or deployment number**, which
+was not true yesterday.
 
 ### Gap register — what closed this pass and what is still open
 
@@ -347,24 +569,41 @@ dated, binding or near-binding instrument.
 - **APAC regional detail** beyond Singapore: HKMA and APRA posture, the MAS
   implementation timeline, third-party accountability.
 
+**Closed 2026-11-22 — both by changing the query, not by searching harder:**
+
+- **~~Canada.~~** Closed. Naming OSFI directly, as the previous pass
+  prescribed, returned E-23, B-10 and the July 2026 agentic bulletin on the
+  first query. Canada turns out to have the **strictest binding model-risk
+  regime in the Americas**, with a 1 May 2027 effective date. See the North
+  America section.
+- **~~EMEA adoption percentages.~~** Closed, and the stated conclusion that the
+  number "does not appear to exist publicly" is withdrawn. It exists and is
+  published by **supervisors** — BoE/FCA (86%, 26 October 2026) and the ECB
+  (>85% of significant institutions) — which is why two passes of
+  market-research-shaped queries never found it. See the EMEA section.
+- **Japan and India** added to APAC, which previously meant Singapore plus two
+  sentences.
+
 **Still open, stated plainly:**
 
-- **Canada.** Searched again this pass as part of North America and it again
-  produced effectively nothing; the material is overwhelmingly US-federal and
-  US-state. This is now a **twice-measured gap**, not an untried one. OSFI
-  should be targeted directly by name in a future pass rather than through
-  regional queries, which is what has failed twice.
 - **Named UPI-ecosystem players** with AI-specific payment products — still not
-  found. NPCI's own position (still examining an agent framework) is the only
-  firm India data point.
-- **EMEA adoption percentages.** Four searches across two passes have produced
-  regulation in depth and **no reliable EMEA-specific adoption statistics**. The
-  CCAF global figures remain the only rigorous numbers in this file. An informed
-  gap: the EMEA adoption number does not appear to exist publicly at
-  region-segmented granularity.
+  found, third pass. NPCI's position (still examining an agent framework) and
+  the RBI's FREE-AI report are the only firm India data points.
+- **Primary-source access.** `bankofengland.co.uk` does not resolve from this
+  environment and OSFI's own pages did not surface in search results. The UK,
+  euro-area and Canadian figures in this file are therefore **corroborated
+  secondary reporting, not primary verification**. This is a gap in the
+  *instrument*, not in the world, and it is the one a future pass should attack
+  first — ideally from a session whose network policy allows regulator domains.
+- **Mexico's CNBV Fintech Law 2.0 update**, reported due October 2026, status
+  still unconfirmed after two passes.
 
 ---
-*Researched 2026-11-09; re-verified and corrected 2026-11-21. Adoption
-percentages outside the CCAF report are self-reported vendor or bank figures and
-should be treated as directional. The EU AI Act Annex III correction in the EMEA
-section supersedes the dates in the 2026-11-09 revision of this file.*
+*Researched 2026-11-09; re-verified and corrected 2026-11-21; extended
+2026-11-22. Adoption percentages outside the CCAF report, the BoE/FCA survey and
+the ECB figures are self-reported vendor or bank numbers and should be treated
+as directional. The EU AI Act Annex III correction in the EMEA section
+supersedes the dates in the 2026-11-09 revision. The 2026-11-22 pass closed the
+Canada and EMEA-adoption gaps, added Japan and India, and recorded
+agent-initiated payments running in LATAM — and replaced the previous "no
+EMEA adoption data exists" conclusion, which was a query artefact.*
