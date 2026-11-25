@@ -1,7 +1,7 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # Financial Services AI Agents — Curated Top Set
@@ -424,3 +424,202 @@ production-grade, validated and maintained — because both have specifications.
 Meanwhile `IFRS 9 impairment` returns a **135-star** top repo that ships **no
 licence file at all**: plenty of attention, no convergence, nothing adoptable.
 Maturity in this plane tracks the specification, not the attention.
+
+---
+
+## Pass 6 (2026-11-25) — the capital-markets plane, and the licence class nobody checked
+
+Pass 5 left this KB with a law: *open-source supply follows the file format,
+not the decision.* This pass tested it on the one plane the KB had never
+touched — **securities and derivatives** — and the law survived but needed a
+second clause, because half the formats in this plane are specified to the
+byte and have **nothing** behind them.
+
+### Verification method, pass 6 — two corrections to the gate in §"Verification method"
+
+**Correction 1 — read the licence name from the TITLE LINE, not from the body.**
+This KB ships Pattern 9 (the licence hygiene gate) as an executable check in
+eight industry KBs. Pass 5 corrected it from byte-bands to line-counts. This
+pass found a defect in the line-count version too, **in our own probe, against
+a real repo**: `danielep71/K-CVA` was labelled **AGPL** when it is
+**MPL-2.0**. Cause: MPL-2.0's *Exhibit B* names "the GNU General Public
+License, the GNU Lesser General Public License, or the GNU Affero General
+Public License" as secondary-licence options, so a body-wide grep for
+`GNU AFFERO` matches the text of a weak-copyleft licence. Any licence with a
+compatibility exhibit will trip the same wire.
+
+The fix is one line: **take the licence name from the first non-blank line and
+use body markers only to confirm it.** MPL-2.0's first line is
+`Mozilla Public License Version 2.0`; it is never ambiguous.
+
+**Correction 2 — the line table, extended by five entries measured this pass.**
+
+| Licence | Lines | Title-line marker |
+|---|---|---|
+| MIT | 19–23 | `MIT License` / `The MIT License (MIT)` |
+| BSD-3-Clause | ~28 | `Redistribution and use in source and binary forms` |
+| QuickFIX Software License 1.0 | 45 | `The QuickFIX Software License, Version 1.0` |
+| Community Specification License 1.0 | 99 | `# Community Specification License 1.0` |
+| Apache-2.0 without appendix | 176 | `Apache License` |
+| LGPL-3.0 | 187 | `GNU LESSER GENERAL PUBLIC LICENSE` |
+| Apache-2.0 with appendix | 201–202 | `Apache License` + `APPENDIX: How to apply` |
+| MPL-2.0 | 373 | `Mozilla Public License Version 2.0` |
+| CC-BY-4.0 | 395 | `Attribution 4.0 International` |
+| LGPL-2.1 (as `.md`) | 503 | `GNU LESSER GENERAL PUBLIC LICENSE Version 2.1` |
+| AGPL-3.0 | ~661 | `GNU AFFERO GENERAL PUBLIC LICENSE` |
+| GPL-3.0 | ~674 | `GNU GENERAL PUBLIC LICENSE` |
+
+Byte counts for Apache-2.0-with-appendix ranged **10,922–11,357 B** across the
+nine repos measured this pass (435 B spread) while the line count held at
+201–202. Pass 5's correction replicates.
+
+**Correction 3 — the false-abundance trap, the mirror of the zero trap.**
+This KB has measured the zero trap three times (a `total_count` of 0 or 1 means
+a bad query far more often than an empty category). Pass 6 measured its
+opposite, and it is **more** dangerous because it looks like evidence:
+
+| Query | `total_count` | What the top results actually were |
+|---|---|---|
+| `CAT reporter FINRA` | 0 | nothing — genuine zero |
+| `Form PF` | 358 | a Mario Party 6 port, a userscript launcher, VPN spam |
+| `N-PORT filing` | 156 | Nintendo Switch game ports, a PE-format C++ wrapper |
+| `securities lending` | 243 | DeFi smart wallets and crypto token contracts |
+
+`Form PF` and `N-PORT` are SEC filings specified to the field. They return
+**more** results than `moov-io/metro2`'s query did — and not one result on the
+first page is a financial filing library. Acronyms that collide with general
+computing vocabulary (`PF`, `PORT`, `CAT`, `FIX`) manufacture abundance.
+
+**A high `total_count` is no more evidence of a populated category than a zero
+is of an empty one.** Both traps have the same remedy and this KB already
+wrote it: requery as `{agency-or-standard-name} + {artefact noun}`, then
+**read the descriptions**. Never count.
+
+### The second clause: open source follows the file that MORE THAN ONE PARTY MUST READ
+
+Every format below is published, versioned and specified to the field. The
+difference in supply is not a difference in specification quality.
+
+| Format | Direction | Best permissive implementation | Stars |
+|---|---|---|---|
+| FIX protocol | counterparty ↔ counterparty | `quickfix-j/quickfixj` + `da4089/simplefix` | 1,161 / 255 |
+| SWIFT MT (FIN) | bank ↔ bank | `prowide/prowide-core` (Apache-2.0) | 296 |
+| ISO 20022 | bank ↔ bank | `prowide/prowide-iso20022` (Apache-2.0) | 240 |
+| Metro 2 | lender → 4 bureaus, bureaus → lender | `moov-io/metro2` (Apache-2.0) | 130 |
+| ISDA CDM | trade model, shared across firms | `finos/common-domain-model` + `finos/rune-dsl` | 297 / 50 |
+| MiFIR RTS 22 | firm → one regulator (via an ARM) | **none** — 2 results, both unlicensed | 0 |
+| EMIR REFIT | firm → one trade repository | **none** — 6 results, best 1 star | 1 |
+| CAT (NA) | firm → one processor | **none** — 0 results | — |
+| Form PF / N-PORT | fund → SEC, not republished | **none** — queries return game ports | — |
+
+The split is clean and it is not about the spec. It is about **who else has to
+read the file.**
+
+- A **many-to-many** format is read by everyone who writes it. Reading another
+  firm's message is how you find your own encoder's bugs, so a shared
+  implementation has shared value, and one gets written and starred.
+- A **one-way regulatory submission** is read by exactly one party, which does
+  not publish its reader. The submitter gains nothing from a shared
+  implementation, cannot test against a second one, and in MiFIR/EMIR usually
+  cannot submit directly anyway — a licensed ARM or trade repository stands in
+  between and sells that layer.
+
+**Second clause, and it is the one that predicts:** where the regulator
+*publishes what it collects*, a reader ecosystem appears even though the
+submission is one-way — SEC EDGAR, Companies House (`kanedata/ixbrl-parse`,
+72★), EDINET (`matthelmer/edinet-tools`, 59★). Where the regulator keeps the
+data, nothing appears: MiFIR, EMIR, CAT, Form PF. **The published corpus, not
+the published schema, is what creates the open-source population.**
+
+This subsumes pass 5's law rather than replacing it. A judgement produces no
+file at all, so nobody reads it, so there is nothing to share — the same
+mechanism at the limit.
+
+**Commercial consequence, and it inverts pass 5's advice for this one plane.**
+Pass 5 said *adopt the parser, build the decision*. In capital-markets
+regulatory reporting there is no parser to adopt and there never will be: the
+client's ARM or trade repository owns that layer and is paid for it. The
+engagement is therefore **on both sides of the vendor**: reconcile what you are
+about to send against your own books *before* submission, and reconcile the
+acknowledgements and rejections back against the trade store *after*. That is
+judgement work with a deterministic oracle, it does not compete with the ARM,
+and it is where the client's reportable-accuracy exposure actually sits.
+
+### Agents and agentic assets added this pass — 7 rows, all verified
+
+Existence confirmed by `git ls-remote` (54/54 resolved), licence read by line
+count and title line, metadata from `search/repositories?q=repo:<slug>` on
+2026-11-25.
+
+| Agent / asset | Repo | Licence | Stars | Pushed | What it does |
+|---|---|---|---|---|---|
+| FINOS AI Governance Framework MCP server | https://github.com/finos/aigf-mcp-server | Apache-2.0 | 10 | 2026-11-09 | Serves the FINOS AI governance framework (risks + mitigations) to an agent over MCP — the governance text becomes a queryable tool instead of a PDF |
+| CDM Object Builder | https://github.com/finos/cdm-object-builder | Apache-2.0 | 13 | 2026-11-23 | Builds and validates ISDA CDM trade objects; the executable counterpart to the spec repo |
+| motiva | https://github.com/apognu/motiva | MIT | 16 | 2026-11-23 | Reimplementation of the OpenSanctions scoring/matching API — a second implementation of the same matching contract |
+| sieve-aml | https://github.com/AbgarSim/sieve-aml | MIT | 16 | 2026-11-16 | Sanctions/AML screening over 35+ official lists with a nightly-refreshed database and dashboard |
+| gleif-mcp-server | https://github.com/olgasafonova/gleif-mcp-server | MIT | 8 | 2026-11-20 | Exposes the GLEIF LEI register to an agent over MCP — counterparty identity as a tool call |
+| risk-calculation-mcp | https://github.com/mselcukozturk/risk-calculation-mcp | MIT | 0 | 2026-11-23 | Local MCP server for IRB and standardised risk weights, RWA and capital ratios |
+| Sanctions screening benchmark | https://github.com/Divine16/Sanctions-screening-benchmark | MIT | 33 | 2026-08-13 | Reproducible recall benchmark for name-screening effectiveness — an evaluation harness, not a screener |
+
+Four of these seven are **MCP servers wrapping a register, a rulebook or a
+calculation**, published in the last three weeks. That is a shift in shape
+worth naming: the previous passes found agents that *did* financial work, these
+wrap a **source of truth** so an agent can cite it. It is the same move the
+legal KB recorded when a regulator's corpus arrived pre-exposed over MCP, and
+it is the right shape — the model asks, the register answers, the answer has a
+provenance.
+
+Maturity caveat, unchanged and applied: `risk-calculation-mcp` at 0 stars and
+`gleif-mcp-server` at 8 are **prototyping seeds and design references, not
+dependencies**. `motiva` and `sieve-aml` at 16 each are interesting for a
+different reason — see Pattern 20 in `compose/patterns.md`: two independent
+implementations of the same screening contract is a differential oracle.
+
+### The licence class nobody in this KB had checked: spec ≠ code ≠ data
+
+Three artefact types, three licence regimes, **one organisation**, and GitHub's
+badge is wrong or absent on all but one of them.
+
+| Artefact | Example | Licence | Lines | What it actually grants |
+|---|---|---|---|---|
+| Specification | https://github.com/finos/common-domain-model | Community Specification License 1.0 | 99 | Rights over the **document** + a patent commitment for implementers. **Not** a software licence. GitHub reports NOASSERTION |
+| Specification | https://github.com/finos/FDC3 | Community Specification License 1.0 | 99 | Same — the standard, not an implementation |
+| Implementation | https://github.com/finos/rune-dsl | Apache-2.0 | 201 | Ordinary permissive software rights — the DSL and code generators that compile the CDM |
+| Implementation | https://github.com/finos/FDC3-Sail | Apache-2.0 | 201 | Ordinary permissive software rights — a working FDC3 desktop agent |
+| Document | https://github.com/finos/ai-governance-framework | CC-BY-4.0 | 395 | Rights over prose. Not a software licence (the legal KB's "CC is not a software licence", again) |
+| Data | https://github.com/opensanctions/opensanctions | **code MIT, data CC BY-NC 4.0** | 23 (code) | See below — this is the expensive one |
+
+**`finos/common-domain-model` has 297 stars and 142 forks and is not software
+you can take.** Adding it as a dependency takes on a *specification* licence.
+The code you want is `finos/rune-dsl`, `finos/rune-common` and
+`finos/cdm-object-builder`, all Apache-2.0. Same for FDC3: the standard is
+CSL-1.0, the implementations (`FDC3-Sail`, `fdc3-dotnet`, `backplane`) are
+Apache-2.0. **In FINOS the standard and its implementation are different repos
+with different licences, and the one with the stars is the standard.**
+
+**The data trap, and it is the single most expensive mistake available in this
+plane.** The OpenSanctions stack is 1,543 stars of genuinely MIT code —
+`opensanctions` (884), `nomenklatura` (274), `yente` (189), `followthemoney`
+(122), `rigour` (74). Its own README states the split:
+
+> "The code within this repository is licensed under the MIT License. Data
+> files produced by OpenSanctions are licensed under CC BY-NC 4.0, and some
+> files under `datasets/` are unmodified copies of third-party material that we
+> cannot license at all."
+
+`yente`'s README is equally explicit: using it commercially "may require a data
+licence for OpenSanctions data". **NC means non-commercial, and screening a
+client's customers is commercial by definition.** The MIT badge covers the
+loader, not the load.
+
+Generalised rule for the twelve KBs: **read the licence of the data separately
+from the licence of the code, and never infer either from the other.** An
+OSI badge on a data repository describes the software that moves the data.
+A screening or reference-data engagement must price the data licence as a
+line item from day one, not discover it at go-live.
+
+Verification gap, declared: `opensanctions.org/licensing` **does not resolve in
+this session** — the host is outside the session's allowed network domains, so
+the commercial tiers could not be read. The licence split above comes from the
+repository's own `README.md` and `yente`'s, which state it unambiguously; the
+*price* of the commercial data licence is not in this KB.

@@ -1,7 +1,7 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # Foundational Repositories — Financial Services
@@ -482,3 +482,108 @@ population for a shared library is one country wide, and the work has gone
 into commercial fiscal-emitter products instead. The same conclusion the
 legal KB reached about porting LEDES to LATAM applies: **the format does not
 transfer, the semantics do.**
+
+---
+
+## Pass 6 (2026-11-25) — FINOS enumerated, and the capital-markets message layer
+
+This KB has cited "FINOS" 19 times across its files and **had never enumerated
+the organisation.** `legend` and `perspective` appeared once each;
+`FDC3`, `morphir`, `waltz`, `rune-dsl`, `tracdap` and `open-reg-tech-us-lcr`
+appeared **zero** times. FINOS has **194 repositories**.
+
+This is the `moov-io` lesson from pass 5 repeating exactly: that pass found
+moov-io had 60 repos while the KB listed seven, and closed the gap by
+enumerating the org rather than querying by topic. **Rule, now measured twice
+in the same KB: when a KB cites an organisation by name, enumerate it. The
+citation is evidence the org matters and evidence nobody has listed it.**
+
+Channel note: `GET /orgs/{org}/repos` returns 403 in this session
+("sessions are bound to their configured repositories"), but
+`search/repositories?q=org:finos` works and paginates. That is the same channel
+that rendered moov-io's 60 repos in pass 5.
+
+### Foundational repositories added this pass — 12 rows, all verified
+
+Existence by `git ls-remote`, licence by line count **and title line** (see the
+pass-6 corrections in `agents/top.md`), metadata as of 2026-11-25.
+
+| Repo | Licence | Stars | Pushed | Why it is foundational |
+|---|---|---|---|---|
+| https://github.com/finos/legend | Apache-2.0 | 1,558 | 2026-11-25 | Goldman Sachs' data modelling and governance platform, FINOS-hosted: model a financial domain once, generate the stores, APIs and lineage from the model |
+| https://github.com/quickfix-j/quickfixj | QuickFIX Software License 1.0 (BSD-derived, 45 lines) | 1,161 | 2026-11-24 | The reference FIX engine on the JVM, actively committed. **Custom permissive licence — review before redistribution** |
+| https://github.com/finos/architecture-as-code | Apache-2.0 | 471 | 2026-11-25 | Architecture expressed as a machine-checkable model (CALM schema) — lets a controls review run against the architecture, not a diagram of it |
+| https://github.com/prowide/prowide-core | Apache-2.0 | 296 | 2026-11-19 | Model and parsers for **all** SWIFT MT (FIN) messages |
+| https://github.com/prowide/prowide-iso20022 | Apache-2.0 | 240 | 2026-11-20 | Business model and parser for **all** ISO 20022 messages — the second implementation that makes a differential oracle possible |
+| https://github.com/da4089/simplefix | MIT | 255 | 2026-06-01 | FIX protocol for Python — the pragmatic choice when the FIX work sits beside a Python analytics stack |
+| https://github.com/finos/morphir | Apache-2.0 | 219 | 2026-11-25 | Business logic as a portable intermediate representation: write a rule once, generate it into several runtimes, and keep it readable by a reviewer |
+| https://github.com/finos/TimeBase-CE | Apache-2.0 | 132 | 2026-11-25 | High-performance time-series store built for market data |
+| https://github.com/finos/traderX | Apache-2.0 | 110 | 2026-11-25 | A complete reference trading application across many services — the realistic integration sandbox for a capital-markets agent |
+| https://github.com/finos/vuu | Apache-2.0 | 63 | 2026-11-25 | View server + HTML5 UI for large, fast-updating tabular data — the blotter layer |
+| https://github.com/finos/tracdap | Apache-2.0 | 58 | 2026-11-22 | Data and analytics platform **built for regulated environments**: immutable model/data versioning with reproducibility as a platform property, not a convention |
+| https://github.com/finos/rune-dsl | Apache-2.0 | 50 | 2026-11-25 | Grammar and code generators behind the ISDA CDM — **this** is the code, the 297-star `common-domain-model` is the specification |
+
+### `finos/tracdap` is the repo this KB has been describing for three passes without naming
+
+Pass 5 concluded that NA, EMEA and APAC arrive at an AI assurance deficit by
+three different routes and converge on **one deliverable: a control and
+evidence layer**. It then had nothing permissive to point at.
+
+`tracdap` is that thing, Apache-2.0, pushed three days ago: a platform whose
+design premise is that in a regulated environment every model run must be
+reproducible from immutable, versioned inputs. The evidence is produced by the
+platform rather than assembled afterwards by whoever is preparing for the
+examiner. For an engagement whose sale is "we can show the regulator how this
+decision was reached", starting here is a materially shorter path than building
+lineage onto a general ML stack.
+
+Pair it with `finos/morphir` for the rule itself and the combination answers
+both halves of a model-risk question: *what was the rule* (a readable IR, not
+Python someone has to trust) and *what exactly ran* (an immutable, versioned
+execution record).
+
+### Regulation as code — and a real repo behind it
+
+`finos/open-reg-tech-us-lcr` (Apache-2.0, 17★, pushed 2026-10-30) is the **US
+Liquidity Coverage Ratio expressed as executable code** in Morphir. This is
+the thing the phrase "regulation as code" usually gestures at without a
+repository attached — searching `regulation as code Morphir` returns exactly
+**one** result, an unlicensed workshop repo, so this plane is invisible to
+topic queries and only reachable by enumerating FINOS.
+
+Place it carefully. 17 stars and 23 forks is a **reference implementation**,
+not a dependency: note that forks exceed stars, which is the signature of a
+repo people copy and adapt rather than import. That is the correct way to use
+it — read how a named US regulation is decomposed into testable functions,
+then do the same for the client's rule under the client's data.
+
+Contrast with what the open market offers for the same job: `Basel capital
+calculation` returns 13 results whose best is a 4-star 2019 project;
+`liquidity coverage ratio` returns 19 whose best permissive entry has 1 star.
+The only serious permissive artefact in the regulatory-calculation plane is the
+one inside a foundation.
+
+### Counterparty identity — the reference-data layer the KB was missing
+
+Every one of this KB's reconciliation, screening and reporting patterns needs
+to answer "who is this counterparty", and the KB had no entry for it.
+
+| Repo | Licence | Stars | Pushed | Role |
+|---|---|---|---|---|
+| https://github.com/WebOfTrust/vLEI | Apache-2.0 | 40 | 2026-10-15 | Open specifications for GLEIF's verifiable LEI — cryptographically verifiable legal-entity identity |
+| https://github.com/ggravlingen/pygleif | MIT | 23 | 2026-11-24 | Python client for the GLEIF LEI register |
+| https://github.com/opensanctions/followthemoney | MIT | 122 | 2026-11-20 | The entity/relationship data model underneath the whole OpenSanctions stack — usable on its own as a counterparty graph schema |
+| https://github.com/opensanctions/nomenklatura | MIT | 274 | 2026-11-24 | Entity resolution and deduplication across FollowTheMoney streams |
+| https://github.com/opensanctions/rigour | MIT | 74 | 2026-11-23 | Cleaning and validation for names, languages and identifiers — the unglamorous layer every screening false-positive traces back to |
+
+The LEI is a **many-to-many identifier by construction** — issued by one body,
+consumed by every counterparty — and the law in `agents/top.md` predicts
+permissive tooling for it. It is there. Meanwhile `entity resolution KYC`
+returns 10 results of which the two most complete are **AGPL-3.0** and the rest
+are zero-star coursework: the *judgement* layer above the identifier is empty
+again, exactly as predicted.
+
+**Licence discipline, restated because this is where it bites:** every MIT row
+in the OpenSanctions block covers **code only**. The data those tools load is
+CC BY-NC 4.0 and parts of it cannot be licensed at all. See the data-trap
+section in `agents/top.md`.

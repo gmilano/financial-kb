@@ -1,7 +1,7 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # Financial Services AI — Current Trends
@@ -480,3 +480,126 @@ the engineering is shared across regions even though the sales argument is not.
 **Caveat, stated because it matters:** every figure in the table is a vendor or
 consultancy survey with its own sampling and commercial interest. They are
 directionally useful and should be quoted with attribution, never as fact.
+
+---
+
+## 21. Open source follows the file that MORE THAN ONE PARTY must read
+
+**This supersedes §19's single clause and keeps its evidence.** §19 concluded
+that open-source supply follows the published file format rather than the
+decision. Pass 6 tested that on securities and derivatives — a plane this KB
+had never touched — and found the law **half right in a way that matters**,
+because several formats there are specified to the byte and have nothing behind
+them at all.
+
+Measured 2026-11-25:
+
+| Format | Who must read it | Supply |
+|---|---|---|
+| FIX | every counterparty | `quickfix-j/quickfixj` 1,161★; `da4089/simplefix` 255★ MIT |
+| SWIFT MT | every bank | `prowide/prowide-core` 296★ Apache-2.0 |
+| ISO 20022 | every bank | `prowide/prowide-iso20022` 240★ Apache-2.0 |
+| ISDA CDM | every dealer | `finos/common-domain-model` 297★ + `finos/rune-dsl` 50★ |
+| FpML | in practice, vendors | **nothing** — best is 16★, unlicensed, last pushed 2016 |
+| MiFIR RTS 22 | one regulator, via an ARM | **nothing** — 2 results, both unlicensed |
+| EMIR REFIT | one trade repository | **nothing** — 6 results, 1★ best |
+| CAT | one processor | **nothing** — 0 results |
+
+The specification quality is not the variable. **The number of parties who must
+read the file is.** A many-to-many format is read by everyone who writes it, so
+reading a counterparty's message is how you find your own encoder's bug: shared
+implementation, shared value, stars. A one-way submission is read by one party
+that publishes no reader, so the submitter gains nothing from sharing and
+cannot test against a second implementation — and under MiFIR and EMIR usually
+cannot submit directly anyway, because a licensed ARM or trade repository
+stands in between and sells that layer.
+
+**Second clause, and it is the predictive one: where the regulator publishes
+the corpus it collects, a reader ecosystem forms anyway.** SEC EDGAR,
+Companies House (`kanedata/ixbrl-parse` 72★), EDINET
+(`matthelmer/edinet-tools` 59★) — all one-way submissions, all with live
+permissive tooling, all with **published corpora**. MiFIR, EMIR and CAT publish
+nothing. It is the published corpus, not the published schema, that creates the
+population.
+
+§19 is not withdrawn: a judgement produces no file at all, so nobody reads it,
+so nothing is shared. Same mechanism at its limit.
+
+**Prediction for the other eleven KBs, falsifiable:** one-way regulatory
+submissions will be as bare as MiFIR regardless of how well specified they are
+(healthcare quality reporting, energy REMIT filings to ACER, automotive
+type-approval dossiers), while many-to-many exchange formats stay mature
+(HL7/FHIR, IEC 61850, GS1/EDIFACT, OpenTravel). The legal KB already produced a
+consistent point without naming it: DataJud publishes **metadata only**, and
+its tooling is correspondingly thin.
+
+**And one commercial inversion.** §19's rule was *adopt the parser, build the
+decision*. In one-way reporting there is no parser to adopt, ever. The
+engagement sits **either side of the vendor**: reconcile the submission against
+the firm's own books before it goes, reconcile acknowledgements and rejections
+back after. Deterministic oracle, no competition with the incumbent, and it is
+where reportable-accuracy exposure actually sits.
+
+## 22. There are three licence classes, not one — spec, code and data — and the badge reports the wrong one
+
+**This extends §18 (licence evidence has seven tiers, `NOASSERTION` is not a
+finding) with the distinction §18 was missing.** §18 treated licence
+identification as a problem of *reading the file correctly*. Pass 6 found a
+prior problem: **the file may not be a software licence at all**, and the
+repository will look completely normal.
+
+| Class | Example | Licence | Lines | Grants |
+|---|---|---|---|---|
+| Specification | `finos/common-domain-model` 297★, `finos/FDC3` 275★ | Community Specification License 1.0 | 99 | Rights over a **document** + a patent commitment to implementers. Not software rights |
+| Implementation | `finos/rune-dsl`, `finos/FDC3-Sail`, `finos/tracdap` | Apache-2.0 | 201 | Ordinary permissive software rights |
+| Document | `finos/ai-governance-framework` 121★ | CC-BY-4.0 | 395 | Rights over prose |
+| Data | `opensanctions/*`, 1,543★ combined | **code MIT / data CC BY-NC 4.0** | 23 | Code free; **data non-commercial**, some files unlicensable at all |
+
+Three observations that each cost real money if missed:
+
+1. **The two most-starred repos in the FINOS list are not software.** GitHub
+   reports `NOASSERTION` on both, which is why this KB has carried them as
+   "licence unclear" rather than "different kind of artefact". Depend on
+   `rune-dsl`, not `common-domain-model`.
+2. **`CC-BY-4.0` on a repo full of governance content is correct and still not
+   a software licence.** The legal KB's "Creative Commons is not a software
+   licence" finding, in a second industry.
+3. **The data trap is the expensive one.** Screening a client's customers is
+   commercial by definition; the OpenSanctions data is CC BY-NC 4.0 and its own
+   README says some files "we cannot license at all". The MIT badge covers the
+   loader, not the load.
+
+**Rule: read the licence of the data separately from the licence of the code,
+and never infer either from the other.**
+
+## 23. The new agent shape is a wrapper around a register, not a worker
+
+Of the seven agentic assets added this pass, **four are MCP servers wrapping a
+source of truth**, all published within three weeks:
+`finos/aigf-mcp-server` (the FINOS AI governance framework),
+`olgasafonova/gleif-mcp-server` (the GLEIF LEI register),
+`mselcukozturk/risk-calculation-mcp` (IRB/standardised risk weights),
+`apognu/motiva` (the OpenSanctions matching API, reimplemented).
+
+Earlier passes of this KB catalogued agents that *performed* financial work —
+dispute triage, three-way match, reconciliation. These do something different
+and, for this industry, better-shaped: they let an agent **ask an authority and
+cite the answer**.
+
+Why the distinction is load-bearing rather than stylistic: an agent that
+*computes* a risk weight is a model, and a model in a regulated institution
+must be inventoried, validated, monitored and defended to an examiner. An agent
+that *queries a register and cites it* is an integration. Under SR 26-2 and
+OSFI E-23 those are not the same object with different labels — they are
+different obligations with different costs.
+
+So the architectural guidance this KB has repeated from the dispute and Metro 2
+planes now has a distribution channel: **put the authority behind a tool call,
+keep the model on the narrative side, and the validation burden stays where it
+belongs.** Pass 5's strongest single asset was a regulator's entire corpus
+already exposed over MCP (`ajtgjmdjp/edinet-mcp`) — this is that pattern
+generalising, and it is three weeks old.
+
+Caveat kept honest: `risk-calculation-mcp` has **0 stars** and
+`gleif-mcp-server` has 8. The *shape* is the trend. These specific repos are
+prototyping seeds and design references, not dependencies.

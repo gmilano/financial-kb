@@ -1,7 +1,7 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # Financial AI Agents — Trending Log
@@ -9,6 +9,65 @@ updated: 2026-11-22
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-25 (pass 6)
+
+**Theme of the week: the register arrives wrapped in MCP, and the licence on
+the wrapper is not the licence on the register.**
+
+### New this week — four MCP servers over a source of truth, all published in the last 3 weeks
+
+The shape changed. Earlier passes of this KB found agents that *performed*
+financial work (dispute triage, three-way match, reconciliation). This week's
+new arrivals mostly wrap a **register, rulebook or calculation** so an agent
+can query it and cite the answer.
+
+| Asset | Repo | Licence | Stars | Pushed | What it wraps |
+|---|---|---|---|---|---|
+| FINOS AI Governance Framework MCP | https://github.com/finos/aigf-mcp-server | Apache-2.0 | 10 | 2026-11-09 | The FINOS AI governance framework — risks and mitigations become tool calls instead of a PDF |
+| GLEIF LEI MCP server | https://github.com/olgasafonova/gleif-mcp-server | MIT | 8 | 2026-11-20 | The GLEIF legal-entity register — counterparty identity as a tool call |
+| risk-calculation-mcp | https://github.com/mselcukozturk/risk-calculation-mcp | MIT | 0 | 2026-11-23 | IRB and standardised risk weights, RWA, capital ratios |
+| motiva | https://github.com/apognu/motiva | MIT | 16 | 2026-11-23 | The OpenSanctions matching/scoring API, reimplemented |
+
+Why it matters more than the star counts suggest: an agent that *computes* a
+risk weight is a model the client must validate; an agent that *asks a register
+and cites the answer* is an integration. The second is reviewable, and in this
+industry reviewable is the constraint that binds.
+
+### Also new this week
+
+| Asset | Repo | Licence | Stars | Pushed | Note |
+|---|---|---|---|---|---|
+| sieve-aml | https://github.com/AbgarSim/sieve-aml | MIT | 16 | 2026-11-16 | Screening across 35+ official lists, nightly DB refresh + dashboard |
+| CDM Object Builder | https://github.com/finos/cdm-object-builder | Apache-2.0 | 13 | 2026-11-23 | Build/validate ISDA CDM trade objects — the executable side of the CDM |
+| K-CVA | https://github.com/danielep71/K-CVA | **MPL-2.0** | 1 | 2026-11-24 | EU CRR3 CVA-risk regulatory capital. Weak copyleft — design reference only |
+
+### Correction to this log's own method, found this week
+
+`danielep71/K-CVA` was initially recorded as **AGPL** by this KB's licence
+probe. It is **MPL-2.0**. MPL-2.0's Exhibit B names the GNU GPL, LGPL and AGPL
+as secondary-licence options, so a body-wide grep for `GNU AFFERO` matches a
+weak-copyleft licence and mislabels it as strong. The probe now reads the
+licence name from the **first non-blank line**. Full corrected line table in
+`agents/top.md`.
+
+This is the second consecutive pass in which this KB's own licence gate was
+found defective against a real repository, and both defects biased the same
+direction: **a genuinely usable asset gets downgraded.** That is the expensive
+failure, not the harmless one.
+
+### Measured this week, and it closes a question three passes old
+
+Searching for agents in capital-markets regulatory reporting returns almost
+nothing — `MiFIR transaction reporting` = 2 results, `EMIR trade reporting` = 6
+with a 1-star best, `CAT reporter FINRA` = **0**. Previous passes would have
+logged that as "the stream dried up". It is not. These formats are specified to
+the field; what they lack is a **second reader**. One-way submissions to a
+single regulator that does not republish the data produce no open source, ever.
+Full statement of the rule and its falsifiable prediction in `agents/top.md`.
+
+So the correct read of a quiet week in this plane is not drought. It is that
+the plane was never going to be populated, and the engagement sits beside the
+submission rather than inside it.
 ## 2026-11-22 (pass 5)
 
 Pass theme: **the plane where money is disputed, reported and booked.** Pass 3

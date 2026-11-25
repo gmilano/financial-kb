@@ -1,7 +1,7 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # Financial Services AI — Market Intelligence
@@ -278,6 +278,64 @@ controls — reported in trade coverage, **not verified against a primary
 source, do not cite to a client without checking.** Bank of America's CashPro
 Chat is the most-cited named deployment.
 
+
+#### Pass 6 (2026-11-25) — the examiner wrote a framework, and the capital-markets plane is closed to open source
+
+**New supervisory artefacts, all 2026, none of them a deadline.**
+
+| Artefact | Date | What it does | Status |
+|---|---|---|---|
+| SR 26-2 (Fed / OCC / FDIC) | Apr 2026 | Replaced prior model-risk guidance. **Expressly excludes generative and agentic AI** | In force |
+| CSBS examination framework | Sep 2026 | Governance, **AI inventories**, three-tier risk classification | Published, examination-focused |
+| Treasury sector framework | Feb 2026 | Described as the first federal, sector-specific AI governance toolkit for financial services | Published |
+| NAIC model AI bulletin | ongoing | Adopted by **27 states + DC + Puerto Rico**; broader adoption on the Nov 2026 agenda | State-by-state |
+| NY DFS cybersecurity rules | in force | Reaches AI through risk assessment and third-party oversight, without naming AI | In force |
+
+The structural fact pass 5 recorded — genAI and agentic AI sit **outside** the
+model-risk guidance — is confirmed and the mechanism is now visible: secondary
+sources report examiners filling that gap **through direct supervisory
+engagement** rather than through published rules. For an engagement that means
+there is no examiner manual to inherit and no safe-harbour to point at, but
+there *is* an examination framework with named components.
+
+**The deliverable this names itself.** CSBS examines for an **AI inventory**
+and a **three-tier risk classification**. Those are artefacts, not postures: a
+complete register of AI in use, each item classified, each classification
+evidenced. A bank that cannot produce one in an examination has a finding
+regardless of how good its models are. This is week-one, defensible-number
+work of exactly the shape pass 5 identified as the way to fund the judgement
+layer.
+
+**Two dates this KB must NOT build on, and saying so is the point.**
+
+- **Colorado AI Act** — the effective date is *inconsistent across sources*:
+  one says 1 Feb 2026, another 30 Jun 2026, a third that it was "slated to
+  originally take effect in February 2026". That pattern means it moved, and
+  pass 4 of this KB already published a headline recommendation on a date that
+  moved. **Verify against the statute before it appears in any client
+  material.** Not recorded here as a fact.
+- **CFPB Regulation B disparate-impact amendments** — reported final April
+  2026 and **under legal challenge**. A credit-model engagement should be
+  designed to satisfy the underlying fair-lending obligation, which is not in
+  doubt, rather than the amendment's specific text, which is.
+
+**Capital markets: the one plane in NA where the usual advice inverts.**
+CAT reporting returns **zero** open-source results; Form PF and N-PORT return
+hundreds of results containing no financial filing library at all (see the
+false-abundance table in `agents/top.md`). This is not a gap to fill. These are
+one-way submissions to a regulator that does not republish the data, and the
+reporting layer is sold by the client's existing vendor.
+
+The NA capital-markets opportunity is therefore **beside the submission, not
+inside it**: pre-submission reconciliation of the report against the firm's own
+books, and post-submission reconciliation of acknowledgements and rejections
+back against the trade store. Reportable-accuracy exposure is where the fines
+land, and neither side of that is vendor territory.
+
+**One NA-placed permissive asset worth naming:**
+`finos/open-reg-tech-us-lcr` (Apache-2.0, 17★) expresses the **US Liquidity
+Coverage Ratio as executable code**. Forks (23) exceed stars (17) — the
+signature of a reference people adapt rather than import. Use it that way.
 ### EMEA
 
 **Regulatory posture: the most demanding in the world, with a hard date.**
@@ -500,6 +558,83 @@ with specialised legal/financial AI actually implemented**. Four of five
 institutions using AI cannot document what it does, in the jurisdiction that
 requires documentation.
 
+
+#### Pass 6 (2026-11-25) — the ECB deadline has PASSED, and MiFIR/EMIR is the emptiest plane in this KB
+
+**The deadline correction, applied the way pass 4 taught this KB to apply it.**
+Secondary sources report that every significant European institution had to
+submit **AI-cybersecurity action plans to the ECB by 31 October 2026**. That
+date is **25 days in the past as of this pass.**
+
+Pass 4 of this file built its headline regional recommendation on a date that
+subsequently moved, and pass 6 of the KB named that as the flagship failure.
+The same discipline applies in the other direction: **a date that has passed is
+not a selling opportunity, it is a status.** The EMEA conversation is no longer
+"we will help you prepare the plan". It is:
+
+- the plan was filed — **can the institution evidence that it is executing it?**
+- what did it commit to, and what is the gap between the commitment and the
+  running estate?
+- an action plan filed with a supervisor is a **testable artefact**. Reconciling
+  a filed commitment against reality is precisely the control-and-evidence work
+  this KB has identified as the convergent deliverable.
+
+**AI Act calendar — cross-KB corroboration, and it matters.** An independent
+EMEA source states the French regulator becomes a **Market Surveillance
+Authority under the AI Act as of 2 December 2027**. The legal KB, researching
+separately on 2026-11-25, recorded Regulation 2026/1744 as delaying Annex III
+to **2027-12-02** and flagged the AI Act calendar as *in conflict, verify
+against EUR-Lex*.
+
+**Two independent research paths produced the same date.** That raises
+confidence materially — but both are secondary sources, so the instruction
+stands unchanged: **verify in EUR-Lex before this date enters client
+material.** What it does settle is the direction: the Annex III financial
+obligations are **later than the 2026 dates this KB once built on**, and any
+engagement sequenced against an August 2026 Annex III date is sequenced wrong.
+
+The AI Act reaches financial services through two named high-risk use cases —
+**creditworthiness assessment** and **life/health insurance pricing** — with
+DORA governing resilience and third-party AI dependency and GDPR governing
+automated decision-making. Those three instruments, not an AI strategy, are
+what an EMEA engagement is documented against.
+
+**Adoption and the supervisory gap.** 81% of surveyed financial firms are
+adopting AI at some level, while **48% of the 130 regulatory authorities
+surveyed are still "Exploring" or not engaged with AI at all**. The UK FCA's
+chief executive has argued publicly that the traditional rulemaking cycle
+"doesn't work" in an era of fast-moving technology. Read together: the
+institutions are ahead of their supervisors, and the supervisors know it. That
+is the condition in which **a well-documented control framework becomes a
+negotiating asset**, because the examiner has no better one to impose.
+
+**MiFIR and EMIR: the emptiest plane this KB has measured.**
+
+| Regime | Open-source supply measured 2026-11-25 |
+|---|---|
+| MiFIR RTS 22 transaction reporting | **2 results total**, both unlicensed, one archived |
+| EMIR REFIT trade reporting | **6 results**, best has 1 star, no licence file |
+| SFTR | nothing distinguishable from the above |
+
+Both regimes are specified to the field. Both are one-way submissions to a
+single destination — and in both the firm usually **cannot submit directly**: a
+licensed ARM or trade repository stands in between and sells that layer. So
+there is no library to adopt and no second implementation to test against.
+
+This is the sharpest regional instance of the pass-6 law, and EMEA is where the
+resulting engagement shape sells first, because MiFIR and EMIR are EMEA
+regimes: **reconcile before the ARM and reconcile after it.**
+`amol-vishwarupe/EMIR` (1★, no licence, pushed 2026-08-08) packages 50
+ESMA-style functional validation rules — **a design reference for what those
+checks are**, not a dependency. Read it, then implement against the client's
+trade store.
+
+**Middle East and Africa — secondary sources, placed honestly.** AI regulation
+is described as nascent but fast-moving: the UAE's National AI Strategy 2031
+and AI Ethics Guidelines, Saudi Arabia's SDAIA framework. In Africa, a
+Ghana-focused review names ABSA Bank Ghana, Stanbic Bank and Ecobank deploying
+AI for chatbots, predictive customer analysis and anti-fraud. None of these are
+binding financial-sector AI rules, and this KB should not imply they are.
 ### APAC
 
 **Regulatory posture: the most advanced on agentic specifically.**
@@ -703,6 +838,80 @@ document; verify before citing.** The unverified "binding MAS Supervisory
 Notice on Governance of Autonomous AI Agents, August 2026" recorded in a
 previous pass remains uncorroborated and still must not be cited.
 
+
+#### Pass 6 (2026-11-25) — two binding statutes in force, and the claim this KB must stop repeating
+
+**Binding AI statutes now in force in the region.**
+
+| Jurisdiction | Instrument | Effective | Shape |
+|---|---|---|---|
+| South Korea | AI Basic / Framework Act | **Jan 2026** | Described as the region's first comprehensive binding AI statute: risk-based, AI impact assessments, labelling for high-impact systems |
+| Vietnam | Law 134/2025/QH15 | **2026-03-01** | Comprehensive risk-based framework for AI development, deployment and governance — **new to this KB this pass** |
+
+Korea corroborates the legal KB's independently recorded 2026-01-22 date for
+the Korean AI Framework Act. Vietnam is new here and matters for the obvious
+reason: it is a delivery geography, and a comprehensive risk-based AI statute
+has been in force there for most of 2026 without appearing in this KB.
+
+**Singapore — the verified artefact, and the unverified one this KB must stop
+carrying forward.** MAS has been **consulting on AI Risk Management
+Guidelines** covering governance, explainability, lifecycle controls and
+oversight of **third-party AI providers**, with a response to consultation
+feedback possibly due late 2026. That is the real, citable artefact.
+
+Pass 5 recorded a supposed **"MAS Supervisory Notice on Governance of
+Autonomous AI Agents" (Aug 2026)** as uncorroborated, and pass 6 searched for
+it again and **still found no primary source**. Two passes, no corroboration.
+**It should now be treated as not existing** and removed from any client
+material. The MAS consultation above is the thing to cite instead. Pass 5 also
+flagged, unverified, a MAS requirement for AI-assisted red teaming of
+internet-facing critical systems from 2026-07-01 — **also still
+uncorroborated** against a primary MAS document.
+
+Recording this explicitly is the point. An uncited claim that survives three
+passes stops looking like a flag and starts looking like a fact.
+
+**Hong Kong is the region's concentration point.** More than **500 AI-focused
+organisations** and a **HK$3bn government subsidy** for AI computing capacity.
+HKMA issued high-level generative-AI principles in 2024 and runs a generative-AI
+sandbox; the SFC has issued circulars on AI use in licensed activities,
+**including investment management**. For a capital-markets AI engagement, HK is
+the APAC jurisdiction where the supervisor has actually written about AI in the
+regulated activity itself rather than about AI in general.
+
+**Japan** — the FSA is pursuing responsible AI adoption alongside tighter
+oversight of crypto-assets and stablecoins and reinforced AML. Pass 5's EDINET
+finding stands as the region's strongest technical asset and the pass-6 law now
+explains *why* it exists: **EDINET publishes the corpus it collects**, so a
+reader ecosystem formed (`matthelmer/edinet-tools`, `ajtgjmdjp/edinet-mcp`).
+MiFIR and EMIR publish nothing and have nothing.
+
+**Australia, New Zealand, Malaysia** — sectoral approach: mandatory guardrails
+embedded in existing legal structures rather than standalone AI statutes.
+Across **Australia, Singapore, New Zealand and Malaysia, supervisors have not
+issued agentic-specific rules for financial institutions.** An agentic
+deployment in those four is governed by existing outsourcing, operational-risk
+and model-governance obligations — which is a *different* engagement from a
+Korea or Vietnam one, and the difference should be priced.
+
+**China** — a "strategic control" model distinct from the risk-based approach
+elsewhere. Secondary analysis suggests the divergence is pushing multinationals
+to reconsider **where their AI operations are located**. For a global delivery
+partner that is a structural fact about engagement design, not a compliance
+footnote: the data-residency and model-hosting decision may be driven by this
+divergence rather than by technical preference.
+
+**Adoption** — one forecast expects roughly **75% of APAC financial
+institutions to adopt or plan to adopt generative AI between 2026 and 2028**.
+Pass 5's measured picture — APAC the most mature region for AI in wealth and
+asset management while roughly half of institutions lack a fully established AI
+assurance programme — remains the sharper framing, and this pass adds nothing
+that contradicts it.
+
+**Capital markets** — the derivative-reporting rewrites across ASIC, MAS and
+HKMA are one-way submissions to trade repositories, so the pass-6 law predicts
+no permissive tooling, and none was found. Same engagement shape as EMEA:
+reconcile either side of the repository.
 ### LATAM
 
 **Regulatory posture: thin on AI-specific finance rules, strong on payment rails.**
@@ -905,6 +1114,77 @@ obligations in force as of early 2026** — so an open-finance pitch in Mexico
 is a readiness engagement, not a compliance one. Trade coverage notes
 stablecoin growth outpacing rulebooks dating to the 2010s.
 
+
+#### Pass 6 (2026-11-25) — Peru's financial deadline has PASSED, and the region's capital-markets plane is an informed gap
+
+**Peru, and the framing this KB had wrong.** Supreme Decree 115-2025-PCM
+approves the regulation of Law 31814 and is reported as making Peru **the first
+country in Latin America with a general AI regulation in force**. It
+**classifies banking and credit scoring as high risk**, and the reported
+deadline for the financial sector was **10 September 2026**.
+
+That is **two and a half months in the past.** Pass 5 of this KB carried Peru
+as a forward-looking date (2026-01-22). It is no longer a preparation play.
+A Peruvian bank either classified its credit-scoring systems as high-risk and
+built the corresponding controls, or it is **non-compliant today**. The
+engagement is remediation and evidence, under time pressure, and it should be
+sold that way — which is a stronger position than preparation, not a weaker
+one.
+
+The secondary-source caveat matters here: the 10 September 2026 financial-sector
+deadline comes from a vendor blog. **Verify against the decree before quoting
+the date to a client** — but the direction (in force, banking and credit
+scoring high-risk) is consistent across sources and with what the legal KB
+recorded independently.
+
+**Everywhere else, measured and stated as absence.** This is the region where
+"nothing found" is a finding rather than a hole in the research:
+
+| Jurisdiction | Status as reported, 2026 |
+|---|---|
+| Honduras | **No** legislation or regulatory guidance specifically addressing AI or generative AI in the financial sector |
+| Panama | **No** specific regulation directly addressing AI (as of March 2026) |
+| Argentina | Technology-neutral, risk-based supervision — **no** AI-specific regulation |
+| Mexico | CNBV's capacity outstripped by fintech growth; **no publicly available draft** AI law, and **no bill before Congress or the Senate** |
+| Brazil / Chile / Colombia | AI bill, framework and CONPES respectively, all at different speeds — none a financial-sector AI rule in force |
+
+Mexico corroborates pass 5 exactly: no dedicated financial-sector AI
+regulation, and open-finance secondary rules still unfinalised. The conclusion
+pass 5 drew holds — **a Mexican open-finance pitch is a readiness engagement,
+not a compliance one** — and now the AI side reads the same way.
+
+**Adoption and the named players.** Financial services leads AI use in the
+region: credit scoring for thin-file customers, real-time fraud detection, AML
+and conversational banking. Named at scale: **Nubank, Mercado Pago,
+Bancolombia, Itaú, Bradesco**. One vendor source makes a causal argument worth
+keeping because it matches pass 5's rails finding — tighter margins forced LATAM
+institutions into automation early as the only viable way to scale service.
+
+**Barriers, and they are Globant's actual addressable work.** Regional AI
+governance frameworks are described as **emerging and often informal**, and
+specialised AI talent is **concentrated in three or four cities**.
+Multinationals operating across the region carry cross-border compliance
+overhead that single-country players avoid. A region that has adopted AI faster
+than it has governed it, with governance expertise scarce and concentrated, is
+the clearest possible description of a market for **governance-and-evidence
+delivery** — which is the same deliverable the other three regions converge on,
+reached here by a fourth distinct route.
+
+**Informed gap — capital markets.** This pass searched the capital-markets
+plane and found **no LATAM-placed permissive open source**: no B3 or CVM
+reporting library, no regional FIX or trade-reporting tooling, nothing
+analogous to `bacen/pix-api` for securities. Pass 5's inversion holds and
+deepens: **LATAM leads this KB in payment rails and is last in both statutory
+accounting and capital markets.** The explanation is the same one pass 5 gave
+for SPED and CFDI — single-country formats have a single-country addressable
+developer population — and the realistic shape is likewise the same: integrate
+above the incumbent the client is already obliged to use.
+
+**Informed gap — regulators as AI adopters.** Nothing was found this pass on
+LATAM financial supervisors' own AI adoption. Globally only about a fifth of
+regulators are at advanced adoption and 48% of 130 surveyed are still
+exploring; no region-specific LATAM figure surfaced. Recorded as not measured,
+not as zero.
 ### Global / cross-region
 
 - **Agentic governance is the universal gap.** Accenture recommends a dedicated
@@ -952,6 +1232,103 @@ either conforms or it does not. Judgement work is what resists measurement —
 so an engagement that starts at the format layer **has a defensible number on
 day one**, and can fund the judgement layer from it.
 
+
+#### Pass 6 (2026-11-25) — open source follows the file that more than one party must read
+
+Pass 5 established: *open-source supply follows the file format, not the
+decision.* Pass 6 tested that on securities and derivatives and found the law
+needed a second clause, because **half the formats in that plane are specified
+to the byte and have nothing behind them.**
+
+| Format | Who must read it | Best permissive implementation |
+|---|---|---|
+| FIX | every counterparty | `quickfix-j/quickfixj` 1,161★, `da4089/simplefix` 255★ MIT |
+| SWIFT MT | every bank | `prowide/prowide-core` 296★ Apache-2.0 |
+| ISO 20022 | every bank | `prowide/prowide-iso20022` 240★ Apache-2.0 |
+| Metro 2 | lender **and** four bureaus | `moov-io/metro2` 130★ Apache-2.0 |
+| MiFIR RTS 22 | one regulator, via an ARM | **none** (2 results, unlicensed) |
+| EMIR REFIT | one trade repository | **none** (6 results, 1★ best) |
+| CAT | one processor | **none** (0 results) |
+| Form PF / N-PORT | the SEC, not republished | **none** (queries return game ports) |
+
+**The mechanism.** A many-to-many format is read by everyone who writes it, so
+reading someone else's message is how you find your own encoder's bug — a
+shared implementation has shared value and gets written and starred. A one-way
+submission is read by one party that does not publish its reader: the submitter
+gains nothing from sharing, cannot test against a second implementation, and
+often may not submit directly at all.
+
+**Second clause, the one that predicts.** Where a regulator **publishes the
+corpus it collects**, a reader ecosystem forms even though the submission is
+one-way — SEC EDGAR, Companies House (`kanedata/ixbrl-parse` 72★), EDINET
+(`matthelmer/edinet-tools` 59★). Where it keeps the data, nothing forms. **The
+published corpus, not the published schema, creates the open-source
+population.**
+
+This subsumes pass 5 rather than replacing it: a judgement produces no file at
+all, so nobody reads it, so there is nothing to share — the same mechanism at
+its limit.
+
+**Falsifiable prediction for the other eleven industries.** Pass 5 predicted
+mature permissive clustering on published interchange formats. Pass 6 says
+**roughly half of those will be empty, and names which half**: one-way
+regulatory submissions (healthcare quality reporting to a payer or CMS, energy
+REMIT filings to ACER, automotive type-approval dossiers) will be as bare as
+MiFIR, while many-to-many exchange formats (HL7/FHIR, IEC 61850, OpenTravel,
+GS1/EDIFACT) stay mature. The legal KB already produced a consistent data
+point without naming the mechanism: Brazil's DataJud publishes **metadata
+only**, and the tooling around it is correspondingly thin.
+
+**The commercial rule, which inverts pass 5's advice for exactly one plane.**
+Pass 5: *adopt the parser, build the decision.* In one-way regulatory reporting
+there is no parser to adopt and never will be — the client's ARM or trade
+repository owns that layer and is paid for it. So the engagement sits **on both
+sides of the vendor**: reconcile the submission against the firm's own books
+before it goes, and reconcile acknowledgements and rejections back against the
+trade store after. Deterministic oracle, no competition with the vendor, and it
+is where reportable-accuracy exposure actually sits.
+
+##### The licence taxonomy this KB had been missing: spec ≠ code ≠ data
+
+One organisation, three artefact types, three licence regimes, and GitHub's
+badge absent or wrong on most of them.
+
+| Class | Example | Licence | What it grants |
+|---|---|---|---|
+| Specification | `finos/common-domain-model` (297★), `finos/FDC3` (275★) | Community Specification License 1.0 (99 lines) | Rights over a **document** plus a patent commitment. **Not software rights.** GitHub says NOASSERTION |
+| Implementation | `finos/rune-dsl`, `finos/FDC3-Sail`, `finos/tracdap` | Apache-2.0 (201 lines) | Ordinary permissive software rights |
+| Document | `finos/ai-governance-framework` (121★) | CC-BY-4.0 (395 lines) | Rights over prose |
+| Data | `opensanctions/*` | **code MIT, data CC BY-NC 4.0** | Code free; **data non-commercial**, some files unlicensable at all |
+
+**The two most-starred repos in the FINOS list are not software.** And the
+OpenSanctions data trap is the expensive one: 1,543 stars of genuinely MIT
+screening code whose data is non-commercial, in a use case — screening a
+client's customers — that is commercial by definition.
+
+**Rule for the twelve KBs: read the licence of the data separately from the
+licence of the code, and never infer either from the other.** An OSI badge on
+a data repository describes the software that moves the data.
+
+##### Global numbers added this pass
+
+All from secondary sources and marked as such. Pass 4 and 5 already used the
+CCAF 2026 headline figures (81% adopting, 40% advanced, fintechs 47% vs
+incumbents 30%, ~20% of regulators advanced, privacy the top perceived risk at
+73%, four of the top five use cases in the back office) — **not repeated here.**
+New this pass:
+
+- **48% of the 130 regulatory authorities surveyed** are still "Exploring" or
+  not engaged with AI at all. The sharper framing of the supervisory gap: it is
+  not that regulators are behind, it is that **half of them have not started.**
+- **Agentic AI is in active adoption among 52% of industry respondents** —
+  the first figure in this KB putting agentic adoption above half.
+- Gartner, via secondary coverage: **40% of business software will include AI
+  that completes end-to-end tasks by the end of 2026.**
+- The **WEF / Accenture "AI Playbook for Financial Services 2026"** and the
+  **CCAF 2026 Global AI in Financial Services Report** (628 institutions, 151
+  jurisdictions) are both published as PDFs. **Read them directly before any
+  major pitch** rather than through roundups — this KB has now twice found
+  roundup figures that did not survive contact with the primary document.
 ## Regional asymmetry — the summary
 
 | Region | Binding AI-in-finance rules | Hard date to sell against | Posture |
@@ -1025,3 +1402,72 @@ supersedes the dates in the 2026-11-09 revision. The 2026-11-22 pass closed the
 Canada and EMEA-adoption gaps, added Japan and India, and recorded
 agent-initiated payments running in LATAM — and replaced the previous "no
 EMEA adoption data exists" conclusion, which was a query artefact.*
+
+### Gap register — pass 6 additions (2026-11-25)
+
+**Closed this pass:**
+
+- **~~The capital-markets plane.~~** Closed, and it was the largest vocabulary
+  hole in this KB. A census before the pass returned **zero** mentions of FIX
+  protocol work, FpML, MiFID/MiFIR, EMIR, SFTR, CAT, custody, securities
+  lending, T+1, Form PF, N-PORT, UCITS, AIFMD, CVM or B3. The plane is now
+  covered — including the finding that **half of it will never be populated by
+  open source** and why.
+- **~~FINOS, cited and never enumerated.~~** Closed. This KB referenced "FINOS"
+  19 times while `FDC3`, `morphir`, `waltz`, `rune-dsl`, `tracdap` and
+  `open-reg-tech-us-lcr` had **zero** mentions between them. The organisation
+  has **194 repositories**. Second confirmation of the pass-5 rule: *when a KB
+  cites an organisation by name, enumerate it.*
+- **~~The control-and-evidence platform.~~** Closed. Three passes concluded all
+  regions converge on a control and evidence layer without naming a permissive
+  platform. It is `finos/tracdap` (Apache-2.0, 58★), built on the premise that
+  a regulated model run must be reproducible from immutable versioned inputs.
+- **~~Counterparty reference data.~~** Closed. Every reconciliation, screening
+  and reporting pattern in this KB needed to answer "who is this counterparty"
+  and the KB had no entry. GLEIF/LEI tooling is permissive and live.
+
+**Corrections to entries already in this file — read these before quoting the
+summary table above:**
+
+- **Peru.** The table records "Peru 22 Jan 2026 (in force)". Pass 6 found a
+  reported **financial-sector deadline of 10 September 2026** under DS
+  115-2025-PCM, with banking and credit scoring classified **high risk**. That
+  date is now past, which changes Peru from a preparation play to a remediation
+  one. Secondary source — verify against the decree.
+- **Colorado.** The table gives 30 Jun 2026. Pass 6 found **three different
+  effective dates across three sources** (1 Feb 2026, 30 Jun 2026, and a
+  reference to it having been "originally slated" for Feb 2026). Treat the
+  Colorado date as **unresolved** and verify against the statute. This KB has
+  already been burned once by building a headline on a date that moved.
+- **EU AI Act Annex III.** The table's "deferred to 2 Dec 2027" is now
+  **independently corroborated**: an EMEA source reports the French regulator
+  becoming a Market Surveillance Authority under the AI Act on **2 December
+  2027**, and the legal KB reached 2027-12-02 by a separate research path on the
+  same day. Still both secondary — EUR-Lex verification remains outstanding —
+  but the direction is settled.
+- **MAS "Supervisory Notice on Governance of Autonomous AI Agents" (Aug 2026).**
+  Searched again, **still no primary source, second consecutive pass**. Should
+  now be treated as **not existing** and dropped from client material. The
+  verified artefact is the MAS **consultation on AI Risk Management
+  Guidelines**. The unverified MAS AI-assisted red-teaming requirement
+  (2026-07-01) is likewise still uncorroborated.
+
+**Still open, stated plainly:**
+
+- **Primary-source access, third pass.** `opensanctions.org` joins
+  `bankofengland.co.uk` on the list of hosts that **do not resolve from this
+  session** — they sit outside the session's allowed network domains. The
+  OpenSanctions licence split was recoverable from the repository READMEs, but
+  the commercial data-licence **pricing** was not. Any screening proposal must
+  obtain it before costing. This remains a gap in the instrument, not the world.
+- **LATAM capital markets.** Searched, nothing found: no B3 or CVM reporting
+  library, no regional FIX or trade-reporting tooling. Recorded as an **informed
+  gap**, consistent with the single-country-format explanation this KB already
+  uses for SPED and CFDI.
+- **LATAM supervisors' own AI adoption.** No region-specific figure surfaced.
+  Not measured, not zero.
+- **Named UPI-ecosystem players** with AI-specific payment products — **fourth
+  pass with nothing found.** At four passes this stops being a research gap and
+  becomes a finding in its own right: India's rails are mature and its
+  permissive agent-layer tooling is not, and a future pass should write that up
+  as the conclusion rather than re-running the query.

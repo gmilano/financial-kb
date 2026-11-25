@@ -1,7 +1,7 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # Financial Repos — Trending Log
@@ -9,6 +9,87 @@ updated: 2026-11-22
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-25 (pass 6)
+
+**Theme of the week: FINOS was cited 19 times in this KB and never enumerated.
+It has 194 repositories and most of its best assets had zero mentions.**
+
+### Actively committed FINOS repos — snapshot taken 2026-11-25
+
+Fourteen of the repos below show a push dated **today**. This is not a
+foundation parking standards; it is a live monorepo-scale organisation.
+
+| Repo | Licence | Stars | Pushed | What it is |
+|---|---|---|---|---|
+| https://github.com/finos/legend | Apache-2.0 | 1,558 | 2026-11-25 | Data modelling + governance platform (Goldman Sachs origin) |
+| https://github.com/finos/architecture-as-code | Apache-2.0 | 471 | 2026-11-25 | Machine-checkable architecture models (CALM) |
+| https://github.com/finos/common-domain-model | **Community Spec License 1.0** | 297 | 2026-11-25 | The ISDA CDM. A **specification**, not software |
+| https://github.com/finos/FDC3 | **Community Spec License 1.0** | 275 | 2026-11-19 | Desktop interop standard. Also a specification |
+| https://github.com/finos/git-proxy | Apache-2.0 | 270 | 2026-11-25 | Push protections and policy enforcement on top of Git |
+| https://github.com/finos/morphir | Apache-2.0 | 219 | 2026-11-25 | Business logic as a portable IR |
+| https://github.com/finos/TimeBase-CE | Apache-2.0 | 132 | 2026-11-25 | Market-data time-series database |
+| https://github.com/finos/ai-governance-framework | **CC-BY-4.0** | 121 | 2026-11-18 | Governance framework. A **document**, not software |
+| https://github.com/finos/traderX | Apache-2.0 | 110 | 2026-11-25 | Reference multi-service trading app |
+| https://github.com/finos/vuu | Apache-2.0 | 63 | 2026-11-25 | View server + blotter UI for fast tabular data |
+| https://github.com/finos/tracdap | Apache-2.0 | 58 | 2026-11-22 | Analytics platform for **regulated** environments |
+| https://github.com/finos/FDC3-Sail | Apache-2.0 | 53 | 2026-11-23 | Working implementation of the FDC3 standard |
+| https://github.com/finos/rune-dsl | Apache-2.0 | 50 | 2026-11-25 | Grammar + generators behind the CDM — the **code** |
+| https://github.com/finos/open-reg-tech-us-lcr | Apache-2.0 | 17 | 2026-10-30 | US Liquidity Coverage Ratio as executable code |
+| https://github.com/finos/cdm-object-builder | Apache-2.0 | 13 | 2026-11-23 | Build/validate CDM trade objects |
+| https://github.com/finos/aigf-mcp-server | Apache-2.0 | 10 | 2026-11-09 | The AI governance framework served over MCP |
+
+### The headline for anyone about to add a FINOS dependency
+
+**The two most-starred repos in the list are not software.**
+`common-domain-model` (297★, 142 forks) and `FDC3` (275★) are licensed under
+the **Community Specification License 1.0** — 99 lines, confirmed byte-for-byte
+on both. That licence governs a specification document and makes a patent
+commitment to implementers; it does **not** grant the software rights an
+Apache-2.0 or MIT grant does. GitHub's API reports `NOASSERTION` for both,
+which is why they have sat in this KB as "licence unclear" instead of
+"different kind of artefact".
+
+The implementations are separate repos and are properly Apache-2.0:
+`rune-dsl`, `rune-common`, `cdm-object-builder` for CDM; `FDC3-Sail`,
+`fdc3-dotnet`, `backplane` for FDC3. **Depend on those.**
+
+Third class, same org: `ai-governance-framework` and `ai-readiness` are
+**CC-BY-4.0** — prose. Useful prose, not a library.
+
+### Two licence states that are not "unlicensed"
+
+- `quickfix-j/quickfixj` (1,161★, pushed 2026-11-24) reports NOASSERTION. The
+  file is **"The QuickFIX Software License, Version 1.0"**, 45 lines, carrying
+  the BSD redistribution clause. Permissive in substance, custom in form —
+  usable, but have it reviewed before redistribution. **Fifth consecutive pass
+  in which a NOASSERTION repo in this KB resolved to a real permissive grant.**
+- `finos/waltz` (240★) — licence **not determinable**. Probed 3 branches ×
+  10 filenames at the repository root; all 404. Same shape as pass 5's
+  `OpenPeppol/peppol-bis-invoice-3` finding: when a repo keeps no files at its
+  root, `raw.githubusercontent.com` cannot distinguish "no licence" from
+  "nothing at this path". Recorded as undeterminable, **not** as unlicensed.
+- `finos/OpenMAMA` (178★) is **LGPL-2.1** (503 lines as `LICENSE.md`) —
+  copyleft, flagged, not a default choice for client work.
+
+### Capital-markets message layer, added to the KB this week
+
+| Repo | Licence | Stars | Pushed | Format |
+|---|---|---|---|---|
+| https://github.com/quickfix-j/quickfixj | QuickFIX SL 1.0 | 1,161 | 2026-11-24 | FIX (JVM) |
+| https://github.com/da4089/simplefix | MIT | 255 | 2026-06-01 | FIX (Python) |
+| https://github.com/prowide/prowide-core | Apache-2.0 | 296 | 2026-11-19 | All SWIFT MT (FIN) messages |
+| https://github.com/prowide/prowide-iso20022 | Apache-2.0 | 240 | 2026-11-20 | All ISO 20022 messages |
+| https://github.com/esanchezros/quickfixj-spring-boot-starter | Apache-2.0 | 167 | 2026-11-25 | QuickFIX/J wired into Spring Boot |
+
+### Channel note for the next pass
+
+`GET /orgs/{org}/repos` → **403** in this session ("sessions are bound to their
+configured repositories"). `search/repositories?q=org:<name>` → **works and
+paginates**, 30 per page. That is the only channel that renders a whole
+organisation here, and it is what produced both this pass's FINOS census and
+pass 5's moov-io census. `curl -sI github.com/<slug>` remains **403 for
+everything** through the proxy — **sixth consecutive pass measuring this.**
+`git ls-remote` remains the only reliable existence check: 54/54 resolved.
 ## 2026-11-22 (pass 5)
 
 ### The byte-count rule this log published yesterday is wrong — use line count

@@ -1,7 +1,7 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # Composition Patterns — Financial Services
@@ -967,3 +967,175 @@ conformance gate with a dated evidence trail. It produces a number in week one
 — files conforming, defects caught before submission — which per trend #19 is
 exactly what the 76% of large institutions who cannot measure AI value are
 missing, and it is what funds the judgement work above it.
+
+---
+
+## Pattern 19 — Reporting assurance either side of the ARM (the pattern for a plane with no parser)
+
+**Applies to:** MiFIR RTS 22, EMIR REFIT, SFTR (EMEA); CAT, Form PF, N-PORT
+(North America); ASIC/MAS/HKMA derivative reporting rewrites (APAC).
+
+**Why this pattern exists.** Every other reporting pattern in this KB starts by
+adopting a permissive format library. Here there is none and there never will
+be — pass 6 measured it (MiFIR 2 results, EMIR 6 with a 1-star best, CAT zero)
+and `intel/trends.md` §21 explains why: these are one-way submissions to a
+single destination that publishes no reader, usually reached through a licensed
+ARM or trade repository that sells exactly that layer.
+
+**So do not build the format layer.** The client already pays for it. Build on
+**both sides of it**, where the client's actual exposure is: reportable
+accuracy, not transport.
+
+**The wiring.**
+
+1. **Trade store → pre-submission reconciliation.** Before the extract goes to
+   the ARM, reconcile it against the firm's own books: does every reportable
+   trade appear, does every appearing trade exist, do notional, counterparty,
+   venue, timestamp and instrument identifier agree with the front-office
+   record? This is deterministic and needs no model.
+2. **Field-level validation from a design reference.**
+   `amol-vishwarupe/EMIR` (1★, **no licence file**, pushed 2026-08-08) packages
+   50 ESMA-style functional validation rules. **Read it for the rule shapes and
+   reimplement** — unlicensed means not adoptable, and this KB's maturity rule
+   bars a 1-star repo from a client deliverable regardless.
+   `shyamramamoorthy/mifir-transaction-reporting-engine` (0★, unlicensed) is the
+   equivalent design reference for RTS 22's field set.
+3. **Counterparty identity resolved, not guessed.** `ggravlingen/pygleif` (MIT,
+   23★) or `olgasafonova/gleif-mcp-server` (MIT, 8★) against the GLEIF register.
+   A reporting break caused by a stale or wrong LEI is one of the most common
+   and most avoidable rejection classes.
+4. **Submit through the client's existing ARM / TR.** Unchanged. Do not touch
+   it.
+5. **Post-submission acknowledgement reconciliation — the half everyone
+   skips.** Pull the ARM/TR acknowledgements, rejections and reconciliation
+   feedback and match each one back to the originating trade. An unmatched
+   acknowledgement is an open item; a rejection that nobody routed back to an
+   owner is an unreported trade.
+6. **Model, strictly on the narrative side.** The LLM triages rejection
+   clusters, drafts the explanation of *why* a class of trades is failing, and
+   proposes the mapping fix. It is **obliged to cite the trade id and the
+   field**; a finding whose citation does not resolve is discarded by the
+   verifier. The model never edits a report, never submits and never closes an
+   item.
+7. **Append-only reporting log** keyed by trade id and reporting date, with the
+   human decision recorded against each item.
+
+**Why this closes.** The deliverable is a reconciliation with a number in it —
+*N trades reportable, N submitted, N acknowledged, N rejected, N unmatched* —
+available in week one, defensible to a reviewer, and not competing with any
+incumbent. It is the §21 corollary applied: the format layer is bought, the
+judgement layer is built.
+
+**Platform note.** Run the deterministic half on `finos/tracdap` (Apache-2.0)
+if the client will have it: immutable versioned inputs mean each reporting run
+is reproducible on demand, which is the question a regulator asks after a
+reportable-accuracy finding.
+
+## Pattern 20 — Sanctions screening with a differential oracle and an honest data licence
+
+**Applies to:** all regions. The licence constraint is global.
+
+**The assets, and the split that has to be understood before anything is
+proposed.**
+
+| Component | Repo | Licence | Stars |
+|---|---|---|---|
+| Screening API (self-hosted) | https://github.com/opensanctions/yente | MIT **(code)** | 189 |
+| Second implementation of the same scoring contract | https://github.com/apognu/motiva | MIT | 16 |
+| Entity resolution / dedup | https://github.com/opensanctions/nomenklatura | MIT | 274 |
+| Entity data model | https://github.com/opensanctions/followthemoney | MIT | 122 |
+| Name/identifier cleaning | https://github.com/opensanctions/rigour | MIT | 74 |
+| Recall benchmark harness | https://github.com/Divine16/Sanctions-screening-benchmark | MIT | 33 |
+| Alternative screener, 35+ lists | https://github.com/AbgarSim/sieve-aml | MIT | 16 |
+| **The data** | OpenSanctions datasets | **CC BY-NC 4.0**, some files unlicensable | — |
+
+**Step zero, before any technical work: price the data licence.** The code is
+MIT and genuinely free. The data is **non-commercial**, and screening a
+client's customers is commercial by definition — `yente`'s own README says
+commercial use "may require a data licence for OpenSanctions data". A pilot
+that works on CC-BY-NC data and cannot go to production is the worst possible
+place to discover this. (`opensanctions.org/licensing` does not resolve from
+this session's network policy, so the tiers must be obtained directly.)
+
+**The differential oracle, which is what makes this pattern worth a number.**
+`yente` and `motiva` implement **the same matching and scoring contract
+independently**, both MIT. Feed both the same entity set and the same query
+load and **diff the scores and the match sets**. Divergence is a free
+correctness signal on the hardest part of screening — fuzzy name matching
+across transliterations, orderings and corporate suffixes — with no vendor
+oracle required.
+
+This is Pattern 16's mechanism (two permissive implementations of one
+specification give a correctness oracle for free) applied to a **scoring
+contract** rather than a file format, which is the first time this KB has been
+able to do that.
+
+**Then calibrate against a published benchmark.**
+`Divine16/Sanctions-screening-benchmark` (MIT, 33★) measures **recall** for
+name screening. Recall is the number that matters and the number vendors avoid:
+a screener with a conveniently low false-positive rate may simply be missing
+people. Run it before and after any threshold change, and keep the series.
+
+**Where the model goes, and where it does not.**
+
+- Deterministic: list ingestion, name normalisation (`rigour`), candidate
+  generation, scoring, threshold application, the audit record.
+- Model: **alert narrative and triage ordering only** — drafting why a
+  candidate resembles a listed entity, ranking a queue by likely relevance. It
+  must cite the list, the entry id and the matched field.
+- **The model never clears an alert, never adjusts a threshold, and never
+  decides a relationship.** A cleared sanctions alert is a regulatory decision
+  with personal liability attached.
+
+**What the client gets in week one:** a recall figure for their current
+screening configuration, measured on a published benchmark, plus a diff between
+two independent implementations of the matching contract. Both are numbers, and
+neither requires the client to have adopted anything yet.
+
+## Pattern 21 — Depend on the implementation, not the standard (a procurement gate, not an architecture)
+
+**Applies to:** every engagement that touches FINOS, and by extension any
+standards-body repository.
+
+**The failure this prevents.** An architect adds `finos/common-domain-model` to
+a build. It has 297 stars, 142 forks, a push dated today and a `LICENSE.md`.
+Nothing looks wrong. But that file is the **Community Specification License
+1.0** (99 lines) — it governs a *specification document* and makes a patent
+commitment to implementers. It is **not** a software licence and does not grant
+what an Apache-2.0 grant grants. GitHub's API reports `NOASSERTION`, which most
+tooling renders as "unknown" and most reviewers read as "probably fine".
+
+**The gate — three checks, mechanical, add to Pattern 9's script.**
+
+1. **Read the licence name from the FIRST NON-BLANK LINE.** Not from a
+   body-wide grep. Pass 6 caught its own probe labelling `danielep71/K-CVA` as
+   **AGPL** when it is **MPL-2.0**, because MPL-2.0's Exhibit B names the GNU
+   GPL, LGPL and AGPL as secondary-licence options. Any licence with a
+   compatibility exhibit trips a body grep.
+2. **Classify the artefact before classifying the licence.** If the first line
+   is `# Community Specification License 1.0` (99 lines) the repo is a
+   **standard**; if it is `Attribution 4.0 International` (395 lines) it is a
+   **document**; if `Mozilla Public License Version 2.0` (373 lines) it is
+   weak-copyleft **code**. Only Apache-2.0 (201–202 lines), MIT (19–23) and
+   BSD-3 (~28) are permissive code grants.
+3. **If the artefact is a standard, find its implementation repo.** It is
+   almost always a sibling in the same org, lower-starred, properly
+   Apache-2.0:
+
+| Standard (do not depend on) | Implementation (depend on this) |
+|---|---|
+| `finos/common-domain-model` (CSL-1.0, 297★) | `finos/rune-dsl`, `finos/rune-common`, `finos/cdm-object-builder` — all Apache-2.0 |
+| `finos/FDC3` (CSL-1.0, 275★) | `finos/FDC3-Sail`, `finos/fdc3-dotnet`, `finos/backplane` — all Apache-2.0 |
+| `finos/ai-governance-framework` (CC-BY-4.0, 121★) | `finos/aigf-mcp-server` — Apache-2.0 |
+
+**The generalisation, because it is not about FINOS.** In a standards
+organisation **the repo with the stars is the standard and the repo with the
+rights is the implementation**, and they are different repos with different
+licences. Star count is a popularity signal for the *standard*, which is
+exactly backwards as a dependency signal.
+
+**Fourth check, for data repositories.** If the repository ships or produces
+**data**, read the data licence separately. `opensanctions/opensanctions` is
+MIT code producing **CC BY-NC 4.0** data with some third-party files its own
+maintainers state they cannot license at all. An OSI badge on a data repository
+describes the software that moves the data. See Pattern 20.

@@ -1,7 +1,7 @@
 ---
 industry: financial
 region: Global
-updated: 2026-11-22
+updated: 2026-11-25
 ---
 
 # Vertical Platforms — Financial Services
@@ -384,3 +384,95 @@ format serves one market, where commercial fiscal-emitter vendors already own
 the ground. For a LATAM engagement the realistic shape is **integrate with the
 fiscal emitter the client is already obliged to use** and put the agent layer
 above it — not rebuild the emitter.
+
+---
+
+## Pass 6 (2026-11-25) — the capital-markets stack, and a deployable screening service
+
+Earlier passes of this file answered "what is the Fineract of banking" for
+retail and payments. This pass answers it for **capital markets**, where the
+assembled answer is not one platform but a FINOS stack whose pieces are each
+Apache-2.0 and independently adoptable.
+
+### Deployable platforms added this pass
+
+| Platform | Repo | Licence | Stars | Pushed | What you get out of the box |
+|---|---|---|---|---|---|
+| TracDAP | https://github.com/finos/tracdap | Apache-2.0 | 58 | 2026-11-22 | A data/analytics platform whose premise is regulated use: immutable, versioned models and datasets so every run is reproducible by construction |
+| Legend | https://github.com/finos/legend | Apache-2.0 | 1,558 | 2026-11-25 | Model a financial domain once, then generate stores, APIs, transformations and lineage from that model |
+| TraderX | https://github.com/finos/traderX | Apache-2.0 | 110 | 2026-11-25 | A full reference trading application across many services — a realistic integration target to put an agent into |
+| Vuu | https://github.com/finos/vuu | Apache-2.0 | 63 | 2026-11-25 | View server plus HTML5 grid for large, fast-updating tabular data: the blotter |
+| TimeBase CE | https://github.com/finos/TimeBase-CE | Apache-2.0 | 132 | 2026-11-25 | Time-series store built for market data rates |
+| yente | https://github.com/opensanctions/yente | MIT (code) | 189 | 2026-11-25 | A self-hostable screening API: entity search and bulk matching against sanctions/PEP data. **Data licensed separately — see the warning below** |
+| sieve-aml | https://github.com/AbgarSim/sieve-aml | MIT | 16 | 2026-11-16 | Screening across 35+ official lists with a nightly-refreshed database and a dashboard |
+| Fluxnova (BPM) | https://github.com/finos/fluxnova-bpm-platform | Apache-2.0 | 116 | 2026-11-25 | BPMN/DMN process and decision engine under FINOS governance — the deterministic workflow spine an agent should propose into rather than replace |
+
+### Why TracDAP is the one to lead with
+
+This KB spent three passes establishing that the deliverable all regions
+converge on is a **control and evidence layer**, and had no permissive platform
+to name. TracDAP is built on the assumption that a model run must be
+reconstructible from versioned inputs — so the audit trail is a property of the
+platform rather than a reporting exercise performed later under deadline.
+
+The practical difference in an engagement: on a general ML platform, "show the
+examiner how this decision was reached" is a project. Here it is a query.
+
+Pair with `finos/morphir` (219★, Apache-2.0) so the rule itself is a readable,
+portable IR rather than Python a reviewer has to take on trust. Together they
+answer the two questions a model-risk function actually asks — *what was the
+rule*, and *what exactly ran*.
+
+### Fluxnova, and the architectural point it makes
+
+`finos/fluxnova-bpm-platform` (116★) and `finos/fluxnova-modeler` (32★, MIT)
+give a BPMN/DMN engine under foundation governance. This matters for agent
+design more than it looks: everything this KB has learned about financial
+agents says the **deterministic** parts — clocks, limits, segregation of
+duties, approval chains — must live outside the model. A BPMN/DMN engine is
+where they live. The agent proposes a transition; the engine decides whether
+that transition is permitted; the engine, not the model, holds the state.
+
+That is the same conclusion Patterns 16 and 17 reached from the dispute and
+Metro 2 planes, arrived at from the platform side.
+
+### The warning that has to travel with the screening row
+
+`yente` is **MIT code that is not much use without data**, and the data is
+**CC BY-NC 4.0** — non-commercial — with some files under `datasets/` being
+third-party material OpenSanctions states it "cannot license at all". Its own
+README says commercial use "may require a data licence".
+
+For a client engagement this means: **the software is free, the screening is
+not.** Price the data licence as a line item at proposal time. A screening
+pilot that works beautifully on CC-BY-NC data and then cannot go to production
+is the worst possible discovery point, and it is entirely avoidable by reading
+two paragraphs of a README.
+
+The same split applies to any reference-data platform: `pygleif` and
+`gleif-mcp-server` are MIT, and GLEIF's LEI data is genuinely open — but that
+is a fact about GLEIF's terms, **not** an inference from the repo's badge.
+Check each one.
+
+### Verification gap, declared
+
+`opensanctions.org/licensing`, which carries the commercial data tiers, **does
+not resolve from this session** — the host sits outside the session's allowed
+network domains. The licence *split* above is quoted from the repositories'
+own READMEs, which state it explicitly. The *pricing* of the commercial tier
+is not in this KB and must be obtained before any screening proposal is costed.
+
+### Fluxnova provenance — worth knowing before you propose it
+
+`finos/fluxnova-modeler`'s licence file is MIT and reads
+`Copyright (c) 2015-2025 Camunda Services GmbH`, and
+`finos/fluxnova-bpm-platform`'s is Apache-2.0 (177 lines, the no-appendix
+variant). Fluxnova is the **FINOS-hosted continuation of the Camunda 7
+community platform**, built from that codebase under foundation governance.
+
+That is a concrete answer to a question that comes up in a lot of financial
+engagements: a client standing on Camunda 7 has a **governed open-source
+continuation path** rather than only a commercial migration. Confirm the
+project's own current statement of scope and support before committing a client
+to it — the provenance here is read from licence headers and org membership,
+which establishes lineage, not a roadmap.
