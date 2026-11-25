@@ -808,3 +808,224 @@ fully permissive and usable; 81 stars between them would have been discarded.
 |---|---|---|
 | https://github.com/Systemorph/IFRS17CalculationEngine | MIT | `LICENSE` and `LICENSE.md` both **404 on `main` and `master`**. Four branches exist; `main` resolves. The top-starred IFRS 17 asset has **no readable licence file** |
 | https://github.com/lifelib-dev/lifelib-products | none | No licence file, while `lifelib` itself is MIT. **Licence varies per repo inside one org** — never infer an org-wide licence |
+
+## Pass 8 (2026-11-25) — the statistical plane: the data an agent must *cite*, and the central bank that shipped an agent
+
+Passes 5–7 established this KB's law in three clauses: open-source supply
+follows **the file format**, specifically the file that **more than one party
+must read**, and only where **the spec is readable without paying to join**.
+Every plane measured so far was an *outbound* one — the institution computes
+something and files it (Metro 2, FinCEN SAR, iXBRL, EDINET, EN 16931, Solvency
+II). Pass 8 measures the **inbound** plane for the first time: the
+authoritative reference and macroeconomic data an institution *reads* in, and
+the published format it arrives in — **SDMX, ISO 17369**.
+
+This plane was at **zero** in this KB. Not thin: absent. `grep -ri sdmx` over
+all eight files before this pass returned nothing.
+
+### Why it was at zero, and it is not because it is empty
+
+`sdmx` as a single term returns **494 repositories**, with institutional owners
+and today's commits. The plane was missing because of **vocabulary collision,
+in its sharpest form yet measured**: the acronyms of the world's principal
+statistical publishers are all software words.
+
+| Query | Top results actually returned | What was wanted |
+|---|---|---|
+| `ecb` | `ECBSR` (super-resolution, 391★), `cppDES` (DES/3DES **ECB cipher mode**, 117★) | European Central Bank |
+| `abs` | `abseil-cpp` (18,212★), `abstreet` | Australian Bureau of Statistics |
+| `imf` | `MeanFlow`/`iMF` (1,220★), `ImFileDialog`, Netflix `photon` (**Interoperable Master Format**) | International Monetary Fund |
+| `istat` | `iStats` Ruby gem for **mac CPU stats** (2,456★), `istatd` | Istituto Nazionale di Statistica |
+
+**Four of the five institutions that publish the macro data every credit and
+treasury model consumes are unreachable by their own names.** This is the
+`fincen` finding of pass 5 inverted: there, the library was named after the
+agency and the consultant's phrase missed it; here, the agency's name is taken
+by unrelated software. Both failures are the same root cause — **the query
+vocabulary is not the artefact vocabulary** — and both are only fixed by
+censusing the **format** (`sdmx`) and the **owner** (`org:bis-med-it`), never
+the institution's initials.
+
+### The headline: a central bank published an agentic AI framework, Apache-2.0
+
+`bis-med-it/marco-BIS` — **MaRCo@BIS, the MAcroeconometric Research
+Companion** — is an **agentic-AI skill framework released by the Bank for
+International Settlements** as a public good alongside BIS Working Paper no
+1395 (Lombardi, Park and Perez-Cruz, 2026). Apache-2.0, 89★, pushed
+2026-11-12.
+
+Read its own description of its shape, because it is the architecture this KB
+has been arguing for across seven passes, published by the central banks' own
+bank:
+
+- A **7-stage workflow with human-in-the-loop confirmation at every important
+  decision** — model selection, variables, lags, identification, sample,
+  sensibility checks, reporting.
+- **Each choice states its source** (the user, a dictionary entry, the
+  knowledge base, or the literature). Provenance is structural, not a prompt
+  instruction.
+- The agent is instructed to **flag anomalies before they reach final
+  results** — price puzzle, explosive root, weak instrument. Named failure
+  modes, checked deterministically.
+- Three parts: **skills as plain Markdown**, a **reference Python library
+  covered by more than 1,000 tests**, and a **dictionary of canonical paper
+  specifications paired with worked replications**.
+- Verification is a command: `pytest tests/test_replications_smoke.py
+  --runslow` runs **every replication against its paper targets**.
+
+**Why this matters commercially, stated plainly.** This KB has repeatedly had
+to argue that the deterministic layer must sit outside the model and that the
+agent must cite. For any central-bank, supervisor or treasury engagement, that
+argument no longer has to be made from first principles — **the BIS has
+published a reference implementation of it, permissively licensed, with a
+regression suite**. It is the strongest single citation in this KB for the
+"model proposes, code decides, every figure cites" architecture.
+
+Two cautions that must travel with it: the data CSVs are **not distributed**
+(FRED panels are downloaded by the user, and the raw download needs metadata
+rows stripped before the loader reads it), and the authors state it is **not
+tested on macOS**.
+
+### Agentic assets added this pass — 13 rows, all verified by `ls-remote` and licence read
+
+The second finding of this pass is that **this plane grew an MCP layer in the
+last ninety days.** Nine of the thirteen rows below were pushed within the last
+month; the oldest non-trivial one dates from March 2026. This is the newest
+agent surface in this KB.
+
+| Agent / asset | Repo | Licence (verified) | ★ | Last push | Region | What it does |
+|---|---|---|---|---|---|---|
+| MaRCo@BIS | https://github.com/bis-med-it/marco-BIS | Apache-2.0 (175 lines) | 89 | 2026-11-12 | Global | BIS agentic macroeconometric research companion; skills + 1,000-test library + replication dictionary |
+| `us-gov-open-data-mcp` | https://github.com/lzinga/us-gov-open-data-mcp | MIT (20 lines) | 113 | 2026-11-02 | North America | MCP server + TS SDK over 40+ US government data APIs |
+| `istat_mcp_server` | https://github.com/ondata/istat_mcp_server | MIT (20 lines) | 24 | 2026-11-22 | EMEA | Italian official statistics (ISTAT) over the SDMX API |
+| `tuik-mcp` | https://github.com/orhoncan/tuik-mcp | **No licence file** (12 names × 3 refs) | 16 | 2026-09-20 | EMEA | Turkish statistical institute (TÜİK) SDMX REST — **do not depend on it** |
+| `mcp-statcan` | https://github.com/Aryan-Jhaveri/mcp-statcan | MIT (20 lines) | 8 | 2026-11-06 | North America | Statistics Canada, 7,000+ Canadian series |
+| `oecd-mcp-server` | https://github.com/cyanheads/oecd-mcp-server | Apache-2.0 (200 lines) | 5 | 2026-11-16 | Global | 1,500+ OECD statistical datasets |
+| `imf-mcp-server` | https://github.com/cyanheads/imf-mcp-server | Apache-2.0 (200 lines) | 4 | 2026-11-13 | Global | IMF **SDMX 3.0** macro dataflows |
+| `ecb-mcp` | https://github.com/scka-de/ecb-mcp | MIT (20 lines) | 4 | 2026-03-31 | EMEA | ECB data: FX rates, interest rates |
+| `open-economics` | https://github.com/felipegambettadesouza6-jpg/open-economics | MIT (20 lines) | 2 | 2026-09-12 | LATAM | No-auth API + MCP server for official **Brazilian** economic data |
+| `gingado` | https://github.com/bis-med-it/gingado | Apache-2.0 (200 lines) | 41 | 2026-11-19 | Global | BIS machine-learning library for economics and finance |
+| `fred-mcp-server` | https://github.com/stefanoamorelli/fred-mcp-server | **AGPL-3.0** (660 lines) | 135 | 2026-08-22 | North America | FRED (Federal Reserve Economic Data) — copyleft, see below |
+| `openecon-data` | https://github.com/hanlulong/openecon-data | **AGPL-3.0** (660 lines) | 95 | 2026-11-21 | Global | 330K indicators (FRED, World Bank) packaged for agents — copyleft |
+| `Equibles` | https://github.com/daniel3303/Equibles | **AGPL-3.0** (660 lines) | 248 | 2026-11-25 | Global | Self-hosted financial-data MCP server — copyleft |
+
+One more, recorded for completeness and **not** recommended: `ValueCell-ai/valuecell`
+(https://github.com/ValueCell-ai/valuecell, Apache-2.0, 200 lines, **11,068★**)
+is a community multi-agent platform for financial applications whose last push
+was **2026-03-09** — over eight months stale at a five-figure star count. It is
+this KB's §9 counter-trend (archived and stalled projects still topping the
+charts) in its purest form, and the reason every row in this table carries a
+`Last push` column.
+
+### The licence pattern on the MCP layer, and it has a commercial reading
+
+Sorted by what the server wraps:
+
+- **Single-institution servers are permissive.** ISTAT (MIT), ECB (MIT),
+  StatCan (MIT), Brazil (MIT), OECD (Apache-2.0), IMF (Apache-2.0),
+  US gov (MIT) — **seven of eight**, the exception being TÜİK, which has no
+  licence file at all.
+- **Multi-source aggregators are AGPL-3.0.** `Equibles` (248★),
+  `openecon-data` (95★) — where the *aggregation across publishers* is the
+  product, the licence protects it.
+- **The honest counterexample:** `fred-mcp-server` (135★) wraps a *single*
+  source and is still AGPL-3.0. So the pattern is a tendency with a named
+  exception, not a rule — stated that way deliberately.
+
+**What to do with it:** a per-institution server is a safe dependency for a
+client deliverable; an aggregator is not, and the aggregation it performs is
+precisely the part that is cheap to rebuild over permissive per-publisher
+servers. Compose the MIT/Apache servers; do not link the AGPL aggregator into
+a client codebase.
+
+### Licence method — two new tiers, and a probe defect that would have published a wrong row
+
+Pass 5 corrected the licence gate from byte-bands to **line counts**. Pass 6
+added spec/code/data classes. This pass breaks the line-count gate twice and
+fixes it.
+
+**Tier 8 — the licence is declared in a package manifest, and there is no
+licence file to read.** The statistical plane lives substantially in R, and
+**CRAN declares licences in `DESCRIPTION`, not in `LICENSE`.** Seven
+repositories, every one reported by GitHub as `NONE` or `NOASSERTION`:
+
+| Repo | ★ | GitHub says | `DESCRIPTION` says | Reality |
+|---|---|---|---|---|
+| https://github.com/rOpenGov/eurostat | 257 | `NOASSERTION` | `BSD_2_clause + file LICENSE` | **BSD-2-Clause, permissive** |
+| https://github.com/eblondel/rsdmx | 111 | `NONE` | `GPL (>= 2)` | **GPL-2+, copyleft** |
+| https://github.com/expersso/OECD | 147 | `NONE` | `CC0` | **CC0, public-domain dedication** |
+| https://github.com/eurostat/restatapi | 36 | `NONE` | `EUPL` | **EUPL, copyleft** |
+| https://github.com/ilostat/Rilostat | 40 | `NOASSERTION` | `BSD_2_clause + file LICENSE` | **BSD-2-Clause, permissive** |
+| https://github.com/MattCowgill/readabs | 114 | `NOASSERTION` | `MIT + file LICENSE` | **MIT** |
+| https://github.com/Eflores89/inegiR | 54 | `NONE` | `CC0` | **CC0** |
+
+**Seven repositories, one label, five different licences — BSD-2, GPL-2+, CC0,
+EUPL and MIT — spanning permissive, copyleft and public domain.** You cannot
+default-assume in either direction, and the two most-starred are on opposite
+sides of the copyleft line (`rOpenGov/eurostat` BSD-2 at 257★, `rsdmx` GPL-2+
+at 111★). Where a `LICENSE` file *does* exist in an R package it is often a
+**two-line CRAN stub** (`ilostat/Rilostat`: `YEAR: 2026` / `COPYRIGHT HOLDER:
+International Labour Organization`, 62 bytes) which names no licence at all —
+so the probe does not merely miss the answer, it finds a file and learns
+nothing. **Generalises to every ecosystem with a manifest: R → `DESCRIPTION`,
+Python → `pyproject.toml`, Node → `package.json`, Rust → `Cargo.toml`, Java →
+`pom.xml`.**
+
+**Tier 9 — the short-form grant, where the pointer *is* the licence.**
+`bis-med-it/pysdmx` and `bis-med-it/sdmx-rest4js` carry a **14-line, ~648-byte**
+LICENSE reading `Copyright (c) 2023, Bank for International Settlements / The
+pysdmx python library is licensed under the Apache License, Version 2.0` plus
+the standard disclaimer. That is a **valid Apache-2.0 grant by incorporation**,
+and a gate calibrated on 175–201 lines rejects it. It is distinct from pass 4's
+pointer case (`bankstatementparser`), where the pointer led to a second,
+fetchable full-text file: **here there is no second file, and the short text is
+the whole grant.** A below-band count therefore means *read it*, and the
+outcome is now one of three — a pointer to a real file, a self-contained short
+grant, or a notice that grants nothing (`visa/trusted-agent-protocol`).
+
+**The probe defect, and it is the one that would have published a wrong row.**
+Probing `sdmx-twg/sdmx-rest` returned a **non-404 body of 44 lines / 1,522
+bytes** at `LICENSE.rst`, which a length classifier would happily have
+measured and filed. Re-fetching every ref directly returned **404 on all three
+licence names across `main`, `master` and `develop`** while `README.md`
+returned 200 on `master` — the repo has **no licence file**, and the 44-line
+body was a transient proxy artefact. It was caught for exactly one reason:
+**no licence marker matched**, so it was read instead of recorded.
+
+> **Hardened rule, supersedes the length step of the Pattern 9 gate:
+> a length measurement is valid only *after* a licence marker has matched.
+> Marker first, length second. "Marker UNKNOWN" is never data — it means
+> re-fetch and read.**
+
+Line-count bands, refined (±1 line, depending on trailing newline — measured
+across all 14 files read this pass): **MIT 20–21** · **Apache-2.0 short-form
+14** · **Apache-2.0 without appendix 175–176** · **Apache-2.0 full 200–201** ·
+**BSD-3 ~28** · **LGPL-3.0 187** · **AGPL-3.0 660–661** · **GPL-3 ~674** ·
+**EUPL-1.2 286** (new this pass, 13,826 B, `amattioc/SDMX`).
+
+### Census tabulated — what was asked and what came back
+
+Recorded so the zeros are informed, per this KB's standing rule that silence
+must not look like coverage.
+
+| Query (single term) | Total | Best permissive, maintained result | Read |
+|---|---|---|---|
+| `sdmx` | 494 | `ondata/opensdmx` MIT 58★, pushed 2026-11-25 | **Alive and institutional** |
+| `org:bis-med-it` | 11 | `marco-BIS` Apache-2.0 89★ | The channel that opened the plane |
+| `org:sdmx-twg` | 16 | — (all specs, **no licence**) | Spec body publishes without licensing |
+| `org:eurostat` | 95 | `gridviz` EUPL-1.2 250★ | **EUPL is the institutional default** |
+| `pension` | 7,926 | `open-source-modelling/Open_Source_Economic_Model` MPL-2.0 30★ | Thin — informed gap |
+| `payroll` | 57,994 | `Payroll-Engine/PayrollEngine` MIT 142★ | Alive but outside FS scope |
+| `figi` | 403 | `svyatov/sec_id` MIT 8★ | **Identifier plane is API-served, not library-served** |
+| `cyclos` | 563 | `cyclosproject/cyclos4-ui` MIT 47★ | Open UI, closed core — see `verticals/solutions.md` |
+
+**`figi` is the sharpest small result.** FIGI is an *open* identifier standard
+with a free OpenFIGI API, and the permissive library population is
+`svyatov/sec_id` (MIT, **8★**) plus `philaris/figir` (4★) and a GPL-3.0 R
+wrapper last touched in **2016**. The format is published and multi-party —
+which by this KB's law should produce libraries — and it produced almost none.
+The explanation is consistent rather than contradictory: **where the authority
+runs a free public API, the lookup is a network call, not a parse**, so there
+is no file to implement and no library accretes. That refines the law rather
+than breaking it: **the law predicts libraries for formats you must *parse*,
+not for registries you merely *query*.**

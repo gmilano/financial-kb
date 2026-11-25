@@ -1348,3 +1348,221 @@ topic query returns nothing, **enumerate the organisation**. `org:moov-io` gave
 and in every case the topic query had already returned a false negative,
 because a professional body names its code after the **agency**, the
 **standard** or the **method**, never after the industry.
+
+## Pattern 25 — Macro grounding that cannot state a figure without a key
+
+**The problem this solves.** Any agent that touches credit provisioning,
+stress testing, treasury forecasting or market commentary needs
+authoritative macro series — unemployment, HICP, policy rates, FX. The failure
+mode is not that the model fetches the wrong number; it is that **it states a
+number with no resolvable provenance**, and a second line reviewer cannot
+distinguish a fetched observation from a recalled one. Every figure in a
+supervised institution needs to resolve to a publisher, a dataflow and a
+period.
+
+**The structural fix: make the key mandatory.** SDMX series are addressed by a
+dataflow key, so an architecture that requires the key *before* the fetch makes
+provenance a precondition rather than a prompt instruction.
+
+**Wiring, concrete:**
+
+1. **Metadata registry as the resolver.** Stand up the **Fusion Metadata
+   Registry** (https://github.com/bis-med-it/FMR-releases, Apache-2.0, BIS) and
+   load the data structure definitions, codelists and dataflows for the
+   publishers in scope. This is the typed description of every series the
+   engagement may cite.
+2. **Resolution step, deterministic, no model.** The agent's request
+   ("unemployment, Spain, monthly, seasonally adjusted") goes to a resolver
+   that returns **an exact dataflow key or an error**. A natural-language
+   phrase that does not resolve to a key is rejected here — it never reaches a
+   fetch. The model may *propose* a phrase; it may not invent a key.
+3. **Fetch over a permissive client.** `ondata/opensdmx`
+   (https://github.com/ondata/opensdmx, MIT, 58★, any SDMX 2.1 REST API) or
+   `bis-med-it/pysdmx` (https://github.com/bis-med-it/pysdmx, Apache-2.0,
+   the BIS's own). Pin one; both are permissive, so the choice is engineering,
+   not legal.
+4. **Per-publisher access via the MCP layer**, where a server exists and is
+   permissive: `ondata/istat_mcp_server` (MIT),
+   `cyanheads/oecd-mcp-server` (Apache-2.0), `cyanheads/imf-mcp-server`
+   (Apache-2.0, SDMX 3.0), `scka-de/ecb-mcp` (MIT),
+   `Aryan-Jhaveri/mcp-statcan` (MIT),
+   `felipegambettadesouza6-jpg/open-economics` (MIT, Brazil),
+   `lzinga/us-gov-open-data-mcp` (MIT).
+5. **Citation gate.** Every figure that reaches a human or a document carries
+   `{publisher, dataflow key, period, retrieval timestamp}`. A verifier drops
+   any claim whose key does not resolve against the registry — the same
+   discipline Pattern 16 applies to account IDs and Pattern 17 to message
+   fields.
+6. **Analysis, if it is econometric, on a published reference.** For
+   macroeconometric work use **MaRCo@BIS**
+   (https://github.com/bis-med-it/marco-BIS, Apache-2.0, 89★) rather than
+   writing the workflow: it already enforces human confirmation at model
+   selection, variables, lags, identification and sample, states the source of
+   each choice, and flags price puzzle, explosive root and weak instrument
+   before results are reported. Its reference library carries **more than
+   1,000 tests** and its replication suite is a command
+   (`pytest tests/test_replications_smoke.py --runslow`).
+
+**Do not use:** `hanlulong/openecon-data`, `daniel3303/Equibles` or
+`stefanoamorelli/fred-mcp-server` as a dependency — all **AGPL-3.0**. They are
+good reading for the aggregation design and bad choices for a client codebase.
+`orhoncan/tuik-mcp` has **no licence file**; if Turkish data is in scope, write
+the TÜİK client rather than adopting it.
+
+**What you can say to a client, and it is true:** *"no figure appears in a
+deliverable without a publisher, a dataflow key and a timestamp, and the
+registry is what decides whether the key is real."*
+
+**Operational caution:** MaRCo@BIS does **not** distribute the FRED data CSVs
+(they are downloaded once, and the raw download needs metadata rows stripped
+before the loader reads it), and the authors state it is **not tested on
+macOS** — budget a container.
+
+## Pattern 26 — SDMX 2.1→3.0 migration assurance with a differential oracle
+
+**Why this pattern exists.** The measured installed base is **SDMX 2.1 at 59%,
+2.0 at 35%, 3.0 at 6%** among central banks (SDMX Pulse, June 2026), with about
+two thirds of the rest planning to migrate, against overall SDMX adoption of
+roughly eight tenths (BIS IFC Report 17, February 2025). So the common client
+situation is: **on 2.x, obliged to move, with no way to prove the move is
+lossless.** That proof is the deliverable.
+
+**This KB's standing rule applies first:** *check whether a second permissive
+implementation exists before writing a validator.* On this plane it does —
+which means the oracle is free.
+
+**Wiring:**
+
+1. **Two independent permissive readers of the same spec.**
+   `ondata/opensdmx` (**MIT**, Python, 58★) and `bis-med-it/pysdmx`
+   (**Apache-2.0**, Python, the standards-adjacent implementation).
+   Licences are compatible, so both can sit in one test harness.
+   Where a JVM/Excel path is in scope, `amattioc/SDMX`
+   (https://github.com/amattioc/SDMX) is a third reader — but it is
+   **EUPL-1.2 copyleft**, so it belongs in the *test* harness, isolated,
+   never linked into the product.
+2. **Differential read.** Feed both readers the same 2.1 payloads and diff the
+   parsed result **observation by observation and attribute by attribute**.
+   Disagreements are either a bug in one reader or an ambiguity in the client's
+   data — both are findings worth money, and neither needs the regulator's
+   validator to surface.
+3. **Round-trip gate for the migration itself.** For each dataflow: read 2.1 →
+   emit 3.0 → read 3.0 → compare against the original parse. **Series identity,
+   observation values, periods and attribute completeness must match exactly.**
+   This is the machine-checkable claim the migration is sold on.
+4. **Structure first, data second.** Load the institution's DSDs and codelists
+   into the **Fusion Metadata Registry** (Apache-2.0) and diff the 2.1 and 3.0
+   structural representations before touching observations. Most migration
+   surprises are structural — codelist cardinality, hierarchy, attribute
+   attachment levels — and they are cheaper to find in metadata than in a
+   billion observations.
+5. **Model strictly outside the comparison.** The diff is arithmetic and
+   deterministic. The model's only jobs are triaging the diff into
+   human-readable classes and drafting the migration note, **obliged to cite
+   dataflow key and observation period**; a finding whose citation does not
+   resolve is dropped.
+6. **Run it in CI over the extract**, not at submission time — the same
+   placement Pattern 16 argues for the Metro 2 file.
+
+**What this produces in week one:** a count of dataflows that round-trip
+cleanly and a list of those that do not, with reasons. That is a number a CFO
+can read and a supervisor can be shown, which is exactly the property pass 5
+identified in format-layer work and could not find in judgment-layer work.
+
+**Transfers to:** every format in this KB with two permissive implementations —
+Metro 2 (`moov-io/metro2` Go vs `teamupstart/metro_2` Ruby), ISO 20022
+(`moov-io/rtp20022` vs `prowide/prowide-iso20022`), EN 16931
+(`josemmo/einvoicing` vs `num-num/ubl-invoice`), ACH (`moov-io/ach` vs
+`RiverFinancial/nacha`).
+
+## Pattern 27 — The per-publisher mesh: rebuild the aggregation, adopt the clients
+
+**The decision this settles.** An engagement needs macro data from six
+publishers. There is an off-the-shelf aggregator that already does all six —
+and it is **AGPL-3.0** (`daniel3303/Equibles` 248★,
+`hanlulong/openecon-data` 95★ with 330K indicators). Adopting it puts copyleft
+in the client's data path; refusing it appears to mean building six
+integrations.
+
+**The measurement that makes the choice easy.** The per-publisher layer is
+**already permissive and already written**: ISTAT, ECB, StatCan, Brazil and
+US-gov servers are **MIT**; OECD and IMF are **Apache-2.0**. Seven of eight
+single-institution servers carry a permissive licence. **The only thing the
+AGPL projects add is the aggregation — a resolver, a normaliser and a cache.**
+That is days of work, not months, and it is the part you want to own anyway
+because it encodes the client's series taxonomy.
+
+**Wiring:**
+
+1. **Adopt, do not write, the publisher clients.** Permissive per-publisher MCP
+   servers and SDMX clients as listed in Pattern 25 step 4, plus the R/Python
+   clients where the analyst workflow is R: `rOpenGov/eurostat` (**BSD-2**),
+   `ilostat/Rilostat` (**BSD-2**), `expersso/OECD` (**CC0**),
+   `Eflores89/inegiR` and `banxicoR` (**CC0**, Mexico),
+   `MattCowgill/readabs` (**MIT**, Australia), `UchidaMizuki/jpstat`
+   (**MIT**, Japan).
+2. **Check the manifest, not the badge, for every R component.** All seven of
+   those were reported `NONE`/`NOASSERTION` by GitHub and resolve via
+   `DESCRIPTION` to five different licences. Two of them are **copyleft** —
+   `eblondel/rsdmx` is **GPL-2+** at 111★ and `eurostat/restatapi` is **EUPL** —
+   so the most obvious R SDMX reader is the one you must not embed.
+3. **Own the resolver.** One normalised series identity across publishers,
+   backed by the Fusion Metadata Registry, with the client's own taxonomy. This
+   is the asset; keep it.
+4. **Cache with provenance.** Store `{publisher, dataflow key, period, value,
+   retrieval timestamp}`. Never store a value without its key.
+5. **Isolate anything reciprocal behind a process boundary**, per Pattern 18's
+   rule for country-specific format libraries: EUPL and GPL components run as
+   separate services or test-harness-only, never linked into the core.
+
+**The sentence that wins the architecture review:** *"we adopted seven
+permissively licensed publisher clients and built the one component that
+encodes your series taxonomy — the aggregator we did not adopt is AGPL, and it
+is also the only part that had to be yours."*
+
+## Pattern 24 addendum (2026-11-25) — two more tiers and a marker-first rule
+
+Pattern 24 corrected the licence probe twice (bytes → lines; `.md` variants).
+Pass 8 breaks it twice more. **Apply these to the gate in all twelve industry
+KBs:**
+
+1. **Probe the package manifest, always, not only when no LICENSE is found.**
+   R → `DESCRIPTION` (`License:`), Python → `pyproject.toml`/`setup.py`,
+   Node → `package.json`, Rust → `Cargo.toml`, Java → `pom.xml`. Measured: **7
+   of 7** R repositories reported `NONE`/`NOASSERTION` by GitHub resolved via
+   `DESCRIPTION`, to **five distinct licences** spanning permissive, copyleft
+   and public domain. A `LICENSE` file may exist and still name no licence —
+   the CRAN stub (`YEAR:` / `COPYRIGHT HOLDER:`, 62 B) is a file that teaches
+   you nothing, which is worse than no file.
+2. **Accept the short-form grant.** A **14-line, ~648-byte** file reading
+   `Copyright (c) YYYY, <holder>` + `licensed under the Apache License, Version
+   2.0` + disclaimer **is a valid Apache-2.0 grant by incorporation**
+   (`bis-med-it/pysdmx`, `bis-med-it/sdmx-rest4js`). A gate calibrated on
+   175–201 lines rejects a clean institutional asset. Below-band now resolves
+   to one of three outcomes: pointer to a fetchable full text, self-contained
+   short grant, or a notice granting nothing.
+3. **Marker first, length second — this is the hard one.** Probing
+   `sdmx-twg/sdmx-rest` returned a **non-404 body of 44 lines / 1,522 bytes**
+   that was **not a licence file at all**; direct re-fetch returned 404 on
+   every licence name across `main`, `master` and `develop`. A length-based
+   classifier would have recorded it. **Never measure a body until a licence
+   marker has matched; "marker unknown" means re-fetch and read, never record.**
+
+Line bands, consolidated (±1 line for trailing newline, measured across 14
+files this pass): **MIT 20–21** · **Apache-2.0 short-form 14** ·
+**Apache-2.0 no appendix 175–176** · **Apache-2.0 full 200–201** ·
+**BSD-3 ~28** · **LGPL-3.0 187** · **EUPL-1.2 286** · **AGPL-3.0 660–661** ·
+**GPL-3 ~674**.
+
+Markers: MIT `Permission is hereby granted, free of charge` · Apache
+`APPENDIX: How to apply the Apache License` (full) or `Apache License` (short
+or no-appendix) · BSD `Redistribution and use in source and binary forms` ·
+LGPL `GNU LESSER GENERAL PUBLIC LICENSE` · AGPL `GNU AFFERO GENERAL PUBLIC
+LICENSE` · **EUPL `EUROPEAN UNION PUBLIC LICENCE`** · MPL `Mozilla Public
+License` · **CC0 `CC0 1.0 Universal`**.
+
+**And one existence rule, reconfirmed:** `gh api search/repositories` with
+`q='repo:<slug>'` returned `total_count: 0` for `khaeru/sdmx`, a repository
+`ls-remote` resolves and whose LICENSE fetches cleanly. **`ls-remote` is the
+only existence oracle; `search/repositories` is a metadata channel that can be
+silently incomplete.**

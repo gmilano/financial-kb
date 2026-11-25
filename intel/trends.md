@@ -715,3 +715,191 @@ better corroborated and it is the number that actually shapes an engagement.
   push **2018**.
 - **No current ranking of leading AI-in-insurance vendors** by market was found
   for any region. Searched; not found; not invented.
+
+## Pass 8 (2026-11-25) — the inbound data plane, and the institution as licence-setter
+
+### Trend 25 — The law now has a boundary: it predicts parsers, not registries
+
+Passes 5–7 built this KB's central law in three clauses — open-source supply
+follows **the file format**, specifically the file **more than one party must
+read**, where **the spec is readable without paying to join**. Pass 8 tested it
+on a plane the KB had never touched and found the law holds *and* has a
+boundary worth naming.
+
+**Where it holds, exactly as predicted.** SDMX (ISO 17369) is a published,
+multi-party, freely readable format, and the library population is healthy and
+institutional: `ondata/opensdmx` (MIT, 58★, pushed today), `bis-med-it/pysdmx`
+(Apache-2.0, the BIS's own), `eblondel/rsdmx` (111★), `amattioc/SDMX` (99★),
+`dr-leo/pandaSDMX` (135★) and its live successor `khaeru/sdmx`.
+
+**Where it does not, and why that is informative.** FIGI is also an open,
+multi-party identifier standard — and its permissive library population is
+`svyatov/sec_id` at **8★**, `philaris/figir` at 4★, and a GPL-3.0 R wrapper
+last touched in **2016**. The format is published; the libraries did not come.
+
+The resolution is not an exception but a refinement:
+
+> **The law predicts libraries for formats you must *parse*. It predicts
+> nothing for registries you merely *query*.** Where the authority runs a free
+> public API, the lookup is a network call, and there is no file to implement —
+> so no library accretes, no matter how open the standard is.
+
+This matters when choosing where to start an engagement. A plane with a parser
+population is a plane where the format layer is free and rebuilding it is
+visible rework. A plane whose authority serves an API has **no format layer to
+adopt** — the integration is the work, and it is small. Do not read "no
+libraries" as "greenfield opportunity" until you have checked whether the
+authority simply answers HTTP.
+
+### Trend 26 — The licence is set by the institution's legal culture, not by the sector, language or ecosystem
+
+The statistical plane is the first in this KB where the same artefact type, in
+the same format, for the same purpose, is published by many institutions at
+once. The licences diverge completely.
+
+| Institution | What it publishes | Licence | Class |
+|---|---|---|---|
+| **BIS** (Basel) | SDMX libraries, ML library, an **agentic framework** | **Apache-2.0**, all 11 repos | Permissive |
+| **World Bank** | Metadata editor, Stata/R tooling | **MIT** | Permissive |
+| **ILO** (UN, Geneva) | `Rilostat` | **BSD-2-Clause** | Permissive |
+| **Eurostat** (Luxembourg) | 95 repos incl. its SDMX client | **EUPL-1.1/1.2** | **Copyleft** |
+| **SDMX-TWG** | The ISO 17369 standard itself | **No licence at all** | Unlicensed spec |
+| Mexican agency clients | `inegiR`, `banxicoR` | **CC0** | Public domain |
+
+**Two international institutions 300 km apart have opposite defaults.** The BIS
+publishes Apache-2.0; the European Commission's statistical office publishes
+EUPL-1.2 copyleft. Neither is a mistake and neither is negotiable — they are
+expressions of each institution's legal culture.
+
+This supersedes a convenient assumption this KB never wrote down but did rely
+on: that *institutional provenance implies safe reuse*. The legal KB found
+HMCTS publishing MIT and concluded "in EMEA the state publishes code". Pass 8
+splits that: **in EMEA the state publishes code, and whether you can build a
+product on it depends on which state body you are talking to.** The only
+reliable procedure is per-publisher verification, every time.
+
+**EUPL-1.2 enters this KB's licence vocabulary** at 286 lines / 13,826 B: an
+OSI-approved European Commission copyleft licence, published in 23 languages,
+with a compatibility list permitting relicensing to specified copyleft
+licences. Usable, reciprocal, and to be isolated behind an interface rather
+than linked into a core — the same treatment Pattern 18 prescribes for
+country-specific format libraries.
+
+### Trend 27 — Licence evidence has nine tiers, and the manifest tier is the one that was invisible
+
+§18 recorded seven tiers and §22 split them into spec/code/data classes. Both
+assumed the evidence is *a file whose name contains "licence"*. Pass 8 broke
+that assumption twice.
+
+**Tier 8 — the licence lives in a package manifest.** The statistical plane is
+substantially R, and **CRAN declares licences in `DESCRIPTION`**. Seven
+repositories, every one reported by GitHub as `NONE` or `NOASSERTION`, resolve
+to **five different licences**:
+
+| Repo | ★ | GitHub | `DESCRIPTION` | Side of the copyleft line |
+|---|---|---|---|---|
+| `rOpenGov/eurostat` | 257 | `NOASSERTION` | `BSD_2_clause` | Permissive |
+| `expersso/OECD` | 147 | `NONE` | `CC0` | Public domain |
+| `eblondel/rsdmx` | 111 | `NONE` | `GPL (>= 2)` | **Copyleft** |
+| `MattCowgill/readabs` | 114 | `NOASSERTION` | `MIT` | Permissive |
+| `ilostat/Rilostat` | 40 | `NOASSERTION` | `BSD_2_clause` | Permissive |
+| `eurostat/restatapi` | 36 | `NONE` | `EUPL` | **Copyleft** |
+| `Eflores89/inegiR` | 54 | `NONE` | `CC0` | Public domain |
+
+The two most-starred sit on **opposite sides of the copyleft line**. Where a
+`LICENSE` file exists at all it is often a **two-line CRAN stub** naming no
+licence (`Rilostat`: `YEAR: 2026` / `COPYRIGHT HOLDER: International Labour
+Organization`, 62 B) — so the probe finds a file and learns nothing, which is
+worse than finding none. Generalises to every manifest ecosystem: R →
+`DESCRIPTION`, Python → `pyproject.toml`, Node → `package.json`, Rust →
+`Cargo.toml`, Java → `pom.xml`.
+
+**Tier 9 — the short-form grant, where the pointer *is* the licence.**
+`bis-med-it/pysdmx` and `sdmx-rest4js` carry a 14-line, ~648-byte LICENSE
+incorporating Apache-2.0 by reference under a BIS copyright line. A valid
+grant; rejected by any gate calibrated on 175–201 lines. Distinct from pass 4's
+pointer case, where a second full-text file existed to fetch — **here there is
+no second file.**
+
+**And the defect that would have published a wrong row.** Probing
+`sdmx-twg/sdmx-rest` returned a **non-404 body of 44 lines / 1,522 bytes** at
+`LICENSE.rst`; direct re-fetch returned **404 on all three licence names across
+`main`, `master` and `develop`**, with `README.md` returning 200 on `master`.
+The repo has no licence file; the body was a transient proxy artefact. It was
+caught because **no marker matched**.
+
+> **Rule, hardening the Pattern 9 / Pattern 24 gate: a length measurement is
+> valid only after a licence marker has matched. Marker first, length second.
+> "Marker unknown" is never data — it means re-fetch and read.**
+
+### Trend 28 — The agent surface for official data appeared in ninety days, and its licence tracks what it wraps
+
+Nine MCP servers over statistical and central-bank data, **eight of them pushed
+within the last month**, the oldest non-trivial one dating from March 2026.
+Before this pass the KB had none.
+
+The pattern in their licences is commercially legible:
+
+- **Single-institution servers are permissive.** ISTAT, ECB, StatCan, Brazil,
+  US-gov (MIT); OECD, IMF (Apache-2.0) — seven of eight, the exception being
+  TÜİK with **no licence file**.
+- **Multi-source aggregators are AGPL-3.0.** `Equibles` (248★),
+  `openecon-data` (95★): where aggregation across publishers is the product,
+  copyleft protects it.
+- **Named counterexample:** `fred-mcp-server` (135★) wraps one source and is
+  AGPL-3.0 anyway. A tendency, not a law — recorded as such.
+
+**What follows for a build.** The aggregation layer is the part an AGPL project
+is protecting *and* the part that is cheapest to rebuild over permissive
+per-publisher servers. Compose the MIT/Apache servers behind one resolver; do
+not link an AGPL aggregator into a client deliverable.
+
+A caution on reading these star counts: eight of nine are under 120. On an
+institutional plane **stars measure audience, not maturity** — a server
+wrapping one publisher's SDMX endpoint is a small bounded artefact that does
+not need a thousand stars to be correct. The counter-trend in the same breath:
+`ValueCell-ai/valuecell` carries **11,068★** and has not been pushed since
+**2026-03-09**, so the correlation runs the other way too.
+
+### Trend 29 — The installed base is on the old version, and that is the engagement
+
+**BIS Irving Fisher Committee, IFC Report 17** (February 2025): SDMX is
+implemented by **about eight tenths** of surveyed institutions, up from two
+thirds a decade earlier. An **SDMX Pulse** newsletter (June 2026) puts the
+version mix among central banks at **SDMX 2.1 — 59%, 2.0 — 35%, 3.0 — 6%**,
+with roughly two thirds of the remainder planning to move to 3.0.
+
+Both figures are cited as what they are: the adoption number is a **2025**
+survey, and the version split is a **newsletter, not a peer-reviewed survey**.
+
+The reading, and it is the opposite of what a technology-led pitch would say:
+
+1. **Build against 2.1, not 3.0.** 94% of the base is on 2.x. A 3.0-only
+   client addresses 6% of publishers. `ondata/opensdmx` targets *any SDMX 2.1
+   REST API*, which is why it is the one to lead with — while
+   `cyanheads/imf-mcp-server` is SDMX 3.0 and therefore ahead of the base.
+2. **The 2.1→3.0 migration is the billable work**, and it has the shape this
+   KB keeps identifying as the good one: an externally published standard, a
+   machine-checkable output, a named deadline culture, and a client who cannot
+   opt out. It is a format-layer engagement, so by pass 5's corollary it
+   produces a defensible number in week one and can fund the judgment layer
+   above it.
+
+### What this pass could not measure, stated so it is not mistaken for coverage
+
+- **Star count for `khaeru/sdmx`** (the live `sdmx1` successor to the dormant
+  `pandaSDMX`): `search/repositories` with `repo:khaeru/sdmx` returns
+  `total_count: 0` while `ls-remote` resolves the repo and its Apache-2.0
+  LICENSE fetches. Recorded as unmeasured, not guessed. **`search/repositories`
+  is not an existence oracle.**
+- **`OpenCyclos` licence** (`NOASSERTION`, 17★, dormant since 2021) — left
+  unresolved because the repo is a five-year-stale fork of a superseded major
+  version and is not proposable either way.
+- **Whether the ECB's Integrated Reporting Framework (IReF) relies on SDMX.**
+  The IReF timeline surfaced this pass (pilot Q2 2030, reporting Q2 2031,
+  announced June 2026) but the source does not state an SDMX dependency, and it
+  has **not** been assumed.
+- **`www.gov.uk` is outside this session's permitted network domains**, so the
+  UK Financial Services AI Adoption Plan recorded in `intel/market.md` this
+  pass is secondary-sourced and flagged there. It was not read at its primary
+  source.

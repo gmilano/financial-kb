@@ -9,6 +9,79 @@ updated: 2026-11-25
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-25 (pass 8)
+
+**Theme of the week: the Bank for International Settlements shipped an agentic
+AI framework under Apache-2.0, and official statistics grew an MCP layer in
+ninety days.**
+
+### New this week — the statistical data plane, first time in this log
+
+`bis-med-it/marco-BIS` (Apache-2.0, 89★, pushed 2026-11-12) is **MaRCo@BIS, the
+MAcroeconometric Research Companion**, released by the BIS as a public good
+alongside BIS Working Paper no 1395 (Lombardi, Park and Perez-Cruz, 2026). It
+is a skill framework that drives a coding agent through a 7-stage
+macroeconometric workflow with human confirmation at every decision, where
+each choice states its source and the agent is instructed to flag named
+anomalies — price puzzle, explosive root, weak instrument — before they reach
+the results. Three parts: skills as plain Markdown, a reference Python library
+with **more than 1,000 tests**, and a dictionary of canonical paper
+specifications with worked replications verifiable by
+`pytest tests/test_replications_smoke.py --runslow`.
+
+**Why it is the most useful thing in this log:** for seven passes this KB has
+argued that the deterministic layer belongs outside the model and that every
+figure must cite its source. That argument now has a reference implementation
+published by the central banks' own bank, permissively licensed, with a
+regression suite. It is a citation, not an opinion.
+
+### The MCP layer on official statistics — nine servers, mostly under a month old
+
+| Server | Licence | ★ | Pushed | Region |
+|---|---|---|---|---|
+| https://github.com/lzinga/us-gov-open-data-mcp | MIT | 113 | 2026-11-02 | North America |
+| https://github.com/ondata/istat_mcp_server | MIT | 24 | 2026-11-22 | EMEA |
+| https://github.com/orhoncan/tuik-mcp | **no licence file** | 16 | 2026-09-20 | EMEA |
+| https://github.com/Aryan-Jhaveri/mcp-statcan | MIT | 8 | 2026-11-06 | North America |
+| https://github.com/cyanheads/oecd-mcp-server | Apache-2.0 | 5 | 2026-11-16 | Global |
+| https://github.com/cyanheads/imf-mcp-server | Apache-2.0 | 4 | 2026-11-13 | Global |
+| https://github.com/scka-de/ecb-mcp | MIT | 4 | 2026-03-31 | EMEA |
+| https://github.com/felipegambettadesouza6-jpg/open-economics | MIT | 2 | 2026-09-12 | LATAM |
+| https://github.com/hanlulong/openecon-data | **AGPL-3.0** | 95 | 2026-11-21 | Global |
+
+Star counts are low — eight of the nine are under 120 — and this KB's standing
+rule applies: **on an institutional plane, stars measure audience, not
+maturity.** A server wrapping one publisher's SDMX endpoint is a small, bounded
+artefact; it does not need a thousand stars to be correct.
+
+**The licence split is the part to act on.** Seven of the eight
+single-institution servers are MIT or Apache-2.0; the multi-source aggregators
+(`Equibles` 248★, `openecon-data` 95★) are AGPL-3.0, because aggregating across
+publishers *is* their product. `fred-mcp-server` (135★, AGPL-3.0) is a
+single-source exception, so this is a tendency with a named counterexample, not
+a law. Compose the permissive per-publisher servers; do not link an AGPL
+aggregator into a client codebase.
+
+### Counter-trend, and it is a five-figure one
+
+`ValueCell-ai/valuecell` (Apache-2.0, **11,068★**) is a community multi-agent
+platform for financial applications whose last push was **2026-03-09** — more
+than eight months stale. Not archived, not deprecated, simply stopped, while
+carrying more stars than every repo in the table above combined. §9 of
+`intel/trends.md` holds: in this industry, star count and liveness are close to
+uncorrelated, which is why every row in this log carries a push date.
+
+### Not recommended, recorded to save the next pass the search
+
+`figi` (403 results) produced no permissive library with traction: the best is
+`svyatov/sec_id` (MIT, **8★**), then `philaris/figir` (4★) and a GPL-3.0 R
+wrapper last touched in **2016**. FIGI is an open standard with a free
+OpenFIGI API, and **where the authority runs a free public API the lookup is a
+network call rather than a parse, so no library accretes.** Build the
+identifier resolver against the API; do not wait for a library.
+
+---
+
 ## 2026-11-25 (pass 7)
 
 **Theme of the week: the actuarial profession has been shipping code all along,

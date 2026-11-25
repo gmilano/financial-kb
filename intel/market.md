@@ -380,6 +380,57 @@ KB offers, and it should lead a US insurance pitch.
 **The licence caveat that must travel with it:** MPL-2.0, not MIT. See Pattern
 23 for the wrap-don't-patch posture and the life-vs-P&C procurement fork.
 
+#### Pass 8 (2026-11-25) — the Fed signalled a third instrument, and Canada closed for the third time by not being searched for
+
+**The regulatory picture gains a pending item, not a new deadline.** Pass 6
+recorded OCC Bulletin **2026-54** (2026-11-04), the first federal *examiner*
+framework for AI, filling the gap that **OCC 2026-13 / SR 26-2 / FIL-15-2026**
+(April 2026) left when they replaced SR 11-7 and left generative and agentic AI
+outside scope. New this pass, and genuinely additive:
+
+- **The Federal Reserve has announced plans to issue a request for information
+  on model risk management as it relates to banks' use of AI.**
+- **Vice Chair for Supervision Michelle Bowman has called for a review of
+  whether existing AI supervisory guidance is still fit for purpose.**
+
+Both are **secondary-sourced** (law-firm commentary; no primary Fed document
+was read this pass) and both are **signals, not obligations** — there is no
+date and no requirement. The reason to record them: an RFI is the stage at
+which an institution's own control framework can become an *input* to the
+rule rather than a response to it. Pass 6's NA recommendation — write the
+control framework first, because whoever writes a defensible one sets the de
+facto standard — now has a named mechanism to aim at. That is the pitch: the
+client's framework, documented, submitted.
+
+**Canada: closed a third time, and a third time not by a regional query.**
+Pass 5 closed the twice-measured Canada gap with `moov-io/cadeft` (Apache-2.0,
+11★, CPA-005 parser), found by enumerating an org the KB already cited. This
+pass adds the statistical side:
+
+| Asset | Repo | Licence (verified) | ★ | Push |
+|---|---|---|---|---|
+| Statistics Canada, 7,000+ series | https://github.com/Aryan-Jhaveri/mcp-statcan | MIT (20 lines) | 8 | 2026-11-06 |
+| 40+ US government data APIs | https://github.com/lzinga/us-gov-open-data-mcp | MIT (20 lines) | 113 | 2026-11-02 |
+| FRED (Federal Reserve Economic Data) | https://github.com/stefanoamorelli/fred-mcp-server | **AGPL-3.0** (660 lines) | 135 | 2026-08-22 |
+
+`mcp-statcan` was **not** found by searching for Canada. It surfaced from a
+census of `mcp sdmx` — a query naming a format and a protocol, with no country
+in it. **Pass 5's rule now holds three times: when a region has returned
+nothing, stop querying the region.** Census the format, the protocol or the
+organisation instead. A national statistical client is built by someone
+interested in statistics, not by someone tagging their repo with a country.
+
+**The licence split matters here more than elsewhere**, because FRED is the
+series set a US engagement reaches for first and **`fred-mcp-server` is
+AGPL-3.0**. The permissive route to the same data is
+`lzinga/us-gov-open-data-mcp` (MIT) or a direct client; see Pattern 27.
+
+**NA statistical gap, measured and left open:** no permissive MCP server or
+SDMX client surfaced for the **Federal Reserve Board's own** data services
+(H.15, Z.1) distinct from FRED, nor for **OSFI** or the **Bank of Canada**.
+Searched via `mcp fred`, `mcp sdmx` and `sdmx`; not found. Stated as an
+informed gap.
+
 ### EMEA
 
 **Regulatory posture: the most demanding in the world, with a hard date.**
@@ -741,6 +792,81 @@ that way to a European carrier: **the alliance route has been tested here.**
 | turkactuary-mcp | https://github.com/afsharid/turkactuary-mcp | **Apache-2.0** (201 L) | **Türkiye insurance regulation search + actuarial calculation over MCP.** The only Turkey-placed insurance asset in this KB. 3★ — a seed, but it is the regulator's corpus as configuration |
 | openIMIS | https://github.com/openimis | **AGPL-3.0 + Swiss governing-law / Berne-forum rider** | Swiss-governed; health and social protection only |
 
+#### Pass 8 (2026-11-25) — the region's statistical code is copyleft, and a 2031 deadline entered the file
+
+**The finding that changes how an EMEA proposal must be written.** This KB's
+legal sibling established that in EMEA *the state publishes code, and it
+publishes it MIT* (HMCTS, 1,827 repositories). The statistical layer **inverts
+the licence half of that finding**:
+
+| Publisher | Repos | Licence | Class |
+|---|---|---|---|
+| **Eurostat** (European Commission) | 95 | **EUPL-1.1 / EUPL-1.2**, near-uniformly | **Copyleft** |
+| **BIS** (Basel) | 11 | **Apache-2.0**, uniformly | Permissive |
+
+`eurostat/gridviz` (250★), `eurostat/searoute` (254★), `eurostat/eurostat-map`
+(110★), `eurostat/Nuts2json` (92★) are all EUPL-1.2, and Eurostat's own SDMX
+client `eurostat/restatapi` declares **EUPL** in its `DESCRIPTION` while GitHub
+reports no licence at all. The permissive Eurostat route is the *community*
+client, `rOpenGov/eurostat` (**BSD-2-Clause**, 257★ — the most-starred asset on
+either side).
+
+**EUPL-1.2** is an OSI-approved European Commission copyleft licence, published
+in 23 languages, with a compatibility list permitting relicensing to specified
+copyleft licences. **286 lines / 13,826 B**, newly entered in this KB's licence
+table. It is usable and it is reciprocal: isolate it behind an interface, as
+Pattern 18 prescribes for country-specific format libraries, and never link it
+into a proprietary core.
+
+> **Stated for a client conversation: "European public-sector code" is not a
+> licence posture. The Commission's statistical office defaults to copyleft and
+> the Basel-based bank for central banks defaults to permissive. Verify per
+> publisher, every time — the default follows the institution's legal culture,
+> not the sector.**
+
+**The densest MCP coverage in any region is EMEA**, and it arrived in the last
+few months:
+
+| Authority | Repo | Licence (verified) | ★ | Push |
+|---|---|---|---|---|
+| ISTAT (Italy) | https://github.com/ondata/istat_mcp_server | MIT (20 lines) | 24 | 2026-11-22 |
+| TÜİK (Türkiye) | https://github.com/orhoncan/tuik-mcp | **No licence file** | 16 | 2026-09-20 |
+| ECB | https://github.com/scka-de/ecb-mcp | MIT (20 lines) | 4 | 2026-03-31 |
+| Eurostat/ISTAT/OECD/ECB (library) | https://github.com/ondata/opensdmx | MIT (20 lines) | 58 | 2026-11-25 |
+
+`tuik-mcp` has **no licence file** across 12 filenames and 3 refs — at 16★ it is
+the most-starred unlicensed asset on this plane. If Turkish data is in scope,
+write the client.
+
+**A new dated item, long-horizon: the ECB's Integrated Reporting Framework
+(IReF).** Announced June 2026, with a **one-year pilot from Q2 2030** and
+**official IReF reporting commencing Q2 2031**. Recorded for two reasons: it is
+a reporting-consolidation programme of exactly the kind this KB's Pattern 18
+addresses, and it is far enough out that it belongs in a roadmap rather than a
+pipeline. **The source does not state whether IReF relies on SDMX, and that has
+not been assumed** — pass 6's lesson that a date is not a durable fact applies
+equally to a dependency.
+
+**UK — recorded, and flagged as unverified at source.** A **Financial Services
+AI Adoption Plan** was published **14 July 2026**, framing scaling AI as a
+strategic priority, with a cited figure that 21% of firms in the financial and
+real-estate sectors had already adopted AI in early 2025. **`www.gov.uk` is
+outside this session's permitted network domains**, so this could not be read
+at its primary source and is secondary-sourced from search results. **Verify
+before quoting it to a client**, and note that the UK plan sits alongside the
+BoE/FCA survey of 26 October 2026 already recorded in this file — that survey
+remains the rigorous UK dataset.
+
+**EMEA adoption, building on pass 5 rather than restating it.** Pass 5
+measured EMEA at 61% in-house adoption against 14% with specialised AI actually
+deployed. The 2026 European Parliament framing adds the mechanism: institutions
+have used classical machine learning for years and are **gradually
+experimenting** with generative AI. One structural constraint worth carrying
+into a pitch: much of the AI value chain — cloud infrastructure, semiconductor
+manufacturing, frontier models — **remains concentrated outside both the UK and
+the EU**, which is an argument for engagements that own the *control and
+evidence* layer rather than the model layer.
+
 ### APAC
 
 **Regulatory posture: the most advanced on agentic specifically.**
@@ -1074,6 +1200,77 @@ Gulf being the natural markets. Read it the way this KB read SPED and CFDI: a
 population, where commercial vendors already hold the ground. **Integrate above
 the incumbent; do not build the library.**
 
+#### Pass 8 (2026-11-25) — the first APAC plane in this KB that is uniformly permissive, and the authorities with no client at all
+
+**The statistical plane is MIT across the region, and that is new.** Every
+previous APAC measurement in this file has been a story of a mature market with
+a thin or awkwardly licensed open-source layer — pass 5 found India's Account
+Aggregator framework live with no permissive SDK above 1★, and pass 5's EDINET
+work was the exception that proved the rule. The statistical layer is the first
+APAC plane here where **every asset measured is permissive**:
+
+| Authority | Repo | Licence (verified) | ★ | Push |
+|---|---|---|---|---|
+| ABS (Australia), R | https://github.com/MattCowgill/readabs | **MIT** (via `DESCRIPTION`) | 114 | 2026-05-15 |
+| ABS (Australia), Python | https://github.com/bpalmer4/readabs | MIT (20 lines) | 9 | 2026-11-24 |
+| e-Stat (Japan), R | https://github.com/UchidaMizuki/jpstat | **MIT** (via `DESCRIPTION`) | 15 | 2026-07-21 |
+| e-Stat (Japan), R | https://github.com/yutannihilation/estatapi | **MIT** (via `DESCRIPTION`) | 23 | **2020-04-12** — dormant |
+
+**All three R packages were reported `NOASSERTION` by GitHub** and resolve to
+MIT only in `DESCRIPTION`. Had this pass trusted the badge, the region's one
+uniformly permissive plane would have been filed as "licence unclear" — which
+is the expensive direction of that error, because it suppresses a usable asset
+rather than flagging an unusable one.
+
+**Why the region was invisible, and it is the sharpest vocabulary collision
+this KB has measured.** Querying `abs` returns `abseil-cpp` (18,212★) and
+`abstreet`; the Australian Bureau of Statistics does not appear. The same holds
+for `imf` (returns `MeanFlow`, `ImFileDialog`, and Netflix `photon` — the
+**Interoperable Master Format**) and `istat` (returns a Ruby gem for **mac CPU
+stats**, 2,456★). The fix that worked was censusing the **format** (`sdmx`) and
+the **package name** (`readabs`, `jpstat`, `estatapi`), never the institution's
+initials.
+
+**The informed gap, and it is the whole region's central banks.** No permissive
+MCP server or SDMX client surfaced for the **Bank of Japan**, the **Reserve
+Bank of India**, the **Monetary Authority of Singapore**, the **People's Bank
+of China**, the **Reserve Bank of Australia** or the **Bank of Korea**.
+Searched via `sdmx`, `mcp sdmx`, `mcp fred`, `estatapi`, `jpstat` and
+`readabs`. The two Japanese and two Australian assets above are **statistical
+office** clients, not central-bank clients. Stated explicitly so the silence is
+not read as coverage: **APAC has national statistics well covered and its
+monetary authorities not covered at all.**
+
+For an engagement that needs APAC central-bank series today, the realistic
+routes are the IMF and OECD servers (`cyanheads/imf-mcp-server`,
+`cyanheads/oecd-mcp-server`, both Apache-2.0) which carry APAC aggregates, or
+the BIS statistics via `bis-med-it/pysdmx` — i.e. **reach the region's data
+through the international institutions rather than the national ones.** That is
+a different integration shape and it should be priced as such.
+
+**Regulation — one item moves from "unverified" toward corroborated.** Pass 5
+flagged, and pass 6 recorded, the MAS requirement for **AI-assisted red teaming
+on critical internet-facing systems from 1 July 2026**. It has now appeared on
+a **third independent secondary path** this pass. It remains **secondary** — no
+primary MAS document has been read by any pass — but three independent
+secondary sources is a materially stronger position than pass 5's single
+Deloitte round-up, and it is the region's one named *practice* obligation
+rather than a governance expectation.
+
+Pass 6's correction stands and must keep standing: the supposed **"MAS
+Supervisory Notice on Governance of Autonomous AI Agents" (August 2026) has
+never been corroborated and must not be cited.** Korea's **Basic Act on AI
+Development and Trust** (in force January 2026) remains the region's first
+comprehensive binding AI statute, and **APRA**'s board-oversight expectations
+remain the Australian instrument.
+
+A framing point for proposals, consistent with pass 5's adoption/assurance
+inversion: analyses this pass continue to find **little explicit regulation
+aimed at agentic AI** in major APAC markets, with Singapore's Model AI
+Governance Framework as the main reference point. APAC therefore still leads
+with **evidence and auditability**, because the obligation is to show your
+working, not to meet a checklist that does not yet exist.
+
 ### LATAM
 
 **Regulatory posture: thin on AI-specific finance rules, strong on payment rails.**
@@ -1315,9 +1512,9 @@ regulation, and open-finance secondary rules still unfinalised. The conclusion
 pass 5 drew holds — **a Mexican open-finance pitch is a readiness engagement,
 not a compliance one** — and now the AI side reads the same way.
 
-**Adoption and the named players.** Financial services leads AI use in the
-region: credit scoring for thin-file customers, real-time fraud detection, AML
-and conversational banking. Named at scale: **Nubank, Mercado Pago,
+**Adoption and the named players.** Financial services leads AI use in
+the region: credit scoring for thin-file customers, real-time fraud
+detection, AML and conversational banking. Named at scale: **Nubank, Mercado Pago,
 Bancolombia, Itaú, Bradesco**. One vendor source makes a causal argument worth
 keeping because it matches pass 5's rails finding — tighter margins forced LATAM
 institutions into automation early as the only viable way to scale service.
@@ -1398,6 +1595,77 @@ the equivalent choice**, and until one does, the plane stays empty regardless
 of market size. That is the one sentence to carry into a LATAM insurance
 conversation: **the gap is not developer capacity, it is that nobody has
 published the artefact to build against.**
+
+#### Pass 8 (2026-11-25) — the region's statistical clients are the freest-licensed assets in this KB, and the central banks have none
+
+**The inversion, continued and sharpened in a third direction.** Pass 5 found
+LATAM leading the KB on payment **rails** (`bacen/pix-api`, 3,010★) and last on
+**books** (SPED, CFDI tooling thin and stale). Pass 8 adds the statistical
+layer, and the region does something no other region in this KB does: its
+clients are licensed **more freely than MIT**.
+
+| Publisher | Repo | Licence (verified) | ★ | Push |
+|---|---|---|---|---|
+| INEGI (Mexico) | https://github.com/Eflores89/inegiR | **CC0** (via `DESCRIPTION`) | 54 | 2026-10-15 |
+| Banco de México | https://github.com/Eflores89/banxicoR | **CC0** (via `DESCRIPTION`) | 11 | 2026-10-15 |
+| Brazil, official economic data | https://github.com/felipegambettadesouza6-jpg/open-economics | MIT (20 lines) | 2 | 2026-09-12 |
+| Banxico CEP (payment receipts) | https://github.com/cuenca-mx/cep-python | MIT | 20 | 2026-09-22 |
+| CoDi (Mexican digital payments) | https://github.com/portfedh/codi-api | Apache-2.0 | 18 | 2026-11-23 |
+
+**CC0 is a public-domain dedication — freer than MIT**, with no attribution
+obligation. Both Mexican clients were reported `NONE` by GitHub and resolve
+only in `DESCRIPTION`. One caution for the client's third-party register: **CC0
+carries no express patent grant** (it explicitly does not license patent
+rights). For a data client that is close to immaterial, but it is worth a line
+rather than a silence.
+
+`open-economics` is worth more than its 2★ suggests: a **no-auth API plus MCP
+server for official Brazilian economic data**. No-auth matters — it removes the
+credential-provisioning step that usually makes a LATAM data integration a
+three-week procurement conversation.
+
+**The informed gap, measured and stated plainly: the region's central banks
+have no permissive SDMX or MCP client.** Nothing surfaced for the **Banco
+Central do Brasil** statistical series (distinct from the Pix API, which this
+KB has covered since pass 4), the **BCRA** (Argentina), the **Banco de la
+República** (Colombia), the **Banco Central de Chile** or the **BCRP** (Peru).
+Searched via `sdmx`, `mcp sdmx`, `banxico`, `inegi` and `mcp econom`. **Mexico
+is the only LATAM country in this KB with a central-bank data client at all**,
+and it is a 11★ community R package under CC0.
+
+Read it the way pass 5 taught rather than as a build opportunity: these are
+**mono-country** integrations, so the addressable developer population for each
+is a single market, which is exactly why no library accretes. The realistic
+shape is the same as pass 5's conclusion on SPED and CFDI — **integrate above
+what the client already has**, and reach regional aggregates through the
+international institutions (IMF and OECD servers, both Apache-2.0) rather than
+building five central-bank clients.
+
+**The regional datum of this pass, and it is the one to put in front of a LATAM
+client.** The CCAF 2026 survey (628 institutions, 151 jurisdictions) finds that
+**advanced economies are nearly seven times more likely to reach the
+"transforming" stage of AI use than emerging markets.** This KB has carried
+CCAF's 81% / 40% adoption figures since pass 4 and its regulator figures since
+pass 6; this one is new and it is different in kind, because it is not about
+*whether* AI is adopted but about **how far adoption gets**.
+
+It reframes the LATAM proposition precisely. The constraint is not appetite —
+Finnovista measured Mexican fintech AI adoption rising **60% (2025) → 77%
+(2026)**, the fastest in the region, with Colombia at 66% in 2025. The
+constraint is **getting past pilot**, and a 7× gap in reaching the transforming
+stage is a gap in **engineering, governance and evidence**, not in enthusiasm.
+That is directly sellable: the deliverable is the thing that moves a working
+pilot into a supervised production system, and it is the same control-and-
+evidence layer pass 5 identified as the convergent deliverable across all three
+other regions.
+
+**Still current from prior passes, not restated here:** Mexico has no dedicated
+AI regulation for financial services and its open-finance secondary rules
+remain unfinalised, so an open-finance pitch there is a **readiness**
+engagement; Peru's **DS 115-2025-PCM** financial deadline has passed; Chile's
+**21.855** moved 21.719 to 2027-10-15; and the **Evident AI Index for Banks in
+Latin America** (July 2026, 20 banks ranked) is the first regional benchmark to
+position a client against — read it before any LATAM banking pitch.
 
 ### Global / cross-region
 
@@ -1616,6 +1884,81 @@ itself the pattern:**
 | Capital markets (pass 6) | The client already **pays an ARM** for the format layer | Build assurance either side of it (Pattern 19) |
 | **Insurance (pass 7)** | The spec is **member-gated**; no parser may lawfully be written | **Buy the format, adopt the method, build the judgment** (Pattern 23) |
 
+#### Pass 8 (2026-11-25) — the law gains a boundary, and the licence follows the institution
+
+**Clause four, and it is a limit rather than an extension.** Passes 5–7 built
+the law in three clauses: open-source supply follows **the file format**,
+specifically the file **more than one party must read**, where **the spec is
+readable without paying to join**. Pass 8 tested it on the inbound data plane
+and found it holds — and found where it stops.
+
+- **Holds:** SDMX (ISO 17369) is published, multi-party and free to read, and
+  carries a healthy institutional library population — `ondata/opensdmx` (MIT,
+  58★), `bis-med-it/pysdmx` (Apache-2.0), `eblondel/rsdmx` (111★),
+  `amattioc/SDMX` (99★), `dr-leo/pandaSDMX` (135★).
+- **Stops:** FIGI is equally open and multi-party, and its permissive library
+  population is `svyatov/sec_id` at **8★**, `philaris/figir` at 4★, and a
+  GPL-3.0 R wrapper last touched in **2016**.
+
+> **Clause four: the law predicts libraries for formats you must *parse*, and
+> nothing for registries you merely *query*. Where the authority runs a free
+> public API, the lookup is a network call — there is no file to implement, so
+> no library accretes however open the standard is.**
+
+The commercial consequence is a correction to how an empty plane is read.
+This KB has repeatedly treated "no permissive libraries" as virgin ground with
+margin in it. Clause four says: **check first whether the authority simply
+answers HTTP.** If it does, there is no format layer to adopt *or* to sell —
+the integration is a small piece of work and the engagement has to stand on
+the judgment layer from day one, without a format-layer deliverable to produce
+a number in week one.
+
+**The other global finding: institutional provenance predicts nothing about
+licence.** The statistical plane is the first in this KB where many
+institutions publish the same artefact type, in the same format, for the same
+purpose — and the licences diverge completely.
+
+| Institution | Licence | Class | Studio can build on it? |
+|---|---|---|---|
+| **BIS** (Basel) — 11 repos incl. an agentic framework | **Apache-2.0** | Permissive | Yes, fully |
+| **World Bank** | **MIT** | Permissive | Yes, fully |
+| **ILO** (UN, Geneva) | **BSD-2-Clause** | Permissive | Yes, fully |
+| **Eurostat** (European Commission) — 95 repos | **EUPL-1.1/1.2** | **Copyleft** | Isolate behind an interface |
+| **SDMX-TWG** — the ISO standard itself | **None at all** | Unlicensed spec | Cite, never vendor |
+| Mexican agency clients | **CC0** | Public domain | Yes, and freer than MIT |
+
+Two international institutions 300 km apart have opposite defaults. This
+supersedes an assumption the KB relied on without writing down — that an
+institutional owner implies safe reuse. **The default follows the
+institution's legal culture, not the sector, the language or the ecosystem,
+and the only reliable procedure is per-publisher verification.**
+
+**The adoption numbers for this plane, cited as what they are.** From the
+**BIS Irving Fisher Committee, IFC Report 17, "SDMX adoption and use of open
+source tools"** (February 2025): SDMX is implemented by **about eight tenths**
+of respondents, up from two thirds ten years earlier. An **SDMX Pulse**
+newsletter (June 2026) puts the central-bank version mix at **2.1 — 59%,
+2.0 — 35%, 3.0 — 6%**, with about two thirds of the remainder planning to move
+to 3.0. The adoption figure is a 2025 survey; the version split is a
+newsletter, not a peer-reviewed survey.
+
+Both point the same way and against the instinct: **build against SDMX 2.1,
+because 94% of the installed base is on 2.x**, and treat the **2.1→3.0
+migration as the engagement** — an externally published standard, a
+machine-checkable output, and a client who cannot opt out. Pattern 26 is that
+recipe, and it gets its correctness oracle free because two permissive
+implementations of the same spec exist.
+
+**One cross-region adoption datum, new and different in kind.** The CCAF 2026
+survey (628 institutions, 151 jurisdictions) finds **advanced economies nearly
+seven times more likely to reach the "transforming" stage of AI use than
+emerging markets.** This KB has carried CCAF's 81%/40% adoption split since
+pass 4 and its regulator figures since pass 6. This figure is not about
+*whether* institutions adopt but **how far adoption gets** — which makes it the
+most directly sellable number in the file, because the deliverable that closes
+a transforming-stage gap is engineering and evidence, not strategy. It applies
+to every emerging market in scope, not only LATAM.
+
 ## Regional asymmetry — the summary
 
 | Region | Binding AI-in-finance rules | Hard date to sell against | Posture |
@@ -1791,3 +2134,31 @@ summary table above:**
 | **"Common Controls for AI Services" (Citi / Morgan Stanley / BofA)** | Still **press-only, no primary source**. Carried forward a third pass |
 | **"MAS Supervisory Notice on Governance of Autonomous AI Agents" (Aug 2026)** | Still **uncorroborated and still not cited anywhere in this KB**. Correctly withheld for a third pass |
 | **AI-in-insurance vendor rankings, any region** | Searched; no current ranking found. Not invented |
+
+### Gap register — pass 8 additions (2026-11-25)
+
+**Closed this pass**
+
+| Gap | How it closed | Channel that worked |
+|---|---|---|
+| The inbound data plane (SDMX) absent from the entire KB | 24 repos added across `agents/top.md` and `repos/foundations.md`, all `ls-remote`-verified with licences read | Censusing the **format** (`sdmx`), then `org:bis-med-it`, `org:sdmx-twg`, `org:eurostat` |
+| No central-bank-published agent framework in the KB | `bis-med-it/marco-BIS`, Apache-2.0, 89★ — BIS agentic macroeconometric framework with >1,000 tests | `org:bis-med-it` |
+| Canada statistical data (third Canada closure) | `Aryan-Jhaveri/mcp-statcan`, MIT, 7,000+ series | `mcp sdmx` — **no country in the query** |
+| LATAM statistical clients | `inegiR` + `banxicoR` (**CC0**), `open-economics` (MIT, Brazil) | `banxico`, `inegi`, `mcp econom` |
+| APAC statistical clients | `readabs` ×2, `jpstat`, `estatapi` — **all MIT** | Package names, not institution names |
+| Licence posture of institutional publishers | Measured per institution: BIS Apache-2.0, World Bank MIT, ILO BSD-2, Eurostat EUPL, SDMX-TWG none, Mexican clients CC0 | Direct licence read + `DESCRIPTION` |
+
+**Open, measured, and stated so silence is not mistaken for coverage**
+
+| Gap | What was searched | Status |
+|---|---|---|
+| **APAC central banks** — BoJ, RBI, MAS, PBoC, RBA, BoK | `sdmx`, `mcp sdmx`, `mcp fred`, `estatapi`, `jpstat`, `readabs` | **No permissive client for any of them.** The four APAC assets found are *statistical office* clients. Reach the region via IMF/OECD/BIS instead |
+| **LATAM central banks** — BCB series, BCRA, BanRep, BCCh, BCRP | `sdmx`, `mcp sdmx`, `banxico`, `inegi`, `mcp econom` | **None.** Mexico is the only LATAM country with any central-bank data client, at 11★ |
+| **NA** — Federal Reserve Board's own services (H.15, Z.1), OSFI, Bank of Canada | `mcp fred`, `mcp sdmx`, `sdmx` | None found; FRED route is **AGPL-3.0** |
+| `khaeru/sdmx` star count | `search/repositories` `repo:` query | **Unmeasurable via that channel** (`total_count: 0` for a repo `ls-remote` resolves). Recorded as unmeasured |
+| Whether **ECB IReF** relies on SDMX | Source announcing the 2030/2031 timeline | **Not stated, not assumed** |
+| **UK Financial Services AI Adoption Plan** (14 July 2026) | Primary source attempt | **`www.gov.uk` outside this session's permitted network domains.** Secondary-sourced; verify before quoting |
+| **Fed RFI on model risk management for AI**; Bowman's fit-for-purpose review | Law-firm commentary | **Secondary, no date, no obligation.** Signals, not deadlines |
+| **MAS red teaming from 1 July 2026** | Third independent secondary path this pass | Still **secondary**; no primary MAS document read by any pass |
+| `OpenCyclos` licence (`NOASSERTION`) | Not pursued | Unresolved deliberately — 5-year-stale fork of a superseded major version |
+| Alleged **"MAS Supervisory Notice on Governance of Autonomous AI Agents"** (Aug 2026) | Uncorroborated since pass 5 | **Do not cite.** Pass 6's correction stands |

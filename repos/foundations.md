@@ -672,3 +672,142 @@ to compare them. Reserving is **arithmetic on a triangle** — given the same
 triangle and the same method, the answers must agree to rounding. That makes it
 one of the few judgment-adjacent workloads in this KB with a free correctness
 oracle. See Pattern 22.
+
+## Pass 8 (2026-11-25) — the SDMX layer: the inbound data format, and the licence is set by the institution
+
+The plane: **SDMX (Statistical Data and Metadata eXchange, ISO 17369)** — the
+published format in which central banks, statistical offices and
+international financial institutions exchange macro and reference data. Every
+IFRS 9 ECL scenario, every stress test, every treasury forecast and every
+macro-grounded agent reads this data. The KB had **zero** rows on it.
+
+### How big the installed base is, and which version matters
+
+From the **BIS Irving Fisher Committee, IFC Report 17, "SDMX adoption and use
+of open source tools"** (February 2025): SDMX is implemented by **about eight
+tenths of respondents**, up from two thirds ten years earlier. An **SDMX Pulse**
+newsletter (June 2026) breaks the versions down among central banks as
+**SDMX 2.1 — 59%, SDMX 2.0 — 35%, SDMX 3.0 — 6%**, with around two thirds of
+the rest planning to migrate to 3.0.
+
+Two engineering consequences, and they point in opposite directions:
+
+1. **Build against 2.1.** 94% of the installed base is on SDMX 2.x. The
+   library to lead with is the one whose README says *"any SDMX 2.1 REST
+   API"* — `ondata/opensdmx`. A 3.0-only client addresses 6% of publishers.
+2. **The migration is the engagement.** Two thirds of non-adopters plan to move
+   to 3.0, and `cyanheads/imf-mcp-server` is already SDMX 3.0 — ahead of the
+   installed base. A client's 2.1→3.0 migration is a dated, scoped,
+   machine-verifiable piece of work, which is exactly the shape this KB's
+   pass-5 corollary says produces a defensible number in week one.
+
+The IFC report figure is **February 2025** and the version split is a
+**newsletter, not a survey** — both are cited here as what they are.
+
+### Core SDMX libraries — 13 rows, all verified by `ls-remote` and licence read
+
+| Repo | Licence (verified, method in `agents/top.md`) | ★ | Last push | Note |
+|---|---|---|---|---|
+| https://github.com/ondata/opensdmx | MIT (20 lines) | 58 | 2026-11-25 | **Lead with this.** Python CLI + library for *any* SDMX 2.1 REST API: Eurostat, ISTAT, OECD, ECB, World Bank |
+| https://github.com/dr-leo/pandaSDMX | Apache-2.0 (176 lines) | 135 | **2023-12-28** | Most-starred Python SDMX client and **dormant ~2 years** — see successor below |
+| https://github.com/khaeru/sdmx | Apache-2.0 (176 lines) | *unmeasured* | — | The live `sdmx1` package; successor to pandaSDMX. **Star count unmeasured — see channel note** |
+| https://github.com/eblondel/rsdmx | **GPL (>= 2)** via `DESCRIPTION` | 111 | 2026-10-01 | Most-starred **R** SDMX reader, and **copyleft** — a deliverable that embeds it inherits GPL |
+| https://github.com/amattioc/SDMX | **EUPL-1.2** (286 lines) | 99 | 2026-04-13 | "SDMX Connectors" — Java core with Excel/R/Python/MATLAB bindings. Copyleft |
+| https://github.com/bis-med-it/pysdmx | Apache-2.0 (**14-line short-form**, BIS copyright) | 32 | 2026-11-25 | **The BIS's own** "opinionated Python SDMX library", pushed today |
+| https://github.com/bis-med-it/sdmx-rest4js | Apache-2.0 (14-line short-form) | 16 | 2026-09-16 | JavaScript client for SDMX services |
+| https://github.com/bis-med-it/gingado | Apache-2.0 (200 lines) | 41 | 2026-11-19 | BIS machine-learning library for economics and finance |
+| https://github.com/bis-med-it/FMR-releases | Apache-2.0 (175 lines) | 4 | 2026-11-24 | Release channel for the **Fusion Metadata Registry** — see `verticals/solutions.md` |
+| https://github.com/bis-med-it/sdmx-blockchain | Apache-2.0 (200 lines) | 3 | 2026-11-04 | Research: permissioned registry for SDMX metadata and restricted datasets |
+| https://github.com/clojure-finance/ecbjure | Apache-2.0 (201 lines) | 20 | 2026-07-08 | ECB data from Clojure — FX, EURIBOR, €STR, HICP |
+| https://github.com/worldbank/metadata-editor | MIT (20 lines) | 278 | 2026-11-20 | **World Bank**: edit, validate and manage DDI Codebook microdata metadata |
+| https://github.com/sdmx-twg/sdmx-rest | **No licence file** (404 on 3 names × 3 refs) | 146 | 2026-09-11 | **The specification itself** — see the spec-licence note below |
+
+### The per-publisher client layer, placed by region — 11 rows
+
+This is the layer that makes the plane regionally actionable: one client per
+statistical authority, and the licence is **the institution's, not the
+language's**.
+
+| Publisher | Repo | Licence (verified) | ★ | Last push | Region |
+|---|---|---|---|---|---|
+| Eurostat (community) | https://github.com/rOpenGov/eurostat | **BSD-2-Clause** (`DESCRIPTION`) | 257 | 2026-09-24 | EMEA |
+| Eurostat (official) | https://github.com/eurostat/restatapi | **EUPL** (`DESCRIPTION`) | 36 | 2026-10-09 | EMEA |
+| ILO (UN agency) | https://github.com/ilostat/Rilostat | **BSD-2-Clause** (`DESCRIPTION`) | 40 | 2026-11-24 | Global |
+| OECD | https://github.com/expersso/OECD | **CC0** (`DESCRIPTION`) | 147 | 2025-08-08 | Global |
+| INEGI (Mexico) | https://github.com/Eflores89/inegiR | **CC0** (`DESCRIPTION`) | 54 | 2026-10-15 | LATAM |
+| Banco de México | https://github.com/Eflores89/banxicoR | **CC0** (`DESCRIPTION`) | 11 | 2026-10-15 | LATAM |
+| ABS (Australia), R | https://github.com/MattCowgill/readabs | **MIT** (`DESCRIPTION`) | 114 | 2026-05-15 | APAC |
+| ABS (Australia), Python | https://github.com/bpalmer4/readabs | MIT (20 lines) | 9 | 2026-11-24 | APAC |
+| e-Stat (Japan), R | https://github.com/UchidaMizuki/jpstat | **MIT** (`DESCRIPTION`) | 15 | 2026-07-21 | APAC |
+| e-Stat (Japan), R | https://github.com/yutannihilation/estatapi | **MIT** (`DESCRIPTION`) | 23 | **2020-04-12** | APAC — dormant, use `jpstat` |
+| Banxico CEP (payments) | https://github.com/cuenca-mx/cep-python | MIT | 20 | 2026-09-22 | LATAM |
+
+### The finding this plane produces: the licence is a function of the institution
+
+Across the two tables above, grouped by owner:
+
+| Institution | Licence posture | Usable by a studio? |
+|---|---|---|
+| **BIS** (Bank for International Settlements) | **Apache-2.0**, uniformly, across all 11 repos | **Yes, fully** |
+| **World Bank** | **MIT** | **Yes, fully** |
+| **ILO** (UN) | **BSD-2-Clause** | **Yes, fully** |
+| **Eurostat** | **EUPL-1.1/1.2**, near-uniformly across 95 repos | **Copyleft — isolate it** |
+| **SDMX-TWG** (the standards body) | **No licence at all** on the specifications | Map, not merchandise |
+| Mexican agencies (community clients) | **CC0** — public domain | Yes, and freer than MIT |
+
+**"It comes from a statistical authority" predicts nothing about the licence.**
+Two international institutions headquartered 300 km apart — the BIS in Basel
+and Eurostat in Luxembourg — have opposite defaults: Apache-2.0 against
+EUPL-1.2. This is the legal KB's EMEA finding (*the state publishes code, MIT*)
+split in two: **in the statistical layer the European Commission publishes
+code under a European copyleft licence, while the bank for central banks
+publishes under a US permissive one.** The practical rule is per-publisher
+verification, every time, because the default varies by legal culture rather
+than by sector, language or ecosystem.
+
+**EUPL-1.2 deserves its own line**, being new to this KB. It is an OSI-approved
+**copyleft** licence published by the European Commission in 23 languages, with
+a compatibility list permitting relicensing to specified copyleft licences. It
+is not MIT-equivalent and it is not a blocker either — it is a reciprocal
+licence that has to be *architecturally isolated* exactly as pass 5's
+Pattern 18 prescribes for country-specific format libraries: keep it out of the
+core, behind an interface, so the obligation stays with the component.
+
+**CC0 also deserves a caution.** `expersso/OECD`, `inegiR` and `banxicoR`
+declare CC0 — a public-domain dedication, *freer* than MIT. It is unambiguously
+usable, with one known gap relative to Apache-2.0: **CC0 contains no express
+patent grant** (and explicitly does not license patent rights). For a data
+client that is close to immaterial; it is worth a line in a client's
+third-party register rather than a change of plan.
+
+### The spec body publishes the standard and licenses nothing
+
+`org:sdmx-twg` is 16 repositories holding the actual SDMX standard —
+`sdmx-rest` (146★), `sdmx-json` (56★), `sdmx-ml` (13★), `sdmx-csv` (13★),
+`sdmx-im` (the information model, 8★), `vtl` (15★) — and **every one reports no
+licence**, confirmed by direct fetch across `main`/`master`/`develop`. The one
+exception is `sdmx-twg/semver` (CC0-1.0), which is versioning guidance rather
+than the standard.
+
+This is pass 6's **spec ≠ code** class in its cleanest instance yet: the
+specification repos are the most-starred things on the plane and are **not
+software and not licensed**, while the implementations beside them (`pysdmx`,
+`opensdmx`, `rsdmx`) are properly licensed software. It also means the plane's
+most important asset — the SDMX standard — is readable at no cost and with no
+membership, satisfying pass 7's third clause, which is precisely why the
+implementation population is healthy.
+
+> **Depend on `opensdmx` or `pysdmx`. Cite `sdmx-twg`. Never vendor it.**
+
+### Channel note — `search/repositories` is not an existence oracle
+
+`khaeru/sdmx` is the live successor to the dormant `pandaSDMX` (PyPI package
+`sdmx1`, with a `conda-forge/sdmx1-feedstock` present and BSD-3 licensed).
+`gh api search/repositories -f q='repo:khaeru/sdmx'` returns **`total_count:
+0`**, while `git ls-remote` resolves the repository and
+`raw.githubusercontent.com` serves its `LICENSE` (Apache-2.0, 176 lines,
+10,173 B). **A `repo:` query returning zero does not mean the repository is
+absent.** Its star count is recorded above as *unmeasured* rather than guessed.
+This reinforces the standing channel rule: **`ls-remote` is the only reliable
+existence channel**; `search/repositories` is a metadata channel that can be
+silently incomplete.

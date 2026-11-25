@@ -564,3 +564,108 @@ different inversion in capital markets (the client already pays an ARM). Three
 planes, three different reasons the default advice fails. That is now a pattern
 in its own right: **check who owns the spec before assuming the format layer is
 free.**
+
+## Pass 8 (2026-11-25) — a deployable metadata registry, and a platform whose UI is open and whose core is not
+
+Three additions, each a real system that can be stood up and have an agentic
+layer put on it, plus one correction to how this file should describe Fineract.
+
+### Fusion Metadata Registry — the deployable SDMX server
+
+**What it is:** a structural metadata registry for SDMX — the component that
+holds an institution's data structure definitions, codelists, concept schemes
+and dataflows, and serves them over the SDMX REST API. It is the piece that
+makes "our statistical data is governed" true rather than aspirational.
+
+| Field | Value |
+|---|---|
+| Release channel | https://github.com/bis-med-it/FMR-releases |
+| Licence | Apache-2.0 (175 lines, verified) |
+| Owner | **Bank for International Settlements** |
+| ★ / push | 4 / 2026-11-24 |
+| Region | Global |
+
+**Why four stars is not a reason to dismiss it.** This is the standing rule for
+institutional software restated: the repo is a *release channel* for a server
+run by central banks, not a community project competing for attention. The
+signal is **owner + push date + archive flag**, and all three are good. The
+same BIS org's `SDMX-dashboard-generator` (18★, Apache-2.0) is **archived** —
+that is the contrast the flag exists to show.
+
+**The agentic layer that belongs on top:** a registry is a *typed* description
+of every series an institution holds. An agent given the registry can resolve
+"unemployment, Spain, monthly, seasonally adjusted" to an exact dataflow key
+before it fetches a single observation — which is the difference between a
+cited figure and a plausible one. Wire it as described in Pattern 25.
+
+### Cyclos — the licence shape this file has not recorded before
+
+**What it is:** a payment platform for communities, complementary-currency
+schemes, cooperatives and large organisations — the "member-to-member payments"
+system that sits where Fineract sits for lending.
+
+| Component | Repo | Licence (verified) | ★ | Push |
+|---|---|---|---|---|
+| Official frontend | https://github.com/cyclosproject/cyclos4-ui | **MIT** (20 lines) | 47 | 2026-11-13 |
+| Fork of the last open core | https://github.com/mateli/OpenCyclos | `NOASSERTION` — unresolved | 17 | **2021-11-06** |
+| Deployment package | https://github.com/jelastic-jps/cyclos | Apache-2.0 | 17 | 2025-11-27 |
+
+**The shape, stated so it can be quoted to a client: the user interface is
+open source and the engine is not.** `cyclos4-ui` is a genuine MIT frontend
+published by the vendor, for a Cyclos 4 server that is commercially licensed.
+`OpenCyclos` is a community fork of **Cyclos 3**, the last open-source core,
+and it has not been touched since **2021**.
+
+This is a **fourth licence shape** for this file, alongside pass 7's three. Not
+"open core" in the usual sense (free core, paid add-ons) but its mirror: **free
+shell, paid core.** The practical consequence is specific — you may freely fork,
+rebrand and extend the Cyclos UI for a client, including putting an agentic
+layer in it, but the ledger underneath is a commercial dependency and must
+appear in the client's licence register and cost model from day one. Do **not**
+propose `OpenCyclos` as the engine: a five-year-dormant fork of a superseded
+major version is a migration project disguised as a platform.
+
+### Apache Fineract — current state, and the gap the community itself names
+
+This file has cited Fineract since its first revision; this pass measures it
+rather than assuming it.
+
+| Field | Value |
+|---|---|
+| Repo | https://github.com/apache/fineract |
+| Licence | **Apache-2.0** |
+| ★ / push | 2,661 / **2026-11-25** |
+| Current stable | **1.15.0** (1.14.0 end-of-life) |
+| Standing | **Recertified as a UN Digital Public Good** by the Digital Public Goods Alliance (announced by the ASF, November 2025) |
+
+**The actionable gap, and it comes from the project's own community.** A May
+2026 Fineract community note recorded on the Apache GSoC 2026 page states that
+Fineract provides **core banking APIs but has no community-maintained
+end-user layer**, the former Self-Service API having been removed, and proposes
+a standalone Spring Boot **backend-for-frontend** application as the fix.
+
+That is an unusually clean engagement opening, for three reasons: the gap is
+**named by the maintainers** rather than inferred by a vendor; it sits at the
+**BFF layer**, which is where an agentic interface naturally lives; and it does
+not require touching the core banking engine, so it carries none of the
+regulatory risk that core changes carry. A studio proposing a conversational or
+agentic member-servicing layer for a credit union, cooperative or neobank on
+Fineract is building the component the project says is missing — and
+Apache-2.0 end to end.
+
+**One caution to carry:** a commercial distribution exists (BaaSFlow, whose CEO
+is a Fineract PMC member) which simplifies deployment. That is not a conflict,
+but a client comparing "open source Fineract" against a vendor's packaged
+Fineract should be told the vendor is a project insider — it changes the support
+conversation, not the licence.
+
+### What this pass could not verify, declared
+
+The Fineract 1.15.0 version, end-of-life status and the UN Digital Public Good
+recertification come from the project's own site and the ASF news entry via
+search results; the BFF gap comes from the Apache GSoC 2026 wiki page. The
+repository figures (stars, licence, push date) were measured directly. No
+primary-source confirmation was obtained for the UK and commercial items in
+this section, and `www.gov.uk` is **outside this session's permitted network
+domains**, so any UK government document referenced in `intel/market.md` this
+pass is secondary-sourced and marked as such there.

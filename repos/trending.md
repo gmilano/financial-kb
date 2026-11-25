@@ -9,6 +9,84 @@ updated: 2026-11-25
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-25 (pass 8)
+
+**Theme of the week: `org:bis-med-it` — the Bank for International Settlements
+has 11 public repositories and had zero mentions in this KB, and the
+specification body for the format they all implement licenses nothing at all.**
+
+### `org:bis-med-it` enumerated — snapshot 2026-11-25
+
+Eleven repositories, **Apache-2.0 on every one that carries a licence**, four
+of them pushed within the last three weeks.
+
+| Repo | Licence (verified) | ★ | Pushed | Archived |
+|---|---|---|---|---|
+| https://github.com/bis-med-it/marco-BIS | Apache-2.0 (175 lines) | 89 | 2026-11-12 | no |
+| https://github.com/bis-med-it/bistro | Apache-2.0 | 42 | 2026-03-20 | **yes** |
+| https://github.com/bis-med-it/gingado | Apache-2.0 (200 lines) | 41 | 2026-11-19 | no |
+| https://github.com/bis-med-it/pysdmx | Apache-2.0 (14-line short-form) | 32 | 2026-11-25 | no |
+| https://github.com/bis-med-it/LLM_Primer_for_Economists | Apache-2.0 | 20 | 2025-06-11 | **yes** |
+| https://github.com/bis-med-it/BIS_Multisector_Model | Apache-2.0 | 19 | 2026-10-30 | **yes** |
+| https://github.com/bis-med-it/SDMX-dashboard-generator | Apache-2.0 | 18 | 2025-08-27 | **yes** |
+| https://github.com/bis-med-it/sdmx-rest4js | Apache-2.0 (14-line short-form) | 16 | 2026-09-16 | no |
+| https://github.com/bis-med-it/FMR-releases | Apache-2.0 (175 lines) | 4 | 2026-11-24 | no |
+| https://github.com/bis-med-it/sdmx-blockchain | Apache-2.0 (200 lines) | 3 | 2026-11-04 | no |
+| https://github.com/bis-med-it/sdmx4ds | **no licence file** | 3 | 2026-05-26 | no |
+
+**Four of eleven are archived**, including `bistro` at 42★ — the second
+most-starred repo in the org. Read the archive flag before proposing anything
+from an institutional owner: a research paper's companion repo is archived when
+the paper is done, and that is not a defect, it is the lifecycle.
+
+### `org:sdmx-twg` — 16 repos holding an ISO standard, none of them licensed
+
+`sdmx-rest` (146★), `sdmx-json` (56★), `vtl` (15★), `sdmx-ml` (13★),
+`sdmx-csv` (13★), `sdmx-im` (8★) — all active, several pushed this week, and
+**every one reports no licence**, verified by direct fetch of three licence
+filenames across `main`, `master` and `develop`. The only licensed repo in the
+org is `semver` (CC0-1.0), which is versioning guidance.
+
+This is pass 6's **spec ≠ code** class at its cleanest: the most-starred
+artefacts on the plane are **specifications, not software**, and the
+implementations beside them are properly licensed. Cite the spec; depend on
+`ondata/opensdmx` (MIT) or `bis-med-it/pysdmx` (Apache-2.0).
+
+### `org:eurostat` — 95 repos and a copyleft default
+
+Eurostat's public code is **near-uniformly EUPL-1.1/1.2**: `gridviz` (250★),
+`searoute` (254★), `eurostat-map` (110★), `Nuts2json` (92★), `JGiscoTools`
+(28★), `pygridmap` (20★). Its SDMX client `restatapi` declares **EUPL** in
+`DESCRIPTION` while GitHub reports no licence at all.
+
+**The contrast is the finding.** The BIS and Eurostat are both international
+institutions publishing statistical code, and their defaults are opposite —
+Apache-2.0 against EUPL-1.2. EUPL-1.2 is OSI-approved **copyleft**, so it is
+usable but must be architecturally isolated, never linked into a proprietary
+core.
+
+### Measurement correction carried into this log
+
+Pass 7's line-count table gains two entries and one hard rule:
+
+- **EUPL-1.2 = 286 lines / 13,826 B** (`amattioc/SDMX`) — new class.
+- **Apache-2.0 short-form = 14 lines / ~648 B** — a valid grant by
+  incorporation (`pysdmx`, `sdmx-rest4js`), which a gate calibrated on 175–201
+  lines would wrongly reject.
+- **A length measurement is valid only after a licence marker has matched.**
+  Probing `sdmx-twg/sdmx-rest` returned a non-404 body of 44 lines / 1,522
+  bytes that was **not a licence**; direct re-fetch returned 404 on every
+  licence name across three refs. It was caught only because no marker matched.
+
+### What this log could not measure
+
+Star count for `khaeru/sdmx` (the live `sdmx1` successor to the dormant
+`pandaSDMX`): `search/repositories` with `repo:khaeru/sdmx` returns
+`total_count: 0` although `ls-remote` resolves the repo and its Apache-2.0
+`LICENSE` fetches cleanly. Recorded as unmeasured rather than guessed.
+
+---
+
 ## 2026-11-25 (pass 7)
 
 **Theme of the week: `casact` — the Casualty Actuarial Society — has 45
