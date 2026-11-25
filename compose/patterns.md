@@ -1139,3 +1139,212 @@ exactly backwards as a dependency signal.
 MIT code producing **CC BY-NC 4.0** data with some third-party files its own
 maintainers state they cannot license at all. An OSI badge on a data repository
 describes the software that moves the data. See Pattern 20.
+
+## Pattern 22 — Loss-reserving assurance with a three-language differential oracle
+
+**Applies to:** P&C / general insurers and reinsurers, all regions. The method
+is global; only the regulatory sign-off differs.
+
+**Why this pattern is the strongest-shaped insurance engagement in this KB.**
+Reserving is the rare insurance workload that is **arithmetic on a published
+method**, not a private judgment. Given the same development triangle and the
+same method — chain ladder, Bornhuetter-Ferguson, Cape Cod, Mack — the answer
+is determined. That means, uniquely on this plane, **a free correctness
+oracle exists**, and this KB's standing rule (pass 5: *check whether a second
+permissive implementation exists before writing a validator*) is satisfied
+three times over.
+
+**The assets, and the licence split that must be settled before day one.**
+
+| Role | Repo | Licence (read) | Note |
+|---|---|---|---|
+| Primary engine | https://github.com/casact/chainladder-python | **MPL-2.0** (373 L, 16,724 B) | Casualty Actuarial Society. Pushed 2026-11-23 |
+| Oracle A | https://github.com/mages/ChainLadder | **GPL (>= 2)** via `DESCRIPTION`, no `LICENSE` file | R, on CRAN since 2008 |
+| Oracle B | https://github.com/JuliaActuary/ChainLadder.jl | **MIT** | 6 stars, dormant since 2022 — use as a third opinion only |
+| Cross-language harness | https://github.com/actuarialopensource/benchmarks | **MIT** (20 L, 1,087 B) | Exists expressly to compare implementations |
+| ML reserving comparator | https://github.com/casact/tryangle | **MPL-2.0** | Automatic development-factor selection |
+| Stochastic / Bayesian | https://github.com/casact/rp-bnn-claims | **MPL-2.0** | CAS research-paper code |
+| Data model | https://github.com/casact/PCDM | **MPL-2.0** | Open P&C data model — the triangle's schema |
+| Clean-licence fallback | https://github.com/casact/actsim | **Apache-2.0** (200 L, 11,341 B) | The only fully permissive `casact` repo |
+
+**Step zero — settle MPL-2.0 with counsel, in writing, before any code.**
+MPL-2.0 is **file-level** copyleft: shipping it inside a commercial deliverable
+is permitted, and the obligation attaches only to the MPL-licensed files
+themselves. **Architecture consequence, and it is mechanical: wrap, do not
+patch.** Call `chainladder-python` across a process or module boundary, keep
+every line of client logic in client-owned files, and the copyleft never
+touches the client's IP. If counsel refuses MPL outright, the method is
+*published* — reimplementing chain ladder is lawful, is roughly two weeks, and
+Oracles A and B make it testable from the first commit. **Say the price out
+loud rather than discovering it in month three.**
+
+**The wiring.**
+
+1. **Triangle extraction, deterministic.** Claims transactions from the
+   carrier's PAS → development triangle, on the `casact/PCDM` schema. No model.
+   Every cell traceable to the claim and transaction rows that produced it.
+2. **The oracle gate, and this is the deliverable.** Run the *same* triangle
+   through `chainladder-python` and through `mages/ChainLadder`, method by
+   method, and **diff factor-by-factor and ultimate-by-ultimate**. Agreement to
+   rounding is the pass condition. Wire it into CI on the carrier's own
+   historical triangles. Disagreement is a bug in the pipeline, in the data, or
+   in a method selection — all three are findings worth money.
+3. **Diagnostics, deterministic.** Negative incrementals, triangle holes,
+   late-reported distortion, tail factors outside a configured band, calendar
+   effects. Rules, not a model, each with a named actuarial reference.
+4. **Model only where judgment lives, and only with a citation.** Narrative
+   drafting of the reserve memo, candidate explanations for diagnostic
+   failures, and triage of which accident years need an actuary's attention.
+   **The model must cite accident year, development period and method**, and a
+   verifier drops any finding whose citation does not resolve to a triangle
+   cell.
+5. **The model never selects the booked reserve.** It proposes; the signing
+   actuary selects. The reserve is a regulatory filing with personal
+   professional liability attached — same posture this KB takes on Reg E clocks
+   and procedural deadlines.
+6. **Append-only log** keyed on valuation date, segment and method, holding the
+   triangle hash, both engines' outputs, the diff, the diagnostics and the
+   actuary's acceptance.
+
+**Why this closes.** The week-one deliverable is **a number**: the count of
+segments where two independent implementations of the same published method
+disagree on the carrier's own historical data. That is measurable by
+construction — the corollary pass 5 derived for format work applies here even
+though this is a *method*, because the method is published and therefore
+checkable. It funds the judgment layer from inside the engagement.
+
+**What this pattern is not.** It is not reserve-setting automation, and it must
+not be sold as one. It is assurance of the reserving *pipeline*.
+
+---
+
+## Pattern 23 — The insurance engagement: buy the format, adopt the method, build the judgment
+
+**Applies to:** P&C, life and specialty carriers, all regions. **This pattern
+exists to stop an architect applying Pattern 18 to insurance**, where it fails
+for a reason no other plane in this KB shares.
+
+**The failure this prevents.** Pattern 18 (statutory filing agent) and pass 5's
+headline advice — *adopt the parser, build the decision* — both assume the
+format layer is **free**, because a published format attracts permissive
+implementations. On the insurance plane that assumption is false, and the
+measurement is unambiguous:
+
+| Check | Measured 2026-11-25 |
+|---|---|
+| `ACORD in:name,description`, by stars | 37 results; best relevant **8 stars**, no licence, last push 2017 |
+| `AL3 insurance` | **0 results** |
+| Why | ACORD gates Standards behind **membership and paid programmes** (EHR programme **$5,000/yr**; Forms licensed separately; terms dated 2025-10-27) |
+| Permissive insurance core | `aposin/openinsuranceplatform`, Apache-2.0, 93★/34f — **last push 2019-11-27**. Consortium-built, abandoned |
+
+**The third clause, which is what this pattern encodes:** open source follows
+the file that more than one party must read **and whose specification can be
+read without paying to join**. Insurance satisfies the first condition and
+fails the second, so the population never forms.
+
+**The gate — run these three checks before promising any format layer, on any
+plane, in any industry.**
+
+1. **Can you download the spec, today, without an account?** If not, the format
+   layer is a **procurement line item**, not a sprint.
+2. **Does a permissive implementation exist above ~50 stars with a push inside
+   12 months?** If not, assume none is coming — a member-gated spec does not
+   grow one.
+3. **Has a consortium already tried?** Search the standards body's own GitHub
+   org and read `pushed_at` and `archived`. A dead consortium repo is the
+   cheapest due diligence available and it reframes the whole proposal.
+
+**The corrected composition.**
+
+| Layer | What goes here | Licence |
+|---|---|---|
+| System of record | The carrier's existing PAS. **Not replaced** — that is what `aposin` attempted | Commercial |
+| Interchange | **ACORD membership.** Priced, scheduled, owned by the client | Commercial |
+| Method | `casact/chainladder-python` (MPL-2.0), `lifelib` (MIT), `JuliaActuary/*` (MIT), `pyliferisk` (GPL — reference only) | MPL / MIT — **wrap, do not patch** |
+| Correctness oracle | `mages/ChainLadder` + `actuarialopensource/benchmarks` | GPL / MIT — CI only, never shipped |
+| Judgment | Built, client-owned. References in `agents/top.md` pass 7 | Client |
+| Health / social protection schemes only | openIMIS — **AGPL-3.0 with a Swiss governing-law and Berne-forum rider** | AGPL + rider |
+
+**Life vs P&C — a real procurement fork to put in front of the client.** A
+**life** engagement can be executed **entirely under MIT** (`lifelib`, all of
+`JuliaActuary`). A **P&C reserving** engagement cannot avoid MPL-2.0 without
+reimplementing a published method. Two different conversations with counsel;
+know which one you are in before the kickoff.
+
+**The sales sentence that is true:** not "AI modernises your core insurance
+platform" — the one consortium that tried that is seven years dead — but
+**"your reserving pipeline gets a correctness oracle two independent
+implementations agree on, and your actuaries keep the signature."**
+
+---
+
+## Pattern 24 — The licence probe, corrected twice (supersedes the Pattern 9 gate's licence step)
+
+**Applies to:** every pass of every industry KB. Pattern 9 ships as an
+executable gate in eight KBs; pass 5 corrected it from byte bands to line
+counts, pass 6 corrected it to read the **title line**, and this pass adds two
+cases that break it again. **Replace the licence step with the order below.**
+
+**The order of operations — the title line is the authority, the line count
+only corroborates.**
+
+1. **Fetch**, trying these paths in order on
+   `raw.githubusercontent.com/<slug>/HEAD/<path>`:
+   `LICENSE`, `LICENSE.md`, `LICENSE.txt`, `LICENCE`, `LICENSE.rst`,
+   `COPYING`, and — **added this pass** — `DESCRIPTION` for R/CRAN packages,
+   where the grant lives in a `License:` metadata field and there is no licence
+   file at all (`mages/ChainLadder`, 93 stars, `License: GPL (>= 2)`).
+2. **Read the first non-empty line** and match it against the table.
+3. **If the title line is not a recognised licence name, do not stop — grep the
+   body for the grant clause.** *New cause this pass, the sixth:*
+   `JuliaActuary/MortalityTables.jl` and `LifeContingencies.jl` report
+   `NOASSERTION` because their licence files begin with the **project name**
+   under a `====` underline, with plain MIT beneath. 81 stars of permissive code
+   would otherwise be discarded. Known `NOASSERTION` causes now: a `.md`
+   extension (`ledger/ledger`, 6,078★, BSD-3); a licence referenced rather than
+   reproduced plus a rider (openIMIS); a project-name title line (this pass).
+4. **Never let a body marker override the title line.** MPL-2.0 §1.12 defines
+   "Secondary License" by naming the GNU GPL, LGPL **and AGPL**, so any
+   precedence-ordered body grep reports MPL-2.0 as AGPL-3.0. This pass
+   reproduced that failure on **nine** `casact` repositories after pass 6 had
+   already documented it. It is settled: title line first.
+5. **Use the line count only to decide whether to read the file.** It is stable
+   *per rendering*, not per licence — MPL-2.0 measures **373 lines / 16,724 B**
+   canonically (nine byte-identical readings this pass, zero dispersion) and
+   **150 lines / 14,847 B** reflowed in `casact/raw_package`. Apache-2.0 showed
+   the same split in pass 5 (201 vs 176 lines). **A count outside the table is a
+   prompt to read, never grounds to downgrade an asset** — the expensive error
+   is silently discarding a genuinely permissive asset.
+6. **A licence badge with no file is `undetermined`, not `absent`.**
+   `Systemorph/IFRS17CalculationEngine` reports MIT on the API while `LICENSE`
+   and `LICENSE.md` 404 on both `main` and `master`.
+7. **Never infer an org-wide licence.** `lifelib-dev/lifelib` is MIT;
+   `lifelib-dev/lifelib-products`, pushed the same week, has **no licence
+   file**. Probe every slug you intend to write.
+
+**Line table, consolidated** (merging pass 6's and this pass's measurements):
+
+| Licence | Lines | Bytes | Title-line marker |
+|---|---|---|---|
+| MIT | 19–23 | ~1,055–1,130 | `MIT License` / `The MIT License (MIT)` |
+| MIT under a project-name header | 26 | ~1,349 | *project name* + `====`, grant in body |
+| BSD-3-Clause | ~28 | ~1,500 | `Redistribution and use in source and binary forms` |
+| QuickFIX Software License 1.0 | 45 | — | `The QuickFIX Software License, Version 1.0` |
+| Community Specification License 1.0 | 99 | — | `# Community Specification License 1.0` |
+| CC0-1.0 | 120 | 7,047 | `Creative Commons Legal Code` |
+| MPL-2.0 (reflowed) | 150 | 14,847 | `Mozilla Public License` |
+| Apache-2.0 without appendix | 176 | ~10,179 | `Apache License` |
+| LGPL-3.0 | 187 | — | `GNU LESSER GENERAL PUBLIC LICENSE` |
+| Apache-2.0 with appendix | 200–202 | 11,341–11,677 | `Apache License` + `APPENDIX: How to apply` |
+| MPL-2.0 (canonical) | 373 | 16,724 | `Mozilla Public License Version 2.0` |
+| CC-BY-4.0 | 395 | — | `Attribution 4.0 International` |
+| LGPL-2.1 (as `.md`) | 503 | — | `GNU LESSER GENERAL PUBLIC LICENSE Version 2.1` |
+| AGPL-3.0 | 660–661 | 34,522 | `GNU AFFERO GENERAL PUBLIC LICENSE` |
+| GPL-3.0 | 673 | 35,130 | `GNU GENERAL PUBLIC LICENSE` |
+
+**And the discovery rule that keeps paying, now five passes running:** when a
+topic query returns nothing, **enumerate the organisation**. `org:moov-io` gave
+60 repos in pass 5, `org:finos` 194 in pass 6, `org:casact` 45 in this one —
+and in every case the topic query had already returned a false negative,
+because a professional body names its code after the **agency**, the
+**standard** or the **method**, never after the industry.

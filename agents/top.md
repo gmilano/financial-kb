@@ -623,3 +623,188 @@ this session** — the host is outside the session's allowed network domains, so
 the commercial tiers could not be read. The licence split above comes from the
 repository's own `README.md` and `yente`'s, which state it unambiguously; the
 *price* of the commercial data licence is not in this KB.
+
+## Pass 7 (2026-11-25) — the insurance plane, and the clause that closes it: *membership*
+
+Pass 6 established that open source follows **the file that more than one party
+must read**, and that one-way submissions to a regulator who publishes no
+reader stay empty. This pass took the one plane this KB had never opened —
+**insurance** — and found a case that satisfies pass 6's condition and *still*
+produces nothing. The reason is new, and it is the finding of this pass.
+
+### The census that opened the plane
+
+A vocabulary census of all eight files before any research: **ACORD 0,
+IFRS 17 0, Solvency II 0, reinsurance 0, takaful 0, EIOPA 0, IAIS 0, IRDAI 0,
+NAIC 1, actuarial 1**. The word "insurance" appeared 11 times, all incidental.
+A whole regulated sub-industry — larger by premium than several planes this KB
+covers in depth — was absent.
+
+### The third clause: the spec must be readable without paying to join
+
+ACORD is the insurance industry's interchange standard. It is read by carrier,
+agent, broker and reinsurer — **more than one party must read the file**, so
+pass 6's rule predicts a mature permissive library. There is none.
+
+| Measurement | Result |
+|---|---|
+| `ACORD in:name,description`, sorted by stars | 37 results; best relevant hit **8 stars**, no licence file, last push 2017 |
+| Top 4 results by stars | All `acordeon-*` — Spanish for *cheat sheet*. A pure vocabulary collision |
+| `AL3 insurance` (the flat-file format) | **0 results** |
+
+The mechanism is not technical. ACORD's own published terms gate the standards
+behind membership and paid programmes: access to Standards requires joining the
+relevant membership or participation programme and then creating an acord.org
+account; Forms are licensed separately; the EHR Digital Standards Programme is
+priced at **$5,000 per year** for eligible participants; and ACORD's terms note
+that not all programmes grant access to all standards, some at additional
+charge. The terms document in evidence is dated **2025-10-27**.
+
+> **THIRD CLAUSE, added to pass 6's law: open source follows the file that more
+> than one party must read *and whose specification can be read without paying
+> to join*.** Where the spec is member-gated, the multi-party condition is
+> satisfied and the population still does not form — because the person who
+> would write the library may not lawfully read the spec. FIX, ISO 20022,
+> EN 16931, UBL and Metro 2 are published at no cost and all have mature
+> permissive implementations in this KB. ACORD is not, and has none.
+
+This is falsifiable and it is the cleanest test the KB has run: the two cases
+differ in *one* variable — the price of reading the spec — and the outcomes are
+opposite.
+
+### The second measurement: the permissive insurance core existed, and it died
+
+Pass 6 wrote, in `verticals/solutions.md`, "there is no permissive insurance
+equivalent of Fineract" and "for a P&C or life insurer engagement there is no
+open starting point". **The conclusion holds. The reason given was wrong, and
+the true reason is more useful.**
+
+| Repo | Licence (read) | Stars / forks | Last push |
+|---|---|---|---|
+| https://github.com/aposin/openinsuranceplatform | Apache-2.0 (202 lines, 11,474 B) | 93 / 34 | **2019-11-27** |
+| https://github.com/aposin/CalculusPrime-PnC | Apache-2.0 (202 lines, 11,677 B) | 6 / — | **2019-11-28** |
+
+`aposin` is the Open Source Insurance Alliance — an industry consortium, not a
+hobbyist. It shipped a **fully permissive core insurance platform** covering,
+in its own description, "the complete scope of business capabilities for the
+insurance industry across all lines of business and business models (B2C, B2B,
+B2B2C)", plus a separate **P&C rating engine**. Both are Apache-2.0. Both have
+been dead for seven years. Five of the org's eight repos carry `ARCHIVED:` as
+the first word of their own description.
+
+> **So the insurance core is not an untried idea. It is a consortium attempt
+> that was made, licensed permissively, and abandoned.** That is a far stronger
+> thing to tell a client than "nothing exists": the risk being priced is not
+> novelty, it is a known failure mode. And it pairs with the ACORD finding —
+> the industry's shared code attempt died, and its shared *format* is behind a
+> membership fee. **The insurance plane is closed by governance, not by absence
+> of effort.**
+
+### The third measurement: where the artefact is a *method*, the plane is alive
+
+The same census that found ACORD empty found a mature, institutional,
+actively-maintained body of insurance open source. It was invisible to pass 6
+because of how it is **named**.
+
+Pass 6's probe was "insurance core platforms (policy, claims, underwriting,
+actuarial) sorted by stars" — a multi-word query, which rule **G-L19** already
+records as an AND that returns nothing, and which contains the word
+*insurance*. The Casualty Actuarial Society's repositories are named
+`chainladder-python`, `reinspy`, `tryangle`, `FASLR`, `PCDM`. The life side is
+`lifelib`, `pyliferisk`, `MortalityTables.jl`. **Not one contains the word
+"insurance".**
+
+> **RULE, and it is the fifth time this KB has relearned it in a new costume:
+> a professional body names its code after the METHOD, never after the
+> INDUSTRY.** Pass 5 found libraries named after the *agency* (`fincen`); this
+> pass finds them named after the *technique* (`chainladder`). Query the
+> actuarial vocabulary — reserving triangle, chain ladder, mortality table,
+> life contingency, economic scenario generator — not the sector noun.
+
+### Agentic assets added this pass — 8 rows, all verified by `ls-remote` and licence read
+
+| Agent / asset | Repo | Licence (read) | Stars | Last push | What it is, and how far to trust it |
+|---|---|---|---|---|---|
+| credibility-gated underwriting XAI | https://github.com/ftsboy1/credibility-gated-underwriting-xai | MIT (20 lines, 1,055 B) | 106 | 2026-07-28 | Underwriting explainability gated on **actuarial credibility** — the discipline's own answer to thin data. Highest-starred permissive agentic underwriting asset found |
+| actuarial-skills | https://github.com/kalta-ai/actuarial-skills | MIT (20 lines, 1,064 B) | 17 | 2026-03-18 | Agent skills for **P&C actuaries**. The only asset found that packages actuarial workflow as skills rather than as a library |
+| agentic claims adjudication | https://github.com/anandapurva55/agentic-claims-adjudication-aws | MIT (20 lines, 1,068 B) | 23 | 2026-11-23 | Multi-agent **motor claims adjudication**, full stack. Pushed two days before this pass |
+| labor-law-mcp | https://github.com/kentaroajisaka/labor-law-mcp | MIT (20 lines, 1,071 B) | 67 | 2026-09-14 | MCP server over **Japanese labour and social-insurance law**. APAC-placed; the regulator's corpus as configuration, not construction |
+| turkactuary-mcp | https://github.com/afsharid/turkactuary-mcp | Apache-2.0 (201 lines, 11,357 B) | 3 | 2026-11-20 | MCP over **Türkiye insurance regulation** plus actuarial calculation. The only Turkey-placed insurance asset in this KB |
+| ClaimsProcessingAssistant-MCP | https://github.com/chbhargavareddy/ClaimsProcessingAssistant-MCP | MIT (20 lines, 1,071 B) | 5 | 2026-08-22 | Claims processing exposed over MCP. Prototype seed |
+| niche underwriting automation skill | https://github.com/dungnotnull/niche-insurance-underwriting-automation-agent-skill | MIT (20 lines, 1,067 B) | 5 | 2026-07-01 | Agent skill for specialty-lines underwriting |
+| openIMIS claim AI (research) | https://github.com/openimis/openimis-research-claim_ai_py | **AGPL-3.0** (660 lines, 34,522 B) | 2 | 2025-10-27 | Claim-AI research module inside openIMIS. Copyleft — **design reference only**, and it inherits the Swiss-law rider documented in `verticals/solutions.md` |
+
+**Star counts, read honestly.** Six of eight are under 25 stars; four are under
+6. By the rule pass 5 established for `virattt/dexter`, these are **design
+references and prototype seeds, not dependencies** — with one qualification
+this pass adds: the *underwriting* assets are weaker evidence than pass 5's
+servicing assets, because underwriting has no shared file to validate against.
+There is no `ach-test-harness` equivalent here. Nothing in this table can be
+checked for correctness by anyone outside the carrier that wrote it.
+
+### Licence correction — two extensions to pass 6's line table, and a new NOASSERTION cause
+
+Pass 6's **Correction 1** (read the licence name from the *title line*, never
+from body markers, because MPL-2.0 §1.12 defines "Secondary License" by naming
+the GNU GPL, LGPL **and AGPL**) was independently reproduced this pass: a
+body-marker probe written in precedence order reported nine `casact`
+repositories as **AGPL-3.0** when every one of them is **MPL-2.0**. The
+correction is confirmed and should be treated as settled.
+
+**Extension 1 — MPL-2.0 is the most stable licence file this KB has measured.**
+
+| Reading | Lines | Bytes |
+|---|---|---|
+| `casact/chainladder-python`, `PCDM`, `reinspy`, `tryangle`, `rp-bnn-claims`, `imaginator`, `double_lift`, `risky-router`, `covid_19_data` | 373 | **16,724** |
+
+**Nine readings, byte-identical.** Zero dispersion. Compare pass 5's measured
+dispersion: MIT 11 B over 3 readings, Apache-2.0 **1,198 B (11.7%) over 4**.
+
+**Extension 2, and it limits Extension 1 — the line count is stable per
+*rendering*, not per licence.** `casact/raw_package` is also MPL-2.0 and
+measures **150 lines / 14,847 B**: a reflowed copy whose first line reads
+`Mozilla Public License` without the version. Same licence, 223 fewer lines.
+This is the exact failure mode pass 5 found for Apache-2.0 (`fincen` 201 lines
+vs `edinet-mcp` 176) now reproduced for MPL-2.0 — **so the title line is the
+authority and the line count only corroborates it.** A count that misses the
+table is a prompt to read the file, never grounds to downgrade an asset.
+
+**Line-table additions measured this pass:**
+
+| Licence | Lines | Bytes | Title-line marker |
+|---|---|---|---|
+| CC0-1.0 | 120 | 7,047 | `Creative Commons Legal Code` |
+| MPL-2.0 (canonical) | 373 | 16,724 | `Mozilla Public License Version 2.0` |
+| MPL-2.0 (reflowed) | 150 | 14,847 | `Mozilla Public License` |
+| Apache-2.0 with appendix | 200–202 | 11,341–11,677 | `Apache License` + `APPENDIX: How to apply` |
+| GPL-3.0 | 673 | 35,130 | `GNU GENERAL PUBLIC LICENSE` |
+| AGPL-3.0 | 660 | 34,522 | `GNU AFFERO GENERAL PUBLIC LICENSE` |
+
+**New NOASSERTION cause — the sixth, and the simplest yet: the licence file's
+first line is the PROJECT NAME.**
+
+`JuliaActuary/MortalityTables.jl` and `JuliaActuary/LifeContingencies.jl` both
+report `NOASSERTION` on the API. Both files are 26 lines and open:
+
+```
+MortalityTables.jl
+====================
+
+Copyright (c) 2018-2020 Alec Loudenback
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+```
+
+That is **MIT in substance**, with a two-line project header above it.
+Pass 5's cause was the `.md` file extension (`ledger/ledger`). This one is a
+title line that is not a licence name at all. **So the probe needs a fallback:
+if the title line is not a recognised licence name, grep the body for the grant
+clause — and only then report the licence as undetermined.** Both repos are
+fully permissive and usable; 81 stars between them would have been discarded.
+
+**Badge without a file — two cases, recorded as undetermined, not as absent:**
+
+| Repo | API says | Measured |
+|---|---|---|
+| https://github.com/Systemorph/IFRS17CalculationEngine | MIT | `LICENSE` and `LICENSE.md` both **404 on `main` and `master`**. Four branches exist; `main` resolves. The top-starred IFRS 17 asset has **no readable licence file** |
+| https://github.com/lifelib-dev/lifelib-products | none | No licence file, while `lifelib` itself is MIT. **Licence varies per repo inside one org** — never infer an org-wide licence |

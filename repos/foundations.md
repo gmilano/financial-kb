@@ -587,3 +587,88 @@ again, exactly as predicted.
 in the OpenSanctions block covers **code only**. The data those tools load is
 CC BY-NC 4.0 and parts of it cannot be licensed at all. See the data-trap
 section in `agents/top.md`.
+
+## Pass 7 (2026-11-25) — the actuarial method layer: an institutional ecosystem this KB had at zero
+
+Census before research: `chainladder` 0, `casact` 0, `lifelib` 0, `actuarial` 1.
+This is the largest single block of previously-unrecorded foundational code the
+KB has added, and it is **not** a set of hobby projects — two of the four owners
+are the profession's own bodies.
+
+**Why it was missing:** every prior probe used the sector noun. None of these
+repositories contains the word *insurance* in its name. See the naming rule in
+`agents/top.md` pass 7.
+
+### The owners, enumerated (the channel that worked: `search/repositories` with `org:`)
+
+| Org | Repos | Dominant licence | Alive? |
+|---|---|---|---|
+| `casact` — **Casualty Actuarial Society** | 45 | **MPL-2.0** | Yes; flagship pushed 2026-11-23 |
+| `JuliaActuary` | 16 | **MIT** | Yes; three repos pushed **2026-11-25**, the day of this pass |
+| `lifelib-dev` | 12 | **MIT** | Yes; pushed 2026-11-23/24/25 |
+| `actuarialopensource` | 18 | mostly **none** | No; newest push 2025-06-08 |
+
+### P&C / general insurance — loss reserving and pricing
+
+| Repo | Licence (read, title line + lines) | Stars | Last push | What it does |
+|---|---|---|---|---|
+| https://github.com/casact/chainladder-python | **MPL-2.0** (373 L, 16,724 B) | 292 | 2026-11-23 | The reference **loss-reserving** library: development triangles, chain ladder, Bornhuetter-Ferguson, Cape Cod, Mack and bootstrap stochastic reserving. Maintained by the Casualty Actuarial Society. This is the single most important repo added this pass |
+| https://github.com/casact/FASLR | **GPL-3.0** (673 L, 35,130 B) | 60 | 2026-10-16 | Free Actuarial System for Loss Reserving — a GUI over the reserving workflow. **Strong copyleft: reference only** |
+| https://github.com/casact/PCDM | **MPL-2.0** (373 L, 16,724 B) | 40 | 2022-06-22 | **Property & Casualty Data Model** — a published open data model for P&C. Dormant since 2022 but it is a *schema*, which ages far better than code |
+| https://github.com/casact/tryangle | **MPL-2.0** (373 L, 16,724 B) | 30 | 2023-06-11 | Machine-learning reserving: automatic selection of development factors. Dormant |
+| https://github.com/casact/reinspy | **MPL-2.0** (373 L, 16,724 B) | 9 | 2026-05-07 | **Reinsurance** structures in Python. Low stars, but it is the only maintained permissive reinsurance code found |
+| https://github.com/casact/actsim | **Apache-2.0** (200 L, 11,341 B) | 11 | 2026-09-28 | Actuarial simulation. **The one fully permissive `casact` repo** — worth knowing when MPL is a procurement obstacle |
+| https://github.com/casact/rp-bnn-claims | **MPL-2.0** (373 L, 16,724 B) | 17 | 2023-02-15 | Bayesian neural networks for individual claims reserving — CAS research paper code |
+| https://github.com/mages/ChainLadder | **GPL (>= 2)**, declared in `DESCRIPTION`; **no `LICENSE` file** | 93 | 2026-08-13 | The original **R** chain-ladder package, on CRAN since 2008. Still maintained. Copyleft — **reference and oracle, not a dependency** |
+
+### Life, annuity and mortality
+
+| Repo | Licence (read) | Stars | Last push | What it does |
+|---|---|---|---|---|
+| https://github.com/lifelib-dev/lifelib | **MIT** (20 L, 1,074 B) | 229 | 2026-11-23 | Life actuarial models — savings, term life, annuity, universal life, plus economic and asset models. Built on `modelx`. **The most-starred permissive life-actuarial library** |
+| https://github.com/franciscogarate/pyliferisk | **GPL-3.0** (673 L, 35,120 B) | 127 | 2026-11-11 | Life contingencies: commutation functions, annuities, assurances, from standard mortality tables. Actively maintained but **copyleft** |
+| https://github.com/JuliaActuary/LifeContingencies.jl | **MIT** (26 L, 1,350 B) — API reports `NOASSERTION`; see the project-name cause in `agents/top.md` | 46 | 2026-10-30 | Life contingencies and insurance/annuity valuation in Julia |
+| https://github.com/JuliaActuary/MortalityTables.jl | **MIT** (26 L, 1,349 B) — API reports `NOASSERTION` | 35 | 2026-10-25 | Standard **mortality and disability tables** with a common interface. The table-loading problem solved once |
+| https://github.com/JuliaActuary/ActuaryUtilities.jl | **MIT** (18 L, 1,058 B) | 44 | **2026-11-25** | Duration, convexity, present value, IRR, risk measures. Pushed the day of this pass |
+| https://github.com/JuliaActuary/FinanceModels.jl | **MIT** (20 L, 1,115 B) | 44 | **2026-11-25** | Yield curves, bootstrapping, discounting, asset modelling |
+| https://github.com/JuliaActuary/EconomicScenarioGenerators.jl | **MIT** (20 L, 1,115 B) | 16 | 2026-10-25 | **Economic scenario generation** — the input every stochastic reserving and capital model needs, and the piece clients most often buy |
+| https://github.com/JuliaActuary/ExperienceAnalysis.jl | **MIT** (20 L, 1,115 B) | 11 | 2026-10-25 | Exposure calculation for experience studies — the unglamorous step that decides whether a mortality study is correct |
+| https://github.com/actuarialopensource/benchmarks | **MIT** (20 L, 1,087 B) | 16 | 2025-06-08 | Cross-implementation **benchmarks** of actuarial projections across Python/Julia/R/JAX. Dormant, but it is the nearest thing this plane has to a correctness oracle |
+
+### The licence posture, stated plainly — it is not the MIT/Apache set
+
+This KB's standing brief is to prefer MIT / Apache-2.0 / BSD. **The P&C
+actuarial profession standardised on MPL-2.0**, and that is not a detail to
+gloss:
+
+- **MPL-2.0 is file-level copyleft.** Linking into a proprietary product is
+  permitted; the obligation attaches to the **MPL-licensed files themselves** —
+  modify one of those files and that file's source must be made available. It
+  is materially weaker than GPL and materially stronger than MIT.
+- **The practical consequence for an engagement:** `chainladder-python` can sit
+  inside a commercial deliverable, provided the client's changes to
+  *chainladder's own files* are published. **Wrap it, do not patch it** — call
+  it across a boundary and keep client logic in separate, client-owned files,
+  and the copyleft never reaches the client's IP. This is the same posture this
+  KB already records for `openMF/web-app` in `verticals/solutions.md`.
+- **The clean escape hatches, if counsel refuses MPL entirely:**
+  `casact/actsim` (Apache-2.0), the whole of `JuliaActuary` (MIT) and
+  `lifelib` (MIT). A **life** engagement can be done entirely under MIT. A
+  **P&C reserving** engagement cannot avoid MPL without reimplementing chain
+  ladder — which is a published method, so reimplementation is lawful and
+  about two weeks of work, and `mages/ChainLadder` plus
+  `actuarialopensource/benchmarks` give two independent oracles to test it
+  against. **That is a real, costed choice to put in front of a client, not a
+  blocker.**
+
+### Pattern note — the differential oracle applies here, and better than usual
+
+Pass 5's rule, *check whether a second permissive implementation exists before
+writing a validator*, is satisfied twice over on this plane: chain-ladder
+reserving exists in **Python (`casact/chainladder-python`, MPL-2.0)**, **R
+(`mages/ChainLadder`, GPL)** and **Julia (`JuliaActuary/ChainLadder.jl`, MIT,
+6 stars, dormant 2022)**, and `actuarialopensource/benchmarks` exists expressly
+to compare them. Reserving is **arithmetic on a triangle** — given the same
+triangle and the same method, the answers must agree to rounding. That makes it
+one of the few judgment-adjacent workloads in this KB with a free correctness
+oracle. See Pattern 22.

@@ -336,6 +336,50 @@ land, and neither side of that is vendor territory.
 `finos/open-reg-tech-us-lcr` (Apache-2.0, 17★) expresses the **US Liquidity
 Coverage Ratio as executable code**. Forks (23) exceed stars (17) — the
 signature of a reference people adapt rather than import. Use it that way.
+#### Pass 7 (2026-11-25) — the insurance supervisor asks for a programme, and the actuarial profession's code is American
+
+**The insurance instrument, and it is an inventory not a threshold.** The
+**NAIC Model AI Bulletin** is the operative US framework for insurers. It
+expects a **written AI programme** covering governance, risk management,
+internal controls and **third-party AI**, for any AI system that makes or
+supports a regulated decision. Adoption is state by state and **the counts in
+circulation conflict**: 23 states + DC by early 2026 (one source), 25 by July
+2026 (another), 27 + DC + Puerto Rico as of 2026-10-08 (a tracker). **None is
+confirmed against the NAIC itself.** For a client proposal, the number of
+states is the wrong anchor anyway — the deliverable is identical in all of
+them.
+
+**Banking, corroborated not re-reported.** OCC Bulletin **2026-54**
+(2026-11-04), the first federal **examiner** framework for AI, and OCC
+**2026-13** (April 2026), the revised interagency model-risk guidance replacing
+SR 11-7 with **generative and agentic AI expressly out of scope**, both
+reappeared on an independent research path this pass. Pass 6 recorded them;
+this is second-source confirmation, not new intelligence. Treasury's **FS AI
+RMF and AI Lexicon** (Feb 2026) remain voluntary and NIST-aligned.
+
+**State legislatures are now the moving part for insurers.** A New Jersey
+Assembly committee advanced a bill that would **restrict certain AI uses in
+denying homeowners, auto and flood claims** (trade press; bill status not
+verified at source). This is the shape to watch in NA: not a federal AI rule,
+but **line-of-business-specific limits on automated denial**, state by state.
+It pairs with the consumer finding in `intel/trends.md` — only ~5% would accept
+an AI claim decision without human review. **Straight-through denial is being
+closed off legally and commercially at the same time.**
+
+**NA is where the actuarial code lives, and this is the region's real asset.**
+The **Casualty Actuarial Society** (`casact`, 45 repos) is a US professional
+body and it maintains the reference loss-reserving implementation —
+`casact/chainladder-python`, **MPL-2.0**, 292★, pushed 2026-11-23 — plus
+`PCDM`, an open **Property & Casualty Data Model**. `actuarialopensource`
+(benchmarks, MIT) is the same community. **So for a US P&C carrier the method
+layer is not an import: it is maintained by the body their own actuaries belong
+to**, which removes the usual objection that open source has no professional
+standing. That is a materially easier conversation than any other plane in this
+KB offers, and it should lead a US insurance pitch.
+
+**The licence caveat that must travel with it:** MPL-2.0, not MIT. See Pattern
+23 for the wrap-don't-patch posture and the life-vs-P&C procurement fork.
+
 ### EMEA
 
 **Regulatory posture: the most demanding in the world, with a hard date.**
@@ -635,6 +679,68 @@ and AI Ethics Guidelines, Saudi Arabia's SDAIA framework. In Africa, a
 Ghana-focused review names ABSA Bank Ghana, Stanbic Bank and Ecobank deploying
 AI for chatbots, predictive customer analysis and anti-fraud. None of these are
 binding financial-sector AI rules, and this KB should not imply they are.
+#### Pass 7 (2026-11-25) — EIOPA folds AI into Solvency II, and the dead consortium was European
+
+**EIOPA had zero mentions in this KB before this pass.** That was the single
+largest named-regulator gap in the file.
+
+**The governance instruction, and it is the opposite of a separate AI regime.**
+EIOPA's **Opinion on AI governance (August 2025)** tells insurers to govern AI
+**inside the existing Solvency II governance and risk-management framework**,
+not in a parallel AI track. For an engagement this is unusually good news and
+should be said plainly: **the client already owns the control framework**; the
+work is extending Solvency II system-of-governance artefacts to cover AI
+systems, not inventing an AI governance function. That is a scoping argument,
+and it is cheaper and more credible than a greenfield AI-governance programme.
+
+**Adoption, and the PoC ceiling.** An **EIOPA survey (February 2026)**,
+as summarised by secondary sources, found **approximately two-thirds of
+European insurers using or actively piloting generative AI, with the majority
+of deployments still at proof-of-concept stage**. That is the same
+adoption-versus-production split this KB measured for EMEA banks (61% in-house
+adoption against 14% with specialised AI actually implanted) — **so the EMEA
+pattern now holds across both banking and insurance: high adoption, low
+production, and the gap is governance evidence.**
+
+**Pending, and worth watching with a date attached.** EIOPA's 2026 work
+programme includes supporting AI Act implementation, delivering **Guidelines on
+AI**, and developing measures against **discriminatory AI practices**. The
+Guidelines are **not yet published**. An insurer pricing engagement started now
+should be built so the documentation can be re-pointed at those Guidelines when
+they land.
+
+**Two prudential items, both secondary and both flagged.**
+- EIOPA Chair **Petra Hielkema**, in a speech dated **2026-11-19**, warned that
+  AI could **amplify correlated cyber losses across many firms at once**,
+  challenging insurance models built for isolated rather than systemic shocks.
+  This is a *pricing and capital* concern, not a compliance one, and it is the
+  first item in this KB where AI is the **insured peril** rather than the tool.
+- **Commission Delegated Regulation 2026/269** is reported to cut the
+  spread-risk capital charge on securitisations (≈46% → ≈22% for a three-year
+  non-STS position) from **2027-01-30**. Secondary source, illustrative figure.
+  **Verify in EUR-Lex before any capital-impact claim.**
+- **EU AI Act Annex III** classes **life and health insurance pricing and risk
+  assessment** as high-risk, with obligations reported from **2026-08-02**. The
+  AI Act calendar conflict pass 6 recorded (Reg 2026/1744) is unresolved —
+  **check EUR-Lex, do not quote a date from a vendor page.**
+
+**The regional finding on code: the permissive insurance core was a European
+consortium, and it is dead.** `aposin` — the **Open Source Insurance
+Alliance** — published `openinsuranceplatform` (Apache-2.0, 93★, 34 forks) and
+`CalculusPrime-PnC`, a P&C rating engine (Apache-2.0). **Last pushes
+2019-11-27 and 2019-11-28.** Five of the org's eight repos self-label
+`ARCHIVED:`. Europe is therefore the region that *tried* the shared permissive
+core and the region whose attempt stands as the cautionary precedent. Say it
+that way to a European carrier: **the alliance route has been tested here.**
+
+**EMEA-placed assets that are alive:**
+
+| Asset | Repo | Licence (read) | Note |
+|---|---|---|---|
+| ChainLadder (R) | https://github.com/mages/ChainLadder | **GPL (>= 2)** in `DESCRIPTION`, no `LICENSE` file | On CRAN since 2008, still maintained. Copyleft — oracle, not dependency |
+| turkactuary-mcp | https://github.com/afsharid/turkactuary-mcp | **Apache-2.0** (201 L) | **Türkiye insurance regulation search + actuarial calculation over MCP.** The only Turkey-placed insurance asset in this KB. 3★ — a seed, but it is the regulator's corpus as configuration |
+| openIMIS | https://github.com/openimis | **AGPL-3.0 + Swiss governing-law / Berne-forum rider** | Swiss-governed; health and social protection only |
+
 ### APAC
 
 **Regulatory posture: the most advanced on agentic specifically.**
@@ -912,6 +1018,62 @@ that contradicts it.
 HKMA are one-way submissions to trade repositories, so the pass-6 law predicts
 no permissive tooling, and none was found. Same engagement shape as EMEA:
 reconcile either side of the repository.
+#### Pass 7 (2026-11-25) — the region with the binding statute, and the survey that excluded insurers
+
+**The regulatory spread is the widest of any region, and it is now measurable
+in kind, not just in degree:**
+
+| Jurisdiction | Instrument | Binding? | Date |
+|---|---|---|---|
+| **South Korea** | Basic Act on the Development of AI and the Establishment of a Trust Base | **Yes — the region's first comprehensive binding AI statute** | **In force January 2026** |
+| **Singapore** | MAS AI Risk Management Guidelines — governance, explainability, third-party AI provider oversight | Not yet | **Consultation**; response possibly late 2026 |
+| **Singapore** | Model AI Governance Framework for **Agentic AI**, introduced at Davos | Voluntary | 2026 |
+| **China** | Mandatory pre-market registration for generative AI | **Yes** | In force |
+| **India** | IRDAI **AI working group** convened | No — principles-based, non-statutory | June 2026 |
+| **Japan** | FSA / national AI guidelines | Soft law. **Sources conflict:** voluntary aligned standards from **April 2026 (FY2026)**, phased mandatory reporting **from 2027** (one source) vs. continued soft-law approach (another) | **Unresolved — verify with the FSA** |
+
+**Singapore is voluntary and Korea is binding and China is mandatory
+registration, in the same region, in the same year.** A pan-APAC insurance AI
+programme cannot be written once; what can be written once is the evidence
+layer underneath it. This is the same conclusion pass 5 reached for APAC
+banking by a different route, and it now holds for insurance.
+
+**The adoption number, and a gap inside it that is the real finding.** A
+**Bank of Japan survey of 153 financial institutions** (100% response rate)
+found roughly **50% already using generative AI** — and, per the commentary,
+**did not include a single insurer**. Separately, **Capgemini** (344
+executives, 18 markets) reports **only ~10% of P&C insurers have successfully
+scaled AI**.
+
+> **Read those two together: the region's most rigorous financial-sector AI
+> survey excluded insurers entirely, and the one insurance-specific number says
+> roughly nine in ten have not scaled.** APAC insurance is not an
+> under-adopting market — it is an **under-measured** one. For an engagement
+> that is an argument for starting with a baseline and an inventory, because
+> the client has no benchmark to be judged against and whoever builds the first
+> defensible one sets it. Same logic this KB applied to NA banks writing the
+> control framework first.
+
+**Where APAC insurance AI is actually in production**, per secondary
+commentary: customer service, **claims summarisation for a human adjuster**,
+and agency/distribution enablement. One commentary states the AI renaissance in
+APAC insurance "isn't happening in underwriting." Every production use keeps a
+human as decision-maker.
+
+**APAC-placed assets, verified:**
+
+| Asset | Repo | Licence (read) | Stars | Note |
+|---|---|---|---|---|
+| labor-law-mcp | https://github.com/kentaroajisaka/labor-law-mcp | **MIT** (20 L, 1,071 B) | 67 | MCP server over **Japanese labour and social-insurance law**. The best-starred region-placed insurance-adjacent asset found, and the same shape pass 6 named: the statutory corpus arrives wrapped in MCP, so for a Japanese engagement that source is **configuration, not construction** |
+| ClaimsProcessingAssistant-MCP | https://github.com/chbhargavareddy/ClaimsProcessingAssistant-MCP | **MIT** (20 L, 1,071 B) | 5 | Claims processing over MCP. Prototype seed |
+
+**Informed gap, APAC:** no permissive **takaful / Islamic insurance** library
+exists (355 results, best relevant 4 stars) despite Malaysia, Indonesia and the
+Gulf being the natural markets. Read it the way this KB read SPED and CFDI: a
+**monopoly-jurisdiction format** with a single addressable developer
+population, where commercial vendors already hold the ground. **Integrate above
+the incumbent; do not build the library.**
+
 ### LATAM
 
 **Regulatory posture: thin on AI-specific finance rules, strong on payment rails.**
@@ -1185,6 +1347,58 @@ LATAM financial supervisors' own AI adoption. Globally only about a fifth of
 regulators are at advanced adoption and 48% of 130 surveyed are still
 exploring; no region-specific LATAM figure surfaced. Recorded as not measured,
 not as zero.
+#### Pass 7 (2026-11-25) — insurance is the region's thinnest plane, and the gap is honest
+
+**The measurement first, because the conclusion depends on it being a measured
+absence rather than an unsearched one.** Searching for LATAM-placed insurance
+open source — actuarial, reserving, policy administration, claims — returned
+**no permissive, maintained, region-placed asset**. Not one. The actuarial
+code is American (`casact`) and Julian/Japanese (`JuliaActuary`,
+`lifelib-dev`); the dead consortium core is European (`aposin`); the one
+Turkey-placed MCP is EMEA.
+
+> **Stated so a future pass does not re-walk it: LATAM has no region-placed
+> insurance open source in this KB, and the search was run with the region's
+> own vocabulary and with institutional-org enumeration, not only with
+> translated US terms.** If a future pass finds one, the likely owner is a
+> supervisor or a professional actuarial institute, not a vendor — that is
+> where every other region's insurance code turned out to live.
+
+**Regulation: general frameworks only, in both major markets, and both
+confirmed by more than one source.**
+
+| Country | Position as measured | Source quality |
+|---|---|---|
+| **Brazil** | **No specific, fully enacted AI law for the financial sector** as of March 2026. **PL 2338/2023 remains in Congress.** AI in insurance supervised through general frameworks: **SUSEP** on market conduct and prudential risk, plus **LGPD**. One compliance blog describes the bill's high-risk classification (which would cover insurance) and its penalties **as though already in force — that is wrong, and the blog contradicts the law-firm sources** | Law firm (Latham) + specialist trade; one blog rejected |
+| **Mexico** | **No AI-specific law and no binding AI framework for financial institutions or fintechs.** Financial regulation held to be technology-neutral enough to accommodate AI inside existing licences. **CNSF had issued no AI-specific circular for insurers as of May 2026**; the applicable frame is derived by analogy from pre-existing rules (model governance, actuarial validation, methodological documentation) | Law firm (Latham) + 2026 trade article |
+
+**What that means commercially, and it is the same shape this KB found for
+Mexican open finance:** a LATAM insurance AI engagement is a **readiness and
+evidence** engagement, not a compliance one. There is no deadline to sell
+against. The defensible pitch is the one that survives PL 2338 passing: build
+the model inventory, the actuarial validation trail and the methodological
+documentation **now**, because those are already expected under SUSEP and CNSF
+model-governance analogies and they are exactly what a high-risk
+classification would later demand. **Compliance-by-anticipation, priced as
+risk reduction rather than as obligation.**
+
+**Market position, secondary:** Brazil retains regional insurtech leadership,
+Mexico second by volume; investment favours solutions that cut acquisition
+cost, sharpen risk selection or automate claims. That ordering — acquisition,
+selection, claims — is worth respecting in a pitch, because it is the client's
+ordering, not the technologist's.
+
+**The regional inversion, continued from pass 5 and now sharper.** Pass 5
+established that LATAM **leads** this KB on payment rails (`bacen/pix-api`,
+3,010★, a central bank publishing its own spec) and is **last** on accounting
+filing. Insurance extends the same line: the region's public institutions
+publish **rails and data**, not **domain code**. Pix exists because a central
+bank chose to publish a specification. **No LATAM insurance supervisor has made
+the equivalent choice**, and until one does, the plane stays empty regardless
+of market size. That is the one sentence to carry into a LATAM insurance
+conversation: **the gap is not developer capacity, it is that nobody has
+published the artefact to build against.**
+
 ### Global / cross-region
 
 - **Agentic governance is the universal gap.** Accenture recommends a dedicated
@@ -1329,6 +1543,79 @@ New this pass:
   jurisdictions) are both published as PDFs. **Read them directly before any
   major pitch** rather than through roundups — this KB has now twice found
   roundup figures that did not survive contact with the primary document.
+#### Pass 7 (2026-11-25) — the third clause: the spec must be readable without paying to join
+
+Pass 5 established that **open-source supply follows the file format, not the
+decision**. Pass 6 refined it: supply follows **the file that more than one
+party must read**, and one-way submissions to a regulator who publishes no
+reader stay empty — with the predictive second clause that where the regulator
+**publishes the corpus** it collects, a reader ecosystem forms anyway.
+
+This pass tested the law on a plane it had never touched and found a case that
+**satisfies the multi-party condition and still produces nothing.**
+
+**The controlled comparison — one variable, opposite outcomes:**
+
+| Standard | Read by more than one party? | Spec readable free? | Best permissive implementation |
+|---|---|---|---|
+| FIX | Yes | **Yes** | 1,161★ |
+| ISO 20022 | Yes | **Yes** | 240★ Apache-2.0 (+ `moov-io/rtp20022`, 90★) |
+| SWIFT MT | Yes | **Yes** | 296★ Apache-2.0 |
+| EN 16931 / UBL | Yes | **Yes** | 180★ MIT, 143★ MIT |
+| Metro 2 | Yes | **Yes** | 130★ Apache-2.0 + a second MIT implementation |
+| **ACORD** | **Yes** — carrier, agent, broker, reinsurer | **No — membership and paid programmes** | **8★, unlicensed, last push 2017.** `AL3 insurance` → **0 results** |
+
+ACORD's own published terms: access to Standards requires joining the relevant
+membership or participation programme and creating an acord.org account; Forms
+are licensed separately; the EHR Digital Standards Programme is **$5,000 per
+year** for eligible participants; not all programmes grant access to all
+standards, some at additional charge. Terms document dated **2025-10-27**.
+
+> **THIRD CLAUSE. Open source follows the file that more than one party must
+> read AND whose specification can be read without paying to join.** Where the
+> spec is member-gated, the multi-party condition is met and the population
+> still does not form — because the person who would write the library may not
+> lawfully read the spec. The gate is **governance, not technical difficulty**.
+
+**The second, independent confirmation on the same plane.** The permissive
+insurance core was not merely absent — it was **built by a consortium and
+abandoned**: `aposin/openinsuranceplatform`, Apache-2.0, 93★/34 forks, last
+push **2019-11-27**, with five of the org's eight repos self-labelled
+`ARCHIVED:`. So the insurance plane is closed at **both** ends: its shared
+format is paywalled and its shared code attempt is dead.
+
+**The counter-case on the same plane, which is what makes the clause precise
+rather than merely pessimistic.** Where the artefact is a **published method**
+rather than a licensed document, the same industry's open source is mature,
+institutional and alive: `casact/chainladder-python` (MPL-2.0, 292★, pushed
+2026-11-23), `lifelib` (MIT, 229★), 16 `JuliaActuary` repos (MIT, three pushed
+the day of this pass). **A method is published in a journal and cannot be
+withheld; a format can be.**
+
+> **So the fully-stated law, after three passes: open source accumulates on
+> artefacts that are (1) shared across parties, (2) readable without payment,
+> and (3) checkable — a file that conforms or does not, or a method whose
+> output is determined. Remove any one and the population disappears, and
+> which one is missing tells you what to do instead.**
+
+**The commercial rule this yields, and it generalises past finance.** Pass 5's
+advice was *adopt the parser, build the decision*. That advice assumes the
+format layer is free. **It is free only when clause (2) holds.** So the
+procurement gate, now Pattern 23's three checks: **before promising a format
+layer on any plane in any industry, confirm you can download the spec today
+without an account.** If you cannot, the format layer is a **line item**, not a
+sprint — and the honest proposal says so in week one rather than discovering it
+in month three.
+
+**Three planes, three different reasons the default advice fails — this is now
+itself the pattern:**
+
+| Plane | Why *adopt the parser* fails | What to do instead |
+|---|---|---|
+| Servicing / filing (pass 5) | It does **not** fail — format layer is free and mature | Adopt the parser, build the decision |
+| Capital markets (pass 6) | The client already **pays an ARM** for the format layer | Build assurance either side of it (Pattern 19) |
+| **Insurance (pass 7)** | The spec is **member-gated**; no parser may lawfully be written | **Buy the format, adopt the method, build the judgment** (Pattern 23) |
+
 ## Regional asymmetry — the summary
 
 | Region | Binding AI-in-finance rules | Hard date to sell against | Posture |
@@ -1471,3 +1758,36 @@ summary table above:**
   becomes a finding in its own right: India's rails are mature and its
   permissive agent-layer tooling is not, and a future pass should write that up
   as the conclusion rather than re-running the query.
+
+
+### Gap register — pass 7 additions (2026-11-25)
+
+**Closed this pass:**
+
+| Gap | Status |
+|---|---|
+| Insurance plane entirely absent (ACORD 0, IFRS 17 0, Solvency II 0, reinsurance 0, EIOPA 0, IAIS 0, IRDAI 0, actuarial 1) | **Closed.** 16 foundational repos, 8 agentic assets, 5 platforms, 3 patterns, all five regions placed |
+| EIOPA never named in this KB | **Closed.** Aug-2025 AI governance Opinion, Feb-2026 adoption survey, 2026 work programme, Hielkema 2026-11-19 speech |
+| NAIC cited once, in passing | **Closed** — with the adoption count left explicitly in conflict (23 / 25 / 27+DC+PR) because no primary source confirmed it |
+| Pass 6's claim that insurance core platforms return "nothing but portfolio demos" | **Corrected.** `aposin/openinsuranceplatform` is Apache-2.0, 93★, 34 forks — and dead since 2019-11-27. Conclusion upheld, reason replaced |
+| Whether a professional body's code can sit outside the MIT/Apache set | **Closed.** `casact` standardised on **MPL-2.0**, measured 9× byte-identical at 373 L / 16,724 B |
+| `NOASSERTION` cause list | **Extended** — sixth cause: the licence file's first line is the **project name** (`JuliaActuary`, 81★ of MIT code at risk of being discarded) |
+| Licence probe paths | **Extended** — `DESCRIPTION` added for R/CRAN packages, where the grant lives in metadata and no licence file exists (`mages/ChainLadder`, 93★) |
+
+**Open, and deliberately left open with the reason stated:**
+
+| Gap | Why it is still open |
+|---|---|
+| **NAIC Model Bulletin adoption count** | Three conflicting secondary figures; **not verified against the NAIC**. A future pass should read the NAIC's own adoption map before any count is published in a client document |
+| **EU AI Act calendar** | Still in conflict (Annex III from 2026-08-02 vs Reg 2026/1744 deferral recorded in pass 6). **Must be resolved in EUR-Lex**, not on vendor pages. Third consecutive pass carrying this |
+| **Commission Delegated Regulation 2026/269** | Securitisation spread-charge reduction (≈46%→≈22%, from 2027-01-30) is **secondary and illustrative**. Verify in EUR-Lex |
+| **Japan FSA AI timeline** | Sources conflict: voluntary from April 2026 with phased mandatory reporting from 2027, vs continued soft law. **Verify with the FSA** |
+| **EIOPA Guidelines on AI** | In the 2026 work programme, **not yet published**. Watch for publication; it will become the EMEA documentation target |
+| **New Jersey AI claims-denial bill** | Committee advancement reported in trade press only; **bill status not verified at source** |
+| **Takaful / Islamic insurance** | Measured empty (355 results, best 4★). Classed as a monopoly-jurisdiction format — integrate above the incumbent. **Not re-searching unless a supervisor publishes a spec** |
+| **IFRS 17** | No usable open implementation: top asset has **no readable licence file on any branch**, Python engine **archived**. Re-check only if a licence file appears |
+| **LATAM insurance open source** | **Measured absent**, with region vocabulary and org enumeration. Will only change if a supervisor or actuarial institute publishes — that is where every other region's insurance code lives |
+| **MAS red-teaming requirement (from pass 5)** | Still **not confirmed against a primary MAS document**. Carried forward a third pass |
+| **"Common Controls for AI Services" (Citi / Morgan Stanley / BofA)** | Still **press-only, no primary source**. Carried forward a third pass |
+| **"MAS Supervisory Notice on Governance of Autonomous AI Agents" (Aug 2026)** | Still **uncorroborated and still not cited anywhere in this KB**. Correctly withheld for a third pass |
+| **AI-in-insurance vendor rankings, any region** | Searched; no current ranking found. Not invented |

@@ -9,6 +9,55 @@ updated: 2026-11-25
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-25 (pass 7)
+
+**Theme of the week: the actuarial profession has been shipping code all along,
+under a licence nobody in this KB had priced, and the insurance interchange
+standard that should have produced libraries produced none because reading it
+costs money.**
+
+### New this week — the actuarial plane, first time in this log
+
+| Asset | Repo | Licence (read) | Stars | Push | Why it is here |
+|---|---|---|---|---|---|
+| chainladder-python | https://github.com/casact/chainladder-python | **MPL-2.0** (373 L) | 292 | 2026-11-23 | Flagship of the **Casualty Actuarial Society**. Pushed two days ago. Zero prior mentions in this KB |
+| JuliaActuary (3 repos) | https://github.com/JuliaActuary/ActuaryUtilities.jl · https://github.com/JuliaActuary/FinanceModels.jl · https://github.com/JuliaActuary/FinanceCore.jl | **MIT** | 44 / 44 / 3 | **2026-11-25** | Three pushes dated the day of this pass. An actively developed MIT actuarial stack |
+| lifelib | https://github.com/lifelib-dev/lifelib | **MIT** (20 L) | 229 | 2026-11-23 | Life actuarial models. Org pushed on 23rd, 24th **and 25th** |
+| agentic claims adjudication | https://github.com/anandapurva55/agentic-claims-adjudication-aws | **MIT** (20 L) | 23 | 2026-11-23 | Multi-agent motor-claims adjudication, full stack |
+| turkactuary-mcp | https://github.com/afsharid/turkactuary-mcp | **Apache-2.0** (201 L) | 3 | 2026-11-20 | Türkiye insurance regulation + actuarial calc over MCP. Continues pass 6's "register wrapped in MCP" shape into a new sector and a new country |
+| ai-insurance-ops | https://github.com/adamblansett/ai-insurance-ops | **MIT** (20 L) | 0 | 2026-11-24 | Self-hosted AI insurance ops (policy intake, claims triage, coverage verification). **0 stars, published yesterday** — logged as a dated sighting, not a recommendation |
+| awesome-finance-agents | https://github.com/aowang-ai/awesome-finance-agents | **CC0-1.0** (120 L, 7,047 B) | 111 | 2026-11-24 | Bilingual curated index of open-source finance agents; reported at **#1 on Trendshift in mid-November 2026**. CC0 on a *list* — an **index, not a dependency**, exactly as this KB classed `moov-io/awesome-fintech` |
+
+### What did NOT appear, measured and written down
+
+- **ACORD**: 37 results, best relevant hit 8 stars and unlicensed, last push
+  2017. `AL3 insurance` → **0 results**. Cause established from ACORD's own
+  terms: membership/programme-gated access. See the third clause in
+  `agents/top.md`.
+- **Solvency II**: `Solvency II SCR` → 21 results; best 10 stars, no licence,
+  last push **2018**. The top hits for bare `solvency` are crypto
+  *proof-of-solvency* repos — a vocabulary collision, not a finding.
+- **IFRS 17**: 124 results; best `Systemorph/IFRS17CalculationEngine` at 35
+  stars, last push 2024-04, **and no readable licence file on any branch**.
+  `lifelib-dev/IFRS17CalculationEnginePython` is **archived**.
+- **Takaful** (Islamic insurance): 355 results, best relevant **4 stars**. An
+  informed gap, not an opportunity — see the monopoly-format reasoning this KB
+  applied to SPED and CFDI.
+
+### Correction to this log's method, found this week
+
+A licence probe that reads **body markers in precedence order** reported nine
+`casact` repositories as AGPL-3.0. Every one is **MPL-2.0**: MPL §1.12 defines
+"Secondary License" by naming the GNU GPL, LGPL *and* AGPL, so a later marker
+overwrites the earlier correct one. Pass 6 had already published this
+correction; this pass reproduced the failure by ignoring it. **Read the title
+line. Use body markers only to confirm.**
+
+Second correction, new: **a `NOASSERTION` badge can mean the licence file's
+first line is the project name.** `MortalityTables.jl` and
+`LifeContingencies.jl` are plain MIT under a two-line project header. 81 stars
+of permissive code would have been discarded.
+
 ## 2026-11-25 (pass 6)
 
 **Theme of the week: the register arrives wrapped in MCP, and the licence on

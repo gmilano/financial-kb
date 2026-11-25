@@ -9,6 +9,77 @@ updated: 2026-11-25
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-25 (pass 7)
+
+**Theme of the week: `casact` — the Casualty Actuarial Society — has 45
+repositories and had zero mentions in this KB, and the permissive insurance
+core platform this KB declared non-existent turns out to have existed and died
+in 2019.**
+
+### `org:casact` enumerated — snapshot 2026-11-25
+
+Forty-five repos. The channel was `search/repositories` with `org:casact`, the
+same channel that yielded moov-io's 60 repos in pass 5 and FINOS's 194 in pass
+6. **Third consecutive pass in which enumerating an organisation beat querying
+a topic.**
+
+| Repo | Licence (read) | Stars | Push |
+|---|---|---|---|
+| https://github.com/casact/chainladder-python | MPL-2.0 (373 L, 16,724 B) | 292 | 2026-11-23 |
+| https://github.com/casact/FASLR | GPL-3.0 (673 L) | 60 | 2026-10-16 |
+| https://github.com/casact/PCDM | MPL-2.0 (373 L) | 40 | 2022-06-22 |
+| https://github.com/casact/tryangle | MPL-2.0 (373 L) | 30 | 2023-06-11 |
+| https://github.com/casact/rp-bnn-claims | MPL-2.0 (373 L) | 17 | 2023-02-15 |
+| https://github.com/casact/imaginator | MPL-2.0 (373 L) | 17 | 2022-03-19 |
+| https://github.com/casact/covid_19_data | MPL-2.0 (373 L) | 14 | 2021-01-13 |
+| https://github.com/casact/raw_package | **MPL-2.0 reflowed** (150 L, 14,847 B) | 13 | 2023-06-08 |
+| https://github.com/casact/actsim | **Apache-2.0** (200 L, 11,341 B) | 11 | 2026-09-28 |
+| https://github.com/casact/risky-router | MPL-2.0 (373 L) | 10 | 2022-09-30 |
+| https://github.com/casact/double_lift | MPL-2.0 (373 L) | 9 | 2020-09-16 |
+| https://github.com/casact/reinspy | MPL-2.0 (373 L) | 9 | 2026-05-07 |
+
+**Read the dates, not the stars.** Only three of the twelve were pushed in
+2026 — but one of those three is the flagship, pushed two days before this
+pass. This is a professional body's research archive with one live product in
+it, which is a different asset class from a vendor monorepo and should be
+described to a client as such.
+
+### The dead consortium — the most useful negative result of this pass
+
+| Repo | Licence (read) | Stars / forks | Last push |
+|---|---|---|---|
+| https://github.com/aposin/openinsuranceplatform | **Apache-2.0** (202 L, 11,474 B) | 93 / 34 | **2019-11-27** |
+| https://github.com/aposin/CalculusPrime-PnC | **Apache-2.0** (202 L, 11,677 B) | 6 | **2019-11-28** |
+
+`aposin` is the **Open Source Insurance Alliance**. Its core platform claims
+"the complete scope of business capabilities for the insurance industry across
+all lines of business"; `CalculusPrime-PnC` is a **P&C rating engine**. Both
+Apache-2.0, both untouched for seven years. **Five of the org's eight repos
+begin their own description with `ARCHIVED:`.**
+
+Pass 6 concluded there is no permissive insurance core. That conclusion stands;
+the reason is better now. **It was built, by a consortium, under Apache-2.0,
+and abandoned.** For a client that is a priced risk with a precedent, not an
+unknown.
+
+### Also measured this week
+
+| Repo | Licence (read) | Stars | Push | Note |
+|---|---|---|---|---|
+| https://github.com/mages/ChainLadder | **GPL (>= 2)** in `DESCRIPTION`; **no `LICENSE` file** | 93 | 2026-08-13 | The R original, on CRAN since 2008, still maintained. Copyleft, and the licence lives in package metadata — a channel this KB had not probed before |
+| https://github.com/actuarialopensource/benchmarks | MIT (20 L, 1,087 B) | 16 | 2025-06-08 | Cross-language actuarial benchmarks. Dormant but it is a correctness oracle |
+| https://github.com/daxaxelrod/open_insure | **no licence file** | 53 | 2024-01-22 | Policy management for self-insurance pools. 53 stars and **unlicensed** — not usable |
+| https://github.com/lifelib-dev/lifelib-products | **no licence file** | 0 | 2026-11-25 | Pushed today, and unlicensed, while `lifelib` itself is MIT. **Licence varies per repo within one org** |
+
+### Channels — reconfirmed, no change
+
+`search/repositories` with `org:` and `repo:` **OK**;
+`raw.githubusercontent.com/<slug>/HEAD/<path>` **OK** for licences, and this
+pass adds `DESCRIPTION` to the probe paths for R/CRAN packages;
+`git ls-remote` **OK** and the only reliable existence check — **28/28 slugs
+written this pass resolve**; `gh api repos/{owner}/{repo}` **403**;
+`curl -sI github.com/<slug>` **403**, sixth consecutive pass measuring it.
+
 ## 2026-11-25 (pass 6)
 
 **Theme of the week: FINOS was cited 19 times in this KB and never enumerated.

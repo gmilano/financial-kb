@@ -603,3 +603,115 @@ generalising, and it is three weeks old.
 Caveat kept honest: `risk-calculation-mcp` has **0 stars** and
 `gleif-mcp-server` has 8. The *shape* is the trend. These specific repos are
 prototyping seeds and design references, not dependencies.
+
+## Pass 7 (2026-11-25) — the insurance trend line, and a licence trend nobody tracks
+
+All adoption and regulatory figures in this section are **secondary sources**
+(vendor blogs, consultancy summaries, trade press) unless marked otherwise, and
+several conflict with each other. Where they conflict, both numbers are printed
+and neither is adopted. The GitHub measurements are first-hand.
+
+### Trend 21 — A profession can standardise on a licence, and MPL-2.0 is the one insurance chose
+
+This is a first-hand measurement and it has no equivalent anywhere else in this
+KB. Of the Casualty Actuarial Society's `casact` repositories, **MPL-2.0 is the
+default**: 9 of the 12 top-starred carry it, byte-identical at 373 lines /
+16,724 B. Exactly one (`casact/actsim`) is Apache-2.0.
+
+The life side chose differently: `lifelib-dev` and all 16 `JuliaActuary`
+repositories are **MIT**.
+
+**Why this is a trend and not trivia.** This KB's standing brief is to prefer
+MIT / Apache / BSD. An entire professional body's output sits just outside that
+set, in **file-level copyleft** — permitted inside a commercial deliverable,
+but with publication obligations attached to the library's own files. A
+procurement screen that filters on "MIT or Apache" discards the reference
+implementation of loss reserving. **The licence of a plane is a property of the
+community that owns the method, and it must be measured per plane, not assumed
+from the industry.** Practical posture in Pattern 23: *wrap, do not patch*; and
+note the real fork — a **life** engagement is executable entirely under MIT, a
+**P&C reserving** engagement is not.
+
+### Trend 22 — Insurance AI is in production in the places that need no oracle, and in pilots everywhere else
+
+- **Scaling is rare.** A Capgemini study of 344 executives across 18 markets
+  reports **only ~10% of P&C insurers have successfully scaled AI**.
+- **Corroborated across sectors:** Deloitte's 2026 Tech Trends reports **11% of
+  organisations have agentic AI in production** generally, and EY reports
+  60–70% of banks struggle to replicate AI beyond isolated programmes. Three
+  independent sources converge on roughly one in ten. **This KB should stop
+  treating "scaling AI" as the client's stated goal and treat it as the
+  measured exception.**
+- **Where it is real:** secondary APAC commentary places the most-evidenced
+  production uses as customer service, **claims summarisation for a human
+  adjuster**, and distribution enablement — all three are workloads where a
+  human remains the decision-maker. The pattern matches this KB's repeated
+  finding: the agent lands first where its output is *reviewed*, not relied on.
+- **Where it is not:** one commentary on the APAC AI renaissance states
+  explicitly that it "isn't happening in underwriting."
+- **Consumer constraint, and it is a hard ceiling on claims automation:** a
+  recent survey found **only 5% would accept an insurance claim decision made
+  by AI without human review**. Treat straight-through claims denial as
+  commercially unsellable regardless of model quality.
+- **Most-cited production deployment of 2026:** AIG's underwriting assistant,
+  built with Anthropic and Palantir (trade press; this KB already cites AIG
+  elsewhere — this is a second sighting, not a new claim).
+
+### Trend 23 — The supervisor arrived for insurers, and the instruments are inventories, not deadlines
+
+This continues pass 6's NA finding (the examiner framework) into the **insurance**
+supervisory stack, which pass 6 did not cover. **EIOPA had 0 mentions in this KB
+before this pass; NAIC had 1.**
+
+| Jurisdiction | Instrument | What it requires | Status |
+|---|---|---|---|
+| **US states** | **NAIC Model AI Bulletin** | A **written AI programme** covering governance, risk management, internal controls and third-party AI, for AI systems making or supporting regulated decisions | Adopted state by state. **Counts conflict:** one source says 23 states + DC by early 2026; another 25 by July 2026; a tracker says 27 + DC + Puerto Rico as of 2026-10-08. **None confirmed against the NAIC itself** |
+| **EU** | **EU AI Act Annex III** | **Life and health insurance pricing and risk assessment classed high-risk**; obligations reported as applying from **2026-08-02** | Calendar remains in dispute — see pass 6's note on Reg 2026/1744 and verify in EUR-Lex before any client commitment |
+| **EU** | **EIOPA Opinion on AI governance (Aug 2025)** | Govern AI **inside the existing Solvency II governance and risk framework**, not in a parallel AI track | In force as supervisory expectation |
+| **EU** | EIOPA 2026 work programme | Support AI Act implementation; deliver **Guidelines on AI**; develop measures against discriminatory AI practices | Guidelines **pending** — a dated gap to watch |
+| **US federal (banks)** | OCC Bulletin **2026-54** (2026-11-04) | First federal **examiner** framework for AI; no separate AI risk appetite — manage within existing frameworks | In force. Independently corroborates pass 6's NA finding |
+| **US federal (banks)** | OCC Bulletin **2026-13** (April 2026) | Revised interagency model risk guidance, replacing SR 11-7 — **generative and agentic AI expressly out of scope** | In force. The gap pass 5 named is now confirmed by a second path |
+| **US Treasury** | FS AI RMF + AI Lexicon (Feb 2026) | Voluntary, NIST-aligned | Voluntary |
+| **Singapore** | MAS AI Risk Management Guidelines | Governance, explainability, oversight of third-party AI providers | **Consultation**; response possibly late 2026 |
+| **South Korea** | Basic Act on AI Development and Trust Base | Region's first comprehensive **binding** AI statute | **In force January 2026** |
+| **India** | IRDAI AI working group (June 2026) | Principles-based, non-statutory; explainability and human oversight | Non-binding |
+| **Japan** | FSA / AI guidelines | Soft law. Sources conflict: one reports voluntary aligned standards from **April 2026 (FY2026)** with phased mandatory reporting **from 2027** | **Conflicting — verify with the FSA** |
+
+**The deliverable this names, and it is the same one pass 6 found for banks:**
+every instrument above asks for an **inventory and a written programme**, not a
+model-performance threshold. NAIC asks for it explicitly. EIOPA asks for it by
+folding AI into Solvency II governance. **So the insurance engagement that
+sells in every region is the control-and-evidence layer**, and the regional
+difference is only which regulator's vocabulary the document is written in.
+
+### Trend 24 — Spend forecasts for agentic finance have become unusable, and saying so is the honest position
+
+Collected this pass, all secondary, all mutually inconsistent:
+
+- Agentic AI in financial services: **USD 7.6 bn (2026) → 41.1 bn (2036)**,
+  banking ~42% of the 2026 figure.
+- KPMG, via a blog: **USD 50 bn** global agentic AI spend in **2025**.
+- A different blog: **USD 50 bn** in financial services alone **by end-2026**.
+- AI in banking: **USD 45.6 bn (2026) → 143.6 bn (2030)**.
+- Generative AI full-implementation value: **USD 200–340 bn annually**.
+- "44% of finance teams will use agentic AI in 2026, an increase of over 600%"
+  (attributed to Wolters Kluwer, not verified at source).
+- JPMorgan: ~**USD 2 bn** of an **USD 18 bn** technology budget to AI.
+
+**These differ by up to sevenfold and across different years and scopes. They
+must not be combined, averaged, or put on a slide.** The one figure in this
+block with a named organisation and a checkable denominator is JPMorgan's
+2-of-18. This KB's position: **cite the deployment ratio (~10–11% in
+production, three independent sources) rather than the market size** — it is
+better corroborated and it is the number that actually shapes an engagement.
+
+### What this pass could not measure, stated so it is not mistaken for coverage
+
+- **Takaful / Islamic insurance:** 355 GitHub results, best relevant **4
+  stars**. No permissive library. Informed gap.
+- **IFRS 17:** the top-starred asset has **no readable licence file**; the
+  Python engine is **archived**. Effectively no usable open implementation.
+- **Solvency II SCR calculation:** 21 results, best 10 stars, unlicensed, last
+  push **2018**.
+- **No current ranking of leading AI-in-insurance vendors** by market was found
+  for any region. Searched; not found; not invented.

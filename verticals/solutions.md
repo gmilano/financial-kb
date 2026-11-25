@@ -476,3 +476,91 @@ continuation path** rather than only a commercial migration. Confirm the
 project's own current statement of scope and support before committing a client
 to it — the provenance here is read from licence headers and org membership,
 which establishes lineage, not a roadmap.
+
+## Pass 7 (2026-11-25) — the insurance core: correcting the *reason*, not the conclusion
+
+Pass 6 wrote, under "Insurance — a measured gap, not an unsearched one":
+
+> "Searching GitHub for insurance core platforms (policy, claims, underwriting,
+> actuarial) sorted by stars returns, below openIMIS, **nothing but portfolio
+> demos** … There is no permissive insurance equivalent of Fineract."
+
+and closed it "so a future pass does not re-walk it". This pass re-walked it
+anyway, because the probe used a **multi-word query containing the sector
+noun** — the pattern rule **G-L19** already records as an AND that returns
+nothing. **The conclusion survives. The supporting claim does not, and the
+replacement is more useful to an engagement.**
+
+### What a corrected search finds
+
+| Platform | Repo | Licence (read, title line + lines) | Stars / forks | Last push | Verdict |
+|---|---|---|---|---|---|
+| **Open Insurance Platform** | https://github.com/aposin/openinsuranceplatform | **Apache-2.0** (202 L, 11,474 B) | 93 / 34 | **2019-11-27** | A **fully permissive core insurance platform** — policy, claims, all lines of business, B2C/B2B/B2B2C — from the **Open Source Insurance Alliance**. Dead seven years |
+| **CalculusPrime-PnC** | https://github.com/aposin/CalculusPrime-PnC | **Apache-2.0** (202 L, 11,677 B) | 6 | **2019-11-28** | P&C **rating engine** — tariff calculation. Dead seven years |
+| open_insure | https://github.com/daxaxelrod/open_insure | **no licence file** | 53 / 13 | 2024-01-22 | Policy management for self-insurance / group pools. 53 stars and **unlicensed** — unusable regardless of fit |
+| ai-insurance-ops | https://github.com/adamblansett/ai-insurance-ops | **MIT** (20 L, 1,069 B) | 0 / 0 | 2026-11-24 | Self-hosted AI insurance ops: policy intake, claims triage, coverage verification, underwriting support. **0 stars, published the day before this pass.** A sighting, not a starting point |
+| openIMIS | https://github.com/openimis | **AGPL-3.0 + Swiss-law rider** (see the pass-6 section above) | 19 / 13 | 2026-11-21 | Unchanged, and still the only *maintained* open insurance core. Health and social protection only |
+
+### The corrected statement, written so it can be quoted to a client
+
+**There is no maintained permissive insurance core. There was one. It was
+Apache-2.0, it was built by an industry consortium, and it was abandoned in
+November 2019.** Five of `aposin`'s eight repositories open their own
+description with the word `ARCHIVED:`.
+
+That changes the conversation in a specific way. "Nothing exists" invites a
+client to assume nobody tried and that Globant can be first. The measured truth
+is that the insurance industry's **collective** attempt at a shared permissive
+core was made, published under the most permissive practical licence, attracted
+34 forks, and stopped. The risk to price is **not novelty — it is a known
+failure mode**, and the engagement should be shaped to avoid repeating it:
+build for one carrier's lines of business, not as a would-be industry asset.
+
+### Why the plane is closed — and it is governance, not technology
+
+Two independent measurements converge, and together they are the central
+finding of pass 7:
+
+1. **The shared format is behind a membership fee.** ACORD — read by carrier,
+   agent, broker and reinsurer — gates its Standards behind membership and paid
+   programmes (programme fees; the EHR Digital Standards Programme at **$5,000
+   per year**; Forms licensed separately; terms dated **2025-10-27**). GitHub
+   has **no** permissive ACORD library above 8 stars, and `AL3 insurance`
+   returns **0 results**.
+2. **The shared code attempt is dead** (above).
+
+So insurance fails pass 6's law for a reason pass 6 did not anticipate: the
+multi-party condition *is* met and the population still does not form, because
+**the specification cannot be read without paying to join**. Full statement of
+the third clause in `agents/top.md` pass 7.
+
+### What IS alive, and it is the part to compose on
+
+The profession ships code — just not platform code, and not under the sector
+noun. **Loss reserving, mortality, life contingencies, economic scenario
+generation and experience analysis are all mature, maintained and permissive
+or weak-copyleft**, owned by the Casualty Actuarial Society (`casact`, 45
+repos), `JuliaActuary` (16 repos, three pushed the day of this pass),
+`lifelib-dev` (12 repos) — fully tabulated in `repos/foundations.md` pass 7.
+
+**So the composition for an insurer engagement is not "ERP + custom domain
+model" as pass 6 proposed.** It is:
+
+| Layer | What to use | Licence posture |
+|---|---|---|
+| Policy / claims **system of record** | The carrier's existing commercial PAS. **Do not attempt to replace it** — that is what `aposin` tried | n/a |
+| Interchange format | **Buy it.** ACORD membership is a line item, not an engineering task | Commercial |
+| **Actuarial method layer** | `casact/chainladder-python`, `lifelib`, `JuliaActuary/*` | MPL-2.0 / MIT — **wrap, do not patch** |
+| Reserving correctness oracle | `mages/ChainLadder` (R) + `actuarialopensource/benchmarks` | GPL / MIT — oracle only, never shipped |
+| Judgment + narrative layer | Built. See `agents/top.md` pass 7 for the seven agentic references | Client-owned |
+| Scheme administration *if* health / social protection | openIMIS — **and read the Swiss-law rider** | AGPL-3.0 + rider |
+
+**The inversion worth naming:** everywhere else in this KB the advice is
+*adopt the parser, build the decision* (pass 5). On the insurance plane there
+is no parser to adopt and none that may lawfully be written, so the advice
+inverts to **buy the format, adopt the method, build the judgment** — and the
+method layer, unusually, comes with a free correctness oracle. Pass 6 found a
+different inversion in capital markets (the client already pays an ARM). Three
+planes, three different reasons the default advice fails. That is now a pattern
+in its own right: **check who owns the spec before assuming the format layer is
+free.**
