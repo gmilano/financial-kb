@@ -1566,3 +1566,378 @@ License` · **CC0 `CC0 1.0 Universal`**.
 `ls-remote` resolves and whose LICENSE fetches cleanly. **`ls-remote` is the
 only existence oracle; `search/repositories` is a metadata channel that can be
 silently incomplete.**
+
+---
+
+## Pattern 28 — XVA and valuation assurance with an independent differential oracle
+
+**When to use it.** A bank or asset manager wants AI in the valuation or risk
+function. This is the pattern to lead a **North American** engagement with,
+because it is the one plane where the second line of defence already has a
+framework to review it under (SR 26-2 / OCC 2026-13 covers valuation models;
+it does **not** cover agentic workflows — see Trend 31).
+
+**What you adopt, not build.**
+
+| Layer | Component | Licence |
+|---|---|---|
+| Pricing core | `lballabio/QuantLib` | BSD-3-Clause |
+| Language binding | `lballabio/QuantLib-SWIG` (pushed 2026-11-25) | same grant |
+| Exposure / XVA / sensitivities | `OpenSourceRisk/Engine` (ORE), XML-configured | Modified BSD |
+| **Independent cross-check** | `OpenGamma/Strata` (Java, **not** a QuantLib derivative) | Apache-2.0 |
+
+**Explicitly excluded:** `FinancePy-Org/FinancePy` (3,239★, **GPL-3.0**) and
+`frtb-net/FRTB` (**AGPL-3.0**). Both are the easiest thing to `pip install` in
+their niche, and both are copyleft. Run Pattern 24's probe **before** the
+prototype.
+
+**The wiring.**
+
+1. **Trade and market data** from the client's system of record into ORE's XML
+   configuration — portfolio, netting sets, CSAs, scenario definitions. This is
+   configuration, not code, which is what makes ORE a platform.
+2. **Deterministic valuation** through QuantLib/ORE. No model in this path.
+3. **The differential oracle.** For every instrument class both stacks cover,
+   price it in **ORE and Strata** and diff. Independent implementations of the
+   same published mathematics under compatible permissive licences give a free
+   correctness oracle — the same construction as Pattern 16 (Metro 2) and
+   Pattern 22 (loss reserving), now available in valuation for the first time.
+   Set tolerances per instrument class and **fail the build on a breach**, not
+   on a report.
+4. **QuantLib's own regression suite as the floor.** It ships closed-form
+   benchmarks; run them in CI on the client's build of the library, so a
+   compiler or version change cannot silently move a number.
+5. **The agent sits outside the pricing call.** It triages which trades moved
+   and why, drafts the calibration commentary, explains sensitivities, and
+   flags named pathologies — a calibration that failed to converge, a
+   discounting curve with a negative forward, an instrument priced by a
+   fallback engine. **Every claim must cite a trade id and a pricing engine
+   name**, and a verifier drops any claim whose citation does not resolve.
+6. **Human sign-off** before anything reaches a valuation committee, and an
+   **append-only log** keyed by trade id and valuation date.
+
+**What the model must never do:** choose the pricing engine, set a calibration
+parameter, override a tolerance breach, or be in the code path that produces a
+number that leaves the system. The model explains valuations; it does not
+produce them.
+
+**Why it closes.** The deliverable is a reconciled valuation with a documented
+challenger implementation — which is precisely the artefact an independent
+model validation function asks for, under guidance that already exists. It
+produces a defensible number in week one, and the governance artefacts it
+generates (differential benchmarking, reproducible suites, documented
+challengers) are the same ones the client's later agentic work will need and
+cannot yet justify on its own.
+
+---
+
+## Pattern 29 — The regulatory-capital engagement: the fixture IS the deliverable
+
+**When to use it.** FRTB, SA-CCR, IFRS 9 / CECL, or any capital or provisioning
+number. This pattern exists because the previous one does **not** transfer
+here, and understanding why is the whole value.
+
+**The measurement that defines the pattern.** Published formula (BCBS 279,
+CRR2, FRTB standards), read by every bank in the jurisdiction, parsed not
+queried — and the global permissive population is: `meenmo/ISDA_SIMM` (MIT,
+32★), `henrik-lauritsen-ch/SACCR-BCBS279` (MIT, 2★), `danielep71/K-SACCR`
+(MPL-2.0, 1★), `sa-ccr/SACCR` (**GPL-3.0**, 7★), `frtb-net/FRTB` (**AGPL-3.0**,
+13★, the only FRTB calculator anywhere), and ISDA's own Apache-2.0 reference
+implementation `Sleto/OpenSIMM`, **untouched since 2015-03-08**.
+
+**Why: the formula is publishable and the fixture is not.** An FRTB charge
+cannot be checked against a closed form — only against *this bank's trading
+book under this regulator's national discretions*. No shared fixture can exist,
+so no shared library accretes. (Trend 30, condition 3.)
+
+**Therefore the engagement is inverted. Do not start with the calculator.**
+
+1. **Deliverable one is the fixture**, and say so in the proposal: an agreed
+   portfolio extract, a frozen market-data snapshot, a documented set of
+   national discretions and model-approval boundaries, and a set of expected
+   numbers signed off by the client's risk function. This is normally treated
+   as preparation. **It is the asset**, it is what nobody can give the client
+   off the shelf, and it is what every later number is judged against.
+2. **Read, do not depend on, the permissive implementations.** `ISDA_SIMM`
+   (MIT, 32★) is the best-shaped: lift its rule structure and test cases,
+   reimplement against the client's product taxonomy. `SACCR-BCBS279` (MIT) and
+   `K-SACCR` (MPL-2.0 — file-level copyleft, so keep it out of the core and
+   behind a process boundary if used at all) are references for the add-on
+   decomposition. **Do not link the GPL-3.0 or AGPL-3.0 ones into a hosted
+   platform at all.**
+3. **The capital calculation is deterministic code with a unit test and a named
+   citation per rule** — the same construction Pattern 17 uses for Reg E
+   clocks. A capital rule is arithmetic; the liability is total; the model has
+   no place in it.
+4. **The agent works on the inputs and the explanation, never the number:**
+   reconciling the trade population against the source system, flagging
+   positions whose risk-factor mapping is missing or ambiguous, explaining
+   period-on-period movement by attributing it to named drivers, drafting the
+   documentation pack. Each finding cites a trade id and a rule reference.
+5. **Human sign-off, append-only log keyed by reporting date and legal entity.**
+
+**The honest sentence for the client:** *"Nobody has an off-the-shelf capital
+engine you can adopt — the one open implementation of FRTB in the world is
+AGPL-licensed with thirteen stars, and ISDA's own reference implementation has
+been abandoned for eleven years. What we build first is the thing that tells
+you whether any engine is right."* That is a stronger position than claiming an
+accelerator, and it is verifiable.
+
+**Regional note:** this is the one plane where LATAM is **not** behind — the
+global population is as thin as the regional one, so a Brazilian or Mexican
+engagement starts level with a German one. The national discretions differ; the
+absence of libraries does not.
+
+---
+
+## Pattern 30 — Corporate actions: bridge the closed format, build on the open one
+
+**When to use it.** Custody, asset servicing, fund administration — anywhere
+SWIFT MT564 corporate-action messages arrive and entitlements must be computed.
+
+**The measurement that sets the architecture.** `iso15022 in:name` returns
+**2 results**, both 0★, both unlicensed, one dead since **2017-02-09**. ISO
+20022 has twelve Apache-2.0 libraries in `moov-io` alone. Both are multi-party
+interchange formats. The difference is that ISO 20022's message definitions are
+published and ISO 15022's MT definitions sit behind SWIFT's licensing — this
+KB's clause 3, in its cleanest measurement.
+
+**What open source actually did about it** — and it is the architecture,
+handed over:
+
+| Repo | Licence | What it is |
+|---|---|---|
+| `roberts-rudzitis/mt564-bridge` | MIT, 1★, 2026-11-01 | MT564 → ISO 20022 **`seev.031`** converter with **XSD validation** and conversion reports |
+| `roberts-rudzitis/mt564-lens` | MIT, 1★, 2026-11-01 | Generator of **synthetic** MT564 messages — fixtures without a live SWIFT feed |
+
+Both are single-author and three weeks old: **design references and prototype
+seeds, not dependencies.**
+
+**The wiring.**
+
+1. **Treat MT564 as an inbound edge, not a domain model.** Convert at the
+   boundary to `seev.031` and make the ISO 20022 form the only representation
+   anything downstream reads. The target has a published schema, so every
+   message can be XSD-validated in CI — a correctness gate the MT form cannot
+   give you.
+2. **Build your fixture corpus synthetically**, following `mt564-lens`. Real
+   corporate-action traffic is client-identifying and usually cannot be
+   redistributed even inside the client, which is why the open-source author
+   wrote a generator rather than shipping samples. Cover the message's hard
+   cases deliberately: mandatory vs voluntary events, multiple options,
+   revisions and cancellations, fractional entitlements.
+3. **Entitlement calculation is deterministic code** — ratio, rounding
+   convention, record-date eligibility, tax withholding — with a unit test per
+   event type and a citation to the event terms. **The model is not in this
+   path.** Fractional-share rounding is arithmetic, and the error is a
+   mis-paid client.
+4. **The agent does the triage and the reading:** classifying inbound events,
+   flagging messages that fail XSD validation or whose terms are internally
+   inconsistent, comparing an event's terms against the issuer announcement and
+   reporting discrepancies, drafting client notifications for human approval.
+   Every claim cites a message reference and a field tag.
+5. **Append-only log keyed by corporate-action reference and version**, because
+   revisions are the common failure mode and the audit question is always
+   "what did we know when we paid?"
+
+**The sentence that sells it:** not *"AI automates corporate actions"* but
+**"every inbound message is schema-validated before it reaches your
+entitlement logic, every event revision is logged with what changed, and the
+calculation that moves money is code with a test — not a model."**
+
+---
+
+## Pattern 31 — Credit scorecard assurance on a three-way differential oracle
+
+**When to use it.** A lender asks for "an AI credit scorecard". **In most cases
+the modelling layer is already built and permissively licensed, and proposing
+to build it again is rework a reviewer will catch.** This pattern sells the
+layer that is actually missing.
+
+**What you adopt.** Three independent implementations of the same binning and
+WOE mathematics, under compatible permissive licences:
+
+| Component | Licence | ★ | Role |
+|---|---|---|---|
+| `guillermo-navas-palencia/optbinning` | Apache-2.0 | 538 | Optimal monotonic binning with constraints; batch and streaming; counterfactual explanations |
+| `ShichenXie/scorecardpy` | MIT | 814 | End-to-end scorecard development |
+| `amphibian-dev/toad` | MIT | 529 | Scorecard toolchain, feature selection |
+| `itlubber/scorecardpipeline` | MIT | 266 | Pipeline modelling, rule mining, PMML export, Excel reporting |
+| `eddyzzl/marvis-risk-agent` | MIT | 397 | **Design reference** for the agent surface: model development, validation, strategy workflows |
+
+**The wiring.**
+
+1. **Binning is computed by a library, never by the model.** Run the same
+   feature set through `optbinning`, `scorecardpy` and `toad` and **diff the
+   resulting bin edges and WOE values.** Three independent implementations of
+   published mathematics give a differential oracle for free — the same
+   construction as Patterns 16, 22, 26 and 28. Material disagreement on a
+   feature is a signal about the *feature*, not about the libraries: it means
+   the variable is unstable at the boundaries, and that is exactly what you
+   want surfaced before the model is fit.
+2. **Monotonicity and information value are the gate, and they are
+   deterministic.** `optbinning` enforces monotonic constraints directly; make
+   violation a build failure rather than a chart in a report. A scorecard that
+   scores a worse borrower better is a fair-lending exposure, not a
+   performance issue.
+3. **Hold the oracle out properly.** Fit on train, select on validation, and
+   keep a time-shifted out-of-time sample the agent never sees. A scorecard's
+   oracle is only publishable because it is statistical — which means it is
+   only valid if the holdout is genuinely held out.
+4. **The agent's job is everything around the fit:** proposing candidate
+   features with a stated rationale, explaining why a bin was merged, drafting
+   the model development document, producing adverse-action reason codes from
+   the WOE contributions, and monitoring drift per feature against the
+   development sample. **Every claim cites a feature name and a bin index**;
+   the verifier drops claims whose citation does not resolve.
+5. **The model proposes, the constraint decides, the human signs.** No model
+   output sets a cut-off, a bin edge, or an approval threshold.
+6. **Append-only log keyed by model version and scoring date**, with the PMML
+   export (`scorecardpipeline` produces one) as the immutable artefact of what
+   was actually deployed.
+
+**Regional note that changes the pitch.** Three of the four libraries are
+**APAC-authored**, maintained, and widely used. In an APAC lending engagement,
+the modelling stack is incumbent — **sell governance, drift monitoring,
+adverse-action explanation and the supervisory evidence trail.** In North
+America the same stack is adoptable but the regulatory frame is ECOA/Reg B
+explainability, so lead with reason codes. In EMEA, `optbinning` is the local
+asset and the frame is the AI Act's credit-scoring high-risk classification —
+whose date this KB still has unresolved (2026-08-02 vs 2027-12-02).
+
+---
+
+## Pattern 24 addendum 2 (2026-11-25) — the licence probe, corrected a third time
+
+Pattern 24 replaced byte bands with line counts after bytes misread
+`moov-io/fincen`. **The line rule broke this pass on a larger asset, and a
+second defect was found that no counting scheme can fix.** Both are
+reproducible; both are now in the gate.
+
+**Defect A — a contributor roster breaks the count.**
+`lballabio/QuantLib`: licence at **`LICENSE.TXT`** (uppercase extension),
+**239 lines / 8,960 B**, GitHub SPDX `NOASSERTION`. Published BSD-3 band ≈ 28
+lines — **8.5× out**. Contents: 180 lines of contributor copyrights running to
+`Copyright (C) 2026`, then attribution notes (Peter Jäckel's *Monte Carlo
+Methods in Finance*, Argonne National Laboratory, the Joe–Kuo number sets),
+then a verbatim three-clause BSD grant. **It is BSD-3-Clause**, and a
+count-driven gate would have rejected a 7,804★ library.
+
+**Defect B — a body grep for `GNU AFFERO` matches GPL-3.0.**
+`FinancePy-Org/FinancePy` (3,239★): **673 lines / 35,148 B**, SPDX `GPL-3.0`,
+title line `GNU GENERAL PUBLIC LICENSE` — and "GNU Affero General Public
+License" appears at lines **552, 556 and 559**, because **GPL-3.0 §13 is titled
+"Use with the GNU Affero General Public License."** Counts cannot separate
+them: GPL-3 ≈ 673 lines, AGPL-3 ≈ 660, **13 apart**. Verified against a true
+AGPL file — `Fincept-Corporation/FinceptTerminal`, title line `GNU AFFERO
+GENERAL PUBLIC LICENSE`, 660 lines.
+
+**This is the expensive confusion.** GPL-3.0 vs AGPL-3.0 is the difference
+between shipping a modified binary with source and being obliged to publish
+your source because you host the thing. Resolving AGPL as GPL creates an
+unbudgeted obligation; resolving GPL as AGPL kills a usable asset.
+
+**The corrected procedure.**
+
+```bash
+#!/bin/bash
+# Pattern 24 licence probe, rev 3. Identify by TITLE LINE; counts only say "read it".
+probe_licence() {
+  local slug="$1" p out code body title lines
+  # Filename tiers measured across nine passes of this KB:
+  for p in LICENSE LICENSE.md LICENSE.txt LICENSE.TXT license license.txt \
+           LICENCE LICENCE.md COPYING COPYING.txt NOTICE; do
+    out=$(curl -s --max-time 25 -w '\n%{http_code}' \
+          "https://raw.githubusercontent.com/$slug/HEAD/$p") || continue
+    code=$(printf '%s' "$out" | tail -1)
+    [ "$code" = "200" ] || continue
+    body=$(printf '%s' "$out" | sed '$d')
+
+    # 1. IDENTIFY: first non-blank line, whitespace stripped. This is the ruling.
+    title=$(printf '%s' "$body" | grep -m1 -v '^[[:space:]]*$' | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
+    lines=$(printf '%s' "$body" | wc -l)
+
+    case "$title" in
+      "GNU AFFERO GENERAL PUBLIC LICENSE") echo "$slug AGPL-3.0 COPYLEFT-NETWORK ($p, $lines L)"; return;;
+      "GNU GENERAL PUBLIC LICENSE")        echo "$slug GPL-3.0 COPYLEFT ($p, $lines L)";        return;;
+      "GNU LESSER GENERAL PUBLIC LICENSE") echo "$slug LGPL COPYLEFT-WEAK ($p, $lines L)";      return;;
+      "Mozilla Public License"*)           echo "$slug MPL-2.0 COPYLEFT-FILE ($p, $lines L)";   return;;
+      "Apache License")                    echo "$slug Apache-2.0 PERMISSIVE ($p, $lines L)";    return;;
+      "MIT License")                       echo "$slug MIT PERMISSIVE ($p, $lines L)";           return;;
+    esac
+
+    # 2. FALL BACK to a body marker ONLY for licences with no title line.
+    #    BSD has none at all; MIT's header is sometimes omitted.
+    #    Read the TAIL: a roster sits at the top, the grant at the bottom.
+    if printf '%s' "$body" | grep -q "Redistribution and use in source and binary forms"; then
+      if printf '%s' "$body" | grep -q "Neither the name"; then
+        echo "$slug BSD-3-Clause PERMISSIVE ($p, $lines L)"
+      else
+        echo "$slug BSD-2-Clause PERMISSIVE ($p, $lines L)"
+      fi
+      return
+    fi
+    printf '%s' "$body" | grep -q "Permission is hereby granted" && {
+      echo "$slug MIT PERMISSIVE ($p, $lines L)"; return; }
+
+    echo "$slug UNRESOLVED-READ-IT-BY-HAND ($p, $lines L, title='$title')"
+    return
+  done
+  echo "$slug NO-LICENCE-FILE-AT-ANY-PROBED-PATH -- see absence rule below"
+}
+```
+
+**Rules that go with it, and they are the part that matters more than the
+script:**
+
+- **Never grep the body for `AFFERO`.** GPL-3.0 §13 names it. Title line only.
+- **Never treat a count as an identification.** A count out of band means
+  *read the file*, in both directions: **below** band suggests truncation,
+  **above** band suggests prepended text — a copyright roster, a preamble, or
+  added terms that change the grant. Both must be read.
+- **`wc -l` counts terminators**, so canonical Apache-2.0 reads **200 or 201**
+  depending on the trailing newline. The band is 200–201.
+- **Read the tail to confirm a BSD or MIT grant.** The roster is at the top.
+- **Probe every filename tier.** Measured across nine passes: `LICENSE`,
+  `LICENSE.md` (`ledger/ledger`), `LICENSE.txt` (Strata), **`LICENSE.TXT`**
+  (QuantLib), **`license.txt`** (ORE), **`COPYING`** (`opencbdc-tx`), plus case
+  variants. Three of these were added by this pass alone.
+- **Absence is only measurable with a control.** A repo that keeps no files at
+  the repository root (`OpenPeppol/peppol-bis-invoice-3`) returns 404 for
+  every path, and `raw.githubusercontent.com` cannot distinguish "no licence"
+  from "nothing at this path". Record **licence not determinable**, never
+  "unlicensed", unless a control file in the same repo returned 200.
+- **`NOASSERTION` is not a finding.** Five consecutive passes of this KB have
+  resolved it to a real permissive grant — this pass: QuantLib (BSD-3 behind a
+  roster), ORE (BSD at a lowercase filename), `opencbdc-tx` (MIT at `COPYING`).
+- **A repo `search/repositories` refuses is not absent.** `OpenGamma` returns
+  HTTP 422 for both `repo:` and `org:` queries while `ls-remote` resolves 3,029
+  refs and the licence file serves canonical Apache-2.0. **`ls-remote` is the
+  only existence oracle.**
+
+**Where to run it:** on every candidate **before** the prototype, not after.
+This pass found three high-traction copyleft assets sitting exactly where a
+developer reaches first — `FinancePy` (3,239★, GPL-3.0, the easiest
+`pip install` in derivatives pricing), `FinceptTerminal` (34,209★, AGPL-3.0)
+and `frtb-net/FRTB` (the only FRTB calculator in existence, AGPL-3.0). Each
+one is a week of rework if it is found at review instead of at selection.
+
+**This script was executed, not just written.** Ten cases, including both
+defects it exists to fix:
+
+| Slug | Probe output | Why it is in the test set |
+|---|---|---|
+| `lballabio/QuantLib` | `BSD-3-Clause PERMISSIVE (LICENSE.TXT, 239 L)` | **Defect A** — 239 lines against a 28-line band, resolved correctly |
+| `FinancePy-Org/FinancePy` | `GPL-3.0 COPYLEFT (LICENSE, 673 L)` | **Defect B** — body names Affero, title line rules it GPL |
+| `Fincept-Corporation/FinceptTerminal` | `AGPL-3.0 COPYLEFT-NETWORK (LICENSE, 660 L)` | The true AGPL control for defect B |
+| `OpenGamma/Strata` | `Apache-2.0 PERMISSIVE (LICENSE.txt, 201 L)` | Repo that `search/repositories` refuses with 422 |
+| `OpenSourceRisk/Engine` | `BSD-3-Clause PERMISSIVE (license.txt, 29 L)` | All-lowercase filename tier |
+| `mit-dci/opencbdc-tx` | `MIT PERMISSIVE (COPYING, 21 L)` | `COPYING` filename tier |
+| `danielep71/K-SACCR` | `MPL-2.0 COPYLEFT-FILE (LICENSE, 372 L)` | File-level copyleft, correctly separated from the others |
+| `NickCrews/mismo` | `LGPL COPYLEFT-WEAK (LICENSE.txt, 70 L)` | **70 lines, not the 187 this KB had recorded** — LGPL ships as a short additional-permissions grant over GPL as well as as full text, so the LGPL band is bimodal. The title line resolved it either way |
+| `ShichenXie/scorecardpy` | `MIT PERMISSIVE (LICENSE, 20 L)` | MIT band is 20–21 lines (trailing newline) |
+| `wilsonfreitas/awesome-quant` | `NO-LICENCE-FILE-AT-ANY-PROBED-PATH` | 30,903★ and genuinely unlicensed — the absence rule applies, and a control file is needed before calling it unlicensed rather than not determinable |
+
+**Terminology note:** ORE describes its own licence as "Modified BSD" and the
+probe returns `BSD-3-Clause`. These are the same grant — BSD with the
+advertising clause removed. Both names appear in this KB; neither is an error.

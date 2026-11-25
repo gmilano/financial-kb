@@ -669,3 +669,136 @@ primary-source confirmation was obtained for the UK and commercial items in
 this section, and `www.gov.uk` is **outside this session's permitted network
 domains**, so any UK government document referenced in `intel/market.md` this
 pass is secondary-sourced and marked as such there.
+
+---
+
+## Pass 9 (2026-11-25) — the analytics platforms you customise rather than replace
+
+Previous passes catalogued the systems of record a financial AI engagement sits
+on top of: Apache Fineract (core banking), Tazama (real-time financial crime),
+Cyclos, the ledger tier. **This pass adds the analytics tier — platforms that
+are not systems of record but are just as much "the thing already installed",
+and which an AI layer customises rather than replaces.**
+
+### QuantLib — the valuation platform
+
+| | |
+|---|---|
+| Repo | https://github.com/lballabio/QuantLib |
+| Licence | BSD-3-Clause (239-line `LICENSE.TXT`; 180-line copyright roster then a verbatim 3-clause grant) |
+| Scale | 7,804★, 2,532 refs, latest tag `v1.44`, pushed 2026-11-25 |
+| Bindings | `lballabio/QuantLib-SWIG` (405★, pushed 2026-11-25) — Python, Java, C#, R |
+
+**Why it belongs in this file and not only in `repos/foundations.md`:**
+QuantLib is to derivatives valuation what Odoo is to ERP — the open platform
+that a serious installation extends rather than replaces, with a plugin surface
+(instruments, pricing engines, term structures) that is explicitly designed for
+extension. The engagement shape is identical to the ERP one: **do not rebuild
+the platform, add the layer the client's business actually needs on top of it,
+and use the platform's own test suite as the acceptance gate.**
+
+Customisation surface for an AI layer: instrument and payoff definitions,
+calibration routines, market-data adapters, scenario generation. The agent
+belongs **outside** the pricing call — proposing calibrations, explaining
+sensitivities, triaging which trades moved and why — and never inside it,
+because the pricing call is the part with an oracle and the part a validator
+will reproduce.
+
+### ORE — the risk platform on top of the valuation platform
+
+| | |
+|---|---|
+| Repo | https://github.com/OpenSourceRisk/Engine |
+| Licence | Modified BSD (`license.txt`, 29 lines, 1,627 B) |
+| Scale | 831★, 248 refs, 21 release tags, latest `v1.8.9.1`, pushed 2026-09-15 |
+| UI/exploration | `OpenSourceRisk/explORE` (Apache-2.0, 1★) |
+
+ORE extends QuantLib with exposure simulation, XVA, sensitivities and capital
+analytics, and is configured by XML rather than programmed — which makes it a
+**platform** in this file's sense: the client's portfolio, netting sets,
+collateral agreements and scenario definitions are configuration, not code.
+LSEG's post-trade group publishes about it, so it is not a lone academic
+project.
+
+**The scoping fact to put in any ORE proposal:** `ORE-SWIG`, the Python
+binding, has not been pushed since **2024-06-14** while the C++ engine is
+current to September 2026. **A Python-first ORE engagement includes binding
+maintenance as scope.** `QuantLib-SWIG` carries no such debt.
+
+### Strata — the independent second implementation
+
+| | |
+|---|---|
+| Repo | https://github.com/OpenGamma/Strata |
+| Licence | Apache-2.0 (`LICENSE.txt`, 201 lines, 11,357 B — canonical with appendix) |
+| Scale | 3,029 refs, latest tag `v2.9.4`. **Star count not measurable** — `search/repositories` returns HTTP 422 for this org |
+
+Java, from OpenGamma, and **not a QuantLib derivative.** That independence is
+its value: it is the only permissive library that can serve as a **differential
+oracle** against the QuantLib/ORE stack for the instruments both cover. Two
+independent implementations under compatible permissive licences is the
+precondition for this KB's differential-oracle patterns (16, 22, 26), and this
+is the first time the valuation plane has had one.
+
+### Credit scorecard platforms — the judgment tier that is already built
+
+| Platform | Repo | Licence | ★ |
+|---|---|---|---|
+| scorecardpy | https://github.com/ShichenXie/scorecardpy | MIT | 814 |
+| optbinning | https://github.com/guillermo-navas-palencia/optbinning | Apache-2.0 | 538 |
+| toad | https://github.com/amphibian-dev/toad | MIT | 529 |
+| scorecardpipeline | https://github.com/itlubber/scorecardpipeline | MIT | 266 |
+
+These are end-to-end scorecard **toolchains**, not algorithms: binning,
+WOE/IV transformation, feature selection, model fitting, performance reporting,
+PMML export, and in `scorecardpipeline`'s case Excel report generation and
+hyperparameter search across the whole pipeline. `optbinning` adds batch and
+streaming optimal binning plus counterfactual explanations.
+
+**Engagement consequence:** a client asking for "an AI credit scorecard" in
+most cases needs the **governance, monitoring and explanation layer** around one
+of these, not a new modelling stack. Three of them are independent
+implementations of the same binning mathematics, which makes the acceptance
+gate cheap to build (Pattern 31).
+
+### EBA supervisory reporting — the filing path
+
+| | |
+|---|---|
+| Repo | https://github.com/Meaningful-Data/xbridge |
+| Licence | Apache-2.0 (200 lines, 11,356 B) |
+| Scale | 10★, 129 refs, pushed **2026-11-25 16:34 UTC** |
+
+Converts XBRL-XML to XBRL-CSV for EBA taxonomies — the COREP/FINREP submission
+path, sitting on the EBA's own migration between the two encodings. Small,
+current, permissive, and squarely on a mandated obligation with a
+machine-checkable output. Customise around it; do not write a second one.
+
+### Recorded as reference architecture, explicitly not a platform to build on
+
+- **`mit-dci/opencbdc-tx`** (MIT at `COPYING`, 931★) — Project Hamilton's
+  retail CBDC transaction processor, co-copyright *MIT Digital Currency
+  Initiative and the Federal Reserve*. **No push in 20 months**; the whole
+  organisation is dormant. The best public description of a high-throughput
+  two-phase payment core available under a permissive licence, and not
+  maintained. Read and cite; do not link.
+- **`FinancePy-Org/FinancePy`** (3,239★, **GPL-3.0**) — the most convenient
+  Python derivatives-pricing install in the ecosystem, and copyleft. A team
+  reaching for `pip install` lands here rather than on BSD-licensed QuantLib.
+  **Run the licence probe before the prototype, not after.**
+- **`frtb-net/FRTB`** (13★, **AGPL-3.0**) — the only FRTB capital calculator
+  found anywhere. Network copyleft, so unusable as a component in a hosted
+  client platform. The FRTB plane has no permissive option at all.
+- **`Fincept-Corporation/FinceptTerminal`** (34,209★, **AGPL-3.0**) — a
+  terminal-style analytics application. Thirty-four thousand stars does not
+  make network copyleft safe inside a client product.
+
+### What this pass did not verify, declared
+
+ORE's association with LSEG post-trade, the ORE release-count numbering and
+QuantLib's "de facto standard" status come from project pages and vendor posts
+reached through search results, which are self-reported. **Every repository
+figure in this section — stars, licence text, line and byte counts, push dates,
+ref counts — was measured directly** via `search/repositories`,
+`raw.githubusercontent.com` and `git ls-remote`, except `Strata`'s star count
+and push date, which are recorded as not measurable.

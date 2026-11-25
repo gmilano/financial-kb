@@ -9,6 +9,145 @@ updated: 2026-11-25
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-25 (pass 9)
+
+### `org:OpenSourceRisk` and `org:lballabio` enumerated — snapshot 2026-11-25
+
+Two calls, twenty repos, and the useful finding is a staleness asymmetry rather
+than a count.
+
+| Repo | Licence | ★ | Last push |
+|---|---|---|---|
+| `lballabio/QuantLib` | BSD-3-Clause | 7,804 | **2026-11-25** |
+| `lballabio/QuantLib-SWIG` | same grant | 405 | **2026-11-25** |
+| `OpenSourceRisk/Engine` | Modified BSD | 831 | 2026-09-15 |
+| `OpenSourceRisk/ORE-SWIG` | NOASSERTION | 60 | **2024-06-14** |
+| `OpenSourceRisk/Dashboard` | NOASSERTION | 51 | **2016-11-14** |
+| `OpenSourceRisk/QuantLib-SWIG` (fork) | NOASSERTION | 3 | 2026-09-11 |
+| `OpenSourceRisk/explORE` | Apache-2.0 | 1 | 2026-02-19 |
+| `OpenSourceRisk/Tools` | no licence file | 7 | 2025-02-23 |
+| `OpenSourceRisk/QuantLibAddIn` | no licence file | 0 | 2026-10-12 |
+| `lballabio/quantlib-old` | no licence file | 468 | 2017-04-21, **archived** |
+| `lballabio/dockerfiles` | BSD-3-Clause | 21 | 2023-08-28, **archived** |
+| `lballabio/quantlib-wheels` | no licence file | 6 | 2026-01-05, **archived** |
+
+**The scoping fact, which is worth more than any star count here: the Python
+binding is the stale part of ORE and the current part of QuantLib.**
+`ORE-SWIG` has not moved since **2024-06-14** while `Engine` is current to
+September 2026 — a Python-first ORE engagement inherits an 18-month-old binding
+against a moving C++ core, and that maintenance is scope. `QuantLib-SWIG` was
+pushed the day of this pass and carries no such debt.
+
+### The two repos that bridge a proprietary format into a published one
+
+The ISO 15022 plane is empty: `iso15022 in:name` → **2 results**, both 0★, both
+unlicensed, one dead since **2017-02-09**. ISO 20022 has twelve Apache-2.0
+libraries in `moov-io` alone. Both are multi-party interchange formats; only
+one has publicly readable message definitions.
+
+What exists on the proprietary side is not an implementation but a **boundary**:
+
+- `roberts-rudzitis/mt564-bridge` — MIT, 1★, 2026-11-01. **MT564 → ISO 20022
+  `seev.031`, with XSD validation and conversion reports.**
+- `roberts-rudzitis/mt564-lens` — MIT, 1★, 2026-11-01. Generator of
+  **synthetic** MT564 messages, because real ones cannot be redistributed
+  either.
+
+**Open source on a closed format converts out of it and builds its own
+fixtures.** That is this KB's clause 3 observed in motion rather than inferred
+from a star count, and the architectural consequence for custody and asset
+servicing is immediate: **build on `seev.031`, treat MT564 as an inbound edge.**
+Recorded as design references, not dependencies (1★, single author, three weeks
+old).
+
+Also seen, excluded: `wdorninger/ddb_mt564-releases` — prebuilt DuckDB
+extension binaries, **no licence file**, 2026-11-13.
+
+### The EBA plane, found only after the obvious query failed
+
+`corep in:name` returns **3,897 results** led by `nodejs/corepack` (3,856★) and
+`LSPosed/CorePatch` (3,601★). `finrep` returns `sewardlee337/finreportr`.
+**Both terms are unusable, and the collision is invisible in the result count.**
+
+Under `eba taxonomy` instead:
+
+| Repo | Licence | ★ | Last push |
+|---|---|---|---|
+| `Meaningful-Data/xbridge` | Apache-2.0 (200 lines, 11,356 B) | 10 | **2026-11-25 16:34 UTC** |
+| `michelecirelli30-ai/eba-dpm-taxonomy-explorer` | no licence file | 0 | 2026-11-23 |
+| `bojaruniec/eba_taxonomy` | MIT | 0 | 2026-08-10 |
+
+`xbridge` converts XBRL-XML to XBRL-CSV for EBA taxonomies — the COREP/FINREP
+filing path, on the EBA's own live migration between the two encodings. At 10★
+it is invisible to every thematic query this KB runs. **Best-shaped EMEA filing
+asset found since `kanedata/ixbrl-parse`.**
+
+### Measurement correction carried into this log — two defects, both reproducible
+
+**1. A copyright roster breaks the line-count rule this log published four
+days ago.** `lballabio/QuantLib`: `LICENSE.TXT` (**uppercase extension**, a
+filename tier the probe lacked), **239 lines / 8,960 B**, GitHub
+`NOASSERTION`. Published BSD-3 band: ≈28 lines. **8.5× out.** The file is 180
+lines of contributor copyrights, then attribution notes (Peter Jäckel's *Monte
+Carlo Methods in Finance*, Argonne National Laboratory, the Joe–Kuo number
+sets), then a verbatim three-clause BSD grant. **It is BSD-3-Clause.** The
+line rule has now failed in exactly the way the byte rule failed in pass 5, and
+on a larger asset.
+
+**2. A body grep for `GNU AFFERO` matches GPL-3.0.** `FinancePy-Org/FinancePy`
+(3,239★, pushed 2026-11-24): licence is **673 lines / 35,148 B**, title line
+`GNU GENERAL PUBLIC LICENSE`, SPDX `GPL-3.0` — and the body says "GNU Affero
+General Public License" at lines **552, 556 and 559**, because **GPL-3.0 §13 is
+titled "Use with the GNU Affero General Public License"**. Counts cannot
+separate them: GPL-3 ≈ 673 lines, AGPL-3 ≈ 660, **13 apart**. Verified against
+a true AGPL file — `FinceptTerminal`'s title line reads `GNU AFFERO GENERAL
+PUBLIC LICENSE`.
+
+**Corrected rule: the first non-blank line is the identification; the body
+marker is a fallback for licences with no title line (BSD has none); every
+count is an instruction to read the file, never an identification.** And
+`wc -l` counts terminators, so canonical Apache-2.0 reads **200 or 201** — both
+appear in this pass. Full version in `compose/patterns.md`, Pattern 24
+addendum 2.
+
+**Three new filename tiers:** `LICENSE.TXT`, `license.txt` (ORE), `COPYING`
+(`opencbdc-tx`). Add all three to every probe.
+
+### Channels — one new false negative, otherwise unchanged
+
+- **`OpenGamma` returns HTTP 422 for both `repo:` and `org:` queries** — "the
+  listed users and repositories cannot be searched" — while `ls-remote`
+  resolves **3,029 refs** and `raw.githubusercontent.com` serves a canonical
+  Apache-2.0 `LICENSE.txt`. Sixth measured search false negative on a live
+  repo. Strata's stars are recorded **not measurable**, not estimated.
+- `search/repositories` with `org:` paid again: eight ORE repos and twelve
+  `lballabio` repos in two calls.
+- `git ls-remote`: **27 of 28 new slugs resolved.** The one that did not —
+  `ultibi` — genuinely does not exist at any of three probed slugs; only two
+  unlicensed documentation repos, dead since 2023. The slug came from recall
+  rather than a search result, which is what the existence gate is for.
+- `curl -sI github.com/<slug>`: **403 for everything, sixth consecutive pass.**
+
+### Informed gap — LATAM on this plane, measured in the region's own languages
+
+Per the standing rule, the gap was measured in Spanish and Portuguese, not with
+translated US terms:
+
+| Query | Total | Best result |
+|---|---|---|
+| `capital regulatorio` | 7 | `MarcialMtzA/Basilea-III-Calculo-ICAP` — Mexican ICAP calculation, **no licence**, 0★, 2026-11-23 |
+| `riesgo de credito` | 299 | `Miau44/Sistema-De-Evaluacion...` — **no licence**, 8★ |
+| `scoring crediticio` | 190 | `borgesnancya-blip/scoring-crediticio-logistic-regression` — **no licence**, 4★ |
+| `basileia` | 84 | **collides with a Byzantine alternate-history worldbuilding project** (`AndHope/Basileia-Romaion`, 15★) |
+
+**Every hit is coursework: 0–8★, almost all unlicensed, none maintained as a
+library.** There is no LATAM-origin asset in the valuation or
+regulatory-capital plane. This is consistent with the region's shape already
+recorded in this KB — LATAM leads on payment *rails* (`bacen/pix-api`, 3,010★)
+and trails on *books* and now on *models*. Placed under LATAM in
+`intel/market.md` as an informed gap with its consequence stated, not as
+silence.
+
 ## 2026-11-25 (pass 8)
 
 **Theme of the week: `org:bis-med-it` — the Bank for International Settlements

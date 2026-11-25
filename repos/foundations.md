@@ -811,3 +811,157 @@ absent.** Its star count is recorded above as *unmeasured* rather than guessed.
 This reinforces the standing channel rule: **`ls-remote` is the only reliable
 existence channel**; `search/repositories` is a metadata channel that can be
 silently incomplete.
+
+---
+
+## Pass 9 (2026-11-25) — the valuation stack, and the two repos that bridge a proprietary format
+
+### The QuantLib stack — foundational, and absent from this KB until now
+
+`QuantLib` appeared twice in prose across all eight files before this pass and
+had no row anywhere. It is the single most widely depended-on open-source
+library in financial services.
+
+| Repo | Licence | ★ | Last push | Refs | Why it is foundational |
+|---|---|---|---|---|---|
+| https://github.com/lballabio/QuantLib | BSD-3-Clause (239-line `LICENSE.TXT`: 180-line copyright roster + verbatim 3-clause grant) | 7,804 | 2026-11-25 | 2,532 | Term structures, instruments, pricing engines, calibration, Monte Carlo. Latest tag `v1.44`. **Pushed to on the day of this pass** |
+| https://github.com/lballabio/QuantLib-SWIG | same grant | 405 | 2026-11-25 | 826 | Official Python/Java/C#/R bindings — the only supported route for a non-C++ stack |
+| https://github.com/OpenSourceRisk/Engine | Modified BSD (`license.txt`, 29 lines, 1,627 B) | 831 | 2026-09-15 | 248 | ORE: XVA, exposure simulation, sensitivities, capital analytics on top of QuantLib. 21 release tags, latest `v1.8.9.1` |
+| https://github.com/OpenGamma/Strata | Apache-2.0 (`LICENSE.txt`, 201 lines, 11,357 B) | not measurable | tag `v2.9.4` | 3,029 | Java market-risk and analytics library. **Independent of QuantLib** — which is what makes a differential oracle possible |
+| https://github.com/FinancePy-Org/FinancePy | **GPL-3.0** (673 lines, 35,148 B) | 3,239 | 2026-11-24 | 284 | Python derivatives pricing. Listed for completeness and **excluded from build-on**: copyleft |
+
+**The licence spread in this plane is the whole decision.** Two BSD, one
+Apache-2.0, one GPL-3.0 — and the GPL-3.0 one is the most convenient to install
+(`pip install financepy`) and the second most starred. A team reaching for the
+easiest import lands on copyleft. This is the clearest case in the KB for
+running the Pattern 24 licence probe **before** the prototype, not after.
+
+**`ORE` version numbering, measured, because the project's own communications
+read like a conflict.** `opensourcerisk.org` and LSEG's posts describe "ORE
+v15", "v16", "v17" and "the 15th release of Open Source Risk Engine", while the
+repository's tags run `v1.8.6.1 … v1.8.9.1`. The repo carries **21 non-peeled
+tags**, so the public numbering is a **release count, not a version string**.
+Both readings are measured; no contradiction. Cite the tag when pinning a
+dependency and the count never.
+
+### `org:OpenSourceRisk` enumerated — snapshot 2026-11-25
+
+Per the standing rule (when a plane looks thin, enumerate the org rather than
+re-query the topic). Eight repos:
+
+| Repo | Licence | ★ | Last push |
+|---|---|---|---|
+| `OpenSourceRisk/Engine` | Modified BSD | 831 | 2026-09-15 |
+| `OpenSourceRisk/ORE-SWIG` | NOASSERTION | 60 | **2024-06-14** |
+| `OpenSourceRisk/Dashboard` | NOASSERTION | 51 | **2016-11-14** |
+| `OpenSourceRisk/Tools` | no licence file | 7 | 2025-02-23 |
+| `OpenSourceRisk/QuantLib-SWIG` | NOASSERTION | 3 | 2026-09-11 |
+| `OpenSourceRisk/explORE` | Apache-2.0 | 1 | 2026-02-19 |
+| `OpenSourceRisk/QuantLibAddIn` | no licence file | 0 | 2026-10-12 |
+| `OpenSourceRisk/OpenSourceRisk.github.io` | no licence file | 0 | 2026-09-15 |
+
+**The useful negative: the Python binding is the stale part.** `ORE-SWIG` has
+not been pushed since **2024-06-14** while `Engine` is current to September
+2026. A Python-first engagement on ORE inherits an 18-month-old binding against
+a moving C++ core. `lballabio/QuantLib-SWIG` (pushed the day of this pass) does
+not have this problem — so **a Python ORE engagement is a binding-maintenance
+commitment, and a Python QuantLib engagement is not.** That is a scoping fact
+worth more than the star counts.
+
+### The corporate-actions bridge — two MIT repos, three weeks old, and they prove the law
+
+The ISO 15022 plane is empty (2 results, both 0★, both unlicensed, one dead
+since 2017 — see `agents/top.md`). What exists instead is the **boundary**:
+
+| Repo | Licence | ★ | Last push | What it does |
+|---|---|---|---|---|
+| https://github.com/roberts-rudzitis/mt564-bridge | MIT (20 lines, 1,073 B) | 1 | 2026-11-01 | **MT564 → ISO 20022 `seev.031` converter with XSD validation and conversion reports** |
+| https://github.com/roberts-rudzitis/mt564-lens | MIT (20 lines, 1,073 B) | 1 | 2026-11-01 | Generator of **synthetic** SWIFT MT564 corporate-action messages — test fixtures without touching a live SWIFT feed |
+
+Both resolve (2 refs each — single-author, single-branch, three weeks old).
+**Recorded as design references and prototype seeds, not dependencies**, per
+the maturity rule this KB applies to 0–1★ assets.
+
+**Why they matter out of all proportion to one star each.** Open-source work on
+a proprietary message format does not implement the format — it **converts out
+of it into the published one**, and it builds its own fixtures because the real
+messages cannot be redistributed either. That is clause 3 of this KB's law
+observed in motion rather than inferred from a star count. For any custody or
+asset-servicing engagement, the architectural implication is immediate: **do
+not build on MT564; build on `seev.031` and treat MT564 as an inbound edge.**
+The target format is published, has a schema, and can be validated in CI.
+
+Also present and recorded for completeness:
+`wdorninger/ddb_mt564-releases` (prebuilt DuckDB extension binaries for MT564,
+no licence file, 2026-11-13) — **binaries without a licence, excluded.**
+
+### EBA supervisory reporting — the plane `corep` could not find
+
+| Repo | Licence | ★ | Last push | What it does |
+|---|---|---|---|---|
+| https://github.com/Meaningful-Data/xbridge | Apache-2.0 (200 lines, 11,356 B) | 10 | 2026-11-25 | **XBRL-XML → XBRL-CSV converter for EBA taxonomies** — the COREP/FINREP filing path. 129 refs |
+| https://github.com/michelecirelli30-ai/eba-dpm-taxonomy-explorer | no licence file | 0 | 2026-11-23 | EBA Data Point Model and taxonomy explorer. Two days old, unlicensed — noted, not listed |
+| https://github.com/bojaruniec/eba_taxonomy | MIT | 0 | 2026-08-10 | No description; 0★ |
+
+`xbridge` was pushed at **16:34 UTC on the day of this pass**. At 10★ it is
+invisible to every thematic query this KB has run, and it sits exactly on the
+EBA's own 2026 migration from XBRL-XML to XBRL-CSV — a mandated format change
+with a deterministic, machine-checkable output. **This is the best-shaped
+EMEA filing asset found since `kanedata/ixbrl-parse`,** and it is placed under
+EMEA in `intel/market.md`.
+
+### Credit-scorecard libraries — the judgment plane that is not empty
+
+| Repo | Licence | ★ | Last push | Refs |
+|---|---|---|---|---|
+| https://github.com/ShichenXie/scorecardpy | MIT | 814 | 2026-07-28 | 27 |
+| https://github.com/guillermo-navas-palencia/optbinning | Apache-2.0 | 538 | 2026-11-22 | 194 |
+| https://github.com/amphibian-dev/toad | MIT | 529 | 2026-06-16 | 112 |
+| https://github.com/eddyzzl/marvis-risk-agent | MIT | 397 | 2026-11-10 | 129 |
+| https://github.com/itlubber/scorecardpipeline | MIT | 266 | 2026-09-05 | 24 |
+| https://github.com/jstephenj14/Monotonic-WOE-Binning-Algorithm | MIT | 118 | 2022-10-26 | 13 |
+| https://github.com/boredbird/woe | MIT | 255 | **2019-10-29** | — |
+
+Six live permissive implementations of the same judgment. **Three
+independent ones (`optbinning`, `scorecardpy`, `toad`) make a differential
+oracle possible on binning and WOE** — see `compose/patterns.md` Pattern 31.
+
+### CBDC — permissive, Federal-Reserve-co-copyrighted, and dormant
+
+| Repo | Licence | ★ | Last push |
+|---|---|---|---|
+| https://github.com/mit-dci/opencbdc-tx | MIT (`COPYING`, 21 lines, 1,139 B) | 931 | **2025-03-20** |
+| https://github.com/mit-dci/opencbdc-tctl | NOASSERTION | 9 | **2024-08-08** |
+| https://github.com/mit-dci/opencbdc-ui | NOASSERTION | 3 | **2024-09-03** |
+| https://github.com/mit-dci/opencbdc-js | NOASSERTION | 2 | **2024-05-18** |
+| https://github.com/mit-dci/terraform-aws-opencbdc-tctl | NOASSERTION | 7 | **2023-06-07** |
+
+`opencbdc-tx`'s licence header reads *"Copyright (c) 2021 MIT (Digital Currency
+Initiative) and the Federal Reserve"* — **an MIT grant co-held by a US central
+bank**, which is a licence-provenance tier this KB has not recorded before
+(pass 8's finding was that the institution sets the licence; here two
+institutions co-set a permissive one).
+
+**And the whole organisation is dormant.** Nothing in it has been pushed for
+**20 months**; the satellites have been still for two years. 931★ on a
+transaction processor for a hypothetical general-purpose CBDC, and no
+maintenance. **Recorded as a reference architecture, explicitly not a
+dependency.** For any CBDC or instant-settlement conversation it is the best
+available public description of a two-phase-commit retail payment core — read
+it, cite it, do not link it.
+
+### Channel notes — unchanged except where stated
+
+- `search/repositories` with `q='repo:<slug>'` and `q='org:<name>'`: **works**,
+  and was again the channel that paid (eight ORE repos, twelve `lballabio`
+  repos in two calls).
+- **`OpenGamma` returns HTTP 422 for both `repo:` and `org:` queries** while
+  `ls-remote` resolves 3,029 refs and `raw.githubusercontent.com` serves its
+  licence. Sixth measured instance of a search false negative on a live repo.
+  Strata's star count is recorded as **not measurable**, not guessed.
+- `git ls-remote`: the only reliable existence channel. **27 of 28 new slugs
+  resolved; the one that did not was `ultibi`, and it does not exist.**
+- `raw.githubusercontent.com/<slug>/HEAD/<path>`: works. **Three new filename
+  tiers this pass: `LICENSE.TXT`, `license.txt`, `COPYING`.** Add all three to
+  every probe.
+- `curl -sI github.com/<slug>`: **403 for everything, sixth consecutive pass.**

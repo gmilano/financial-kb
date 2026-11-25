@@ -431,6 +431,72 @@ SDMX client surfaced for the **Federal Reserve Board's own** data services
 Searched via `mcp fred`, `mcp sdmx` and `sdmx`; not found. Stated as an
 informed gap.
 
+
+#### Pass 9 (2026-11-25) — the one plane where the examiner already has a manual
+
+**The regulatory position, re-measured and extended.** SR 26-2 / OCC Bulletin
+2026-13 (**2026-04-17**) superseded SR 11-7 and OCC Bulletin 2011-12 as US
+bank model-risk guidance. Secondary reporting is consistent that **generative
+and agentic AI fall outside its scope**, that examiners are closing the gap
+through direct supervisory engagement — pressing institutions on use-case risk
+mapping, human-oversight protocols and vendor controls — and that the agencies
+intend to issue a **request for information** on model risk management as it
+relates to AI. One source dates a generative-AI clarification to May 2026 and
+ties it to a Governor Bowman speech on 1 May. *All secondary; not verified
+against the Federal Reserve or OCC primary documents.*
+
+**New this pass, and it matters for vendor-dependent architectures:** a
+**proposed replacement for the 2023 interagency third-party risk guidance,
+explicitly covering AI vendors and model providers, was published in September
+2026** (per a compliance-tracker source). An engagement that places a
+third-party model or hosted agent inside a bank's process should assume this
+is the instrument it will be assessed against, and should produce vendor
+documentation accordingly. *Secondary source; the proposal text was not read.*
+
+Also recorded from this pass's sources, all secondary: the FSOC created a
+**standing interagency AI working group** rather than issuing its own AI rules;
+enforcement to date has run through existing authorities — OCC supervisory
+findings, CFPB adverse-action and explainability actions, and SEC
+"AI-washing" cases; ECOA/Regulation B remains in force, with its disparate-impact
+amendments **under legal challenge**; and there is still **no federal
+AI-specific statute** for financial services, with none imminent.
+
+**The opportunity this creates, and it inverts pass 8's framing.** Pass 8
+recorded the genAI carve-out as a gap: *no examiner's manual to inherit.* That
+is true for agentic workflows and **false for the plane this pass opened.** A
+valuation, XVA or capital model built on QuantLib (BSD-3) or ORE (Modified BSD)
+is squarely **inside** model-risk scope — it is precisely what SR 11-7 was
+written for and what SR 26-2 continues to cover. So the valuation plane is the
+one place in US financial services where an AI-adjacent engagement arrives with
+a **mature supervisory vocabulary already in place**: model inventory,
+development documentation, independent validation, outcomes analysis,
+benchmarking against a challenger.
+
+**Sequencing recommendation for a North American bank.** The second line of
+defence has no accepted framework for an agentic workflow and a well-worn one
+for a valuation model. Start in the valuation plane: it can be reviewed under
+guidance that already exists, and the artefacts it produces — differential
+benchmarking against an independent implementation, documented challenger
+models, reproducible regression suites — are **the same artefacts the agentic
+work will need later and cannot yet justify on its own.** See Pattern 28.
+
+**The mortgage plane is an informed gap, and it is the US-specific one.**
+MISMO is the published, multi-party US mortgage data standard, and there is
+**no permissive library for it**: `mismo in:name` returns 363 results that are
+almost entirely collisions (`mismo` is Spanish for "same"), and the only
+mortgage-relevant repositories are `matmill5/MISMO` (**AGPL-3.0**, 5★) and a
+creation tool dead since **2021-01-03**. This KB has overturned three apparent
+gaps by changing vocabulary; **this one survived the correction.** For a US
+mortgage engagement, the format layer is not free here — it is either copyleft
+or build, which is the opposite of the Metro 2 and FinCEN position recorded in
+pass 5.
+
+**CBDC: permissive, central-bank-authored, abandoned.** `mit-dci/opencbdc-tx`
+(MIT at `COPYING`, 931★) is Project Hamilton's retail CBDC transaction
+processor, co-copyright *MIT Digital Currency Initiative and the Federal
+Reserve*. **No push since 2025-03-20**, and the whole `mit-dci` organisation is
+dormant. Reference architecture for an instant-settlement conversation; not a
+dependency.
 ### EMEA
 
 **Regulatory posture: the most demanding in the world, with a hard date.**
@@ -867,6 +933,77 @@ manufacturing, frontier models — **remains concentrated outside both the UK an
 the EU**, which is an argument for engagements that own the *control and
 evidence* layer rather than the model layer.
 
+
+#### Pass 9 (2026-11-25) — the region's supervisory-reporting asset, and two copyleft traps
+
+**Adoption, newly measured.** A source citing an ECB speech reports that
+**more than 85% of banks under European banking supervision use AI**, with
+generative and agentic use still growing. That is the highest adoption figure
+this KB has recorded for any region, and it sits alongside the EMEA pattern
+already on file: highest in-house adoption, far lower specialised-AI
+deployment, most firms on generic tools. *Secondary source; the ECB speech
+itself was not read.*
+
+**DORA, quantified.** In application since **17 January 2025**, covering
+approximately **22,000 EU financial entities** — banks, investment firms,
+insurance undertakings, payment institutions and trading venues — with AI tools
+counted as **ICT services** subject to contractual and incident-reporting
+requirements, and **19 critical ICT providers** (AWS, Microsoft, Google Cloud,
+IBM and Oracle among them) under direct ESA oversight. *Secondary.*
+
+**The AI Act interaction, and this is the item most likely to change a proposal
+in this region.** Sources report that the AI Act **provides derogations for
+financial institutions** on quality-management-system and monitoring
+obligations where equivalent requirements already exist under financial
+services law. If that holds, a bank's existing governance apparatus is not
+merely helpful evidence but a **partial substitute** for the AI Act's own
+management-system duties — which changes the EMEA pitch from "build an AI
+governance programme" to "map your existing one onto the Act and document the
+equivalence." **Treat as a secondary-sourced claim to verify against the Act's
+text before it is used in a proposal**, because the commercial difference is
+large.
+
+**The date conflict this KB has carried since pass 6 persists.** High-risk
+obligations from **2026-08-02** under the original calendar, versus deferral of
+**credit scoring and life/health insurance** to **2027-12-02** under the
+Digital Omnibus amendment, with general-application and transparency duties
+still from August 2026. **Still not verified against EUR-Lex.** Third pass
+carrying it.
+
+**New EMEA asset, and it is the best-shaped filing asset found since
+`kanedata/ixbrl-parse`.** `Meaningful-Data/xbridge` (**Apache-2.0**, 10★, 129
+refs, pushed **2026-11-25 at 16:34 UTC**) converts **XBRL-XML to XBRL-CSV for
+EBA taxonomies** — the COREP/FINREP submission path, sitting directly on the
+EBA's own migration between the two encodings. It was found only after `corep`
+as a query proved unusable (3,897 results led by `nodejs/corepack` at 3,856★);
+the working query was `eba taxonomy`. At 10★ it is invisible to every thematic
+sweep this KB runs.
+
+This is a textbook instance of the KB's best-shaped agent workload: an external
+deadline, a machine-checkable output, a named supervisor, and an obligation the
+client cannot opt out of. See Pattern 18 (statutory filing, regionalised) —
+EMEA now has a fourth format library alongside EN 16931, iXBRL and SAF-T.
+
+**Two copyleft traps in this region's capital plane, and both are easy to walk
+into.** SA-CCR under CRR2 has `sa-ccr/SACCR` (**GPL-3.0**, 7★, R, pushed
+2026-11-14) as its most complete implementation; the permissive alternatives
+are `henrik-lauritsen-ch/SACCR-BCBS279` (MIT, **2★**, dead since 2023) and
+`danielep71/K-SACCR` (**MPL-2.0**, 1★, an Excel/VBA toolkit for SA-CCR
+benchmarking and validation under CRR and Basel, pushed the day of this pass).
+FRTB has exactly one calculator anywhere — `frtb-net/FRTB`, **AGPL-3.0**, 13★ —
+so **the FRTB plane has no permissive option at all** and a hosted client
+platform cannot include it.
+
+**`OpenGamma/Strata`** (Apache-2.0, `v2.9.4`, 3,029 refs) is the region's
+contribution to the valuation plane and the only permissive library independent
+of QuantLib — which makes it the differential oracle for the whole stack
+(Pattern 28). Its star count is **not measurable**: `search/repositories`
+returns HTTP 422 for the `OpenGamma` org.
+
+**`optbinning`** (Apache-2.0, 538★, pushed 2026-11-22), the most
+feature-complete credit-scorecard library found, is EMEA-authored — the
+region's only entry in the judgment plane this pass opened, against three
+APAC ones.
 ### APAC
 
 **Regulatory posture: the most advanced on agentic specifically.**
@@ -1271,6 +1408,76 @@ Governance Framework as the main reference point. APAC therefore still leads
 with **evidence and auditability**, because the obligation is to show your
 working, not to meet a checklist that does not yet exist.
 
+
+#### Pass 9 (2026-11-25) — the region owns the judgment layer, and that is new
+
+**The finding, and it is the first of its kind in this KB.** Every previous
+pass has placed APAC on the *consumption* side of open source: the region
+digitises at scale, publishes little code, and its one uniformly permissive
+plane (pass 8's statistical clients) wraps other people's data. **This pass
+found a plane the region authored.**
+
+Credit scorecards — the model-development judgment layer sitting directly on a
+lending decision — has six live permissive implementations, and **three of the
+four leading libraries are APAC-authored**:
+
+| Library | Repo | Licence | ★ | Last push | Origin |
+|---|---|---|---|---|---|
+| scorecardpy | https://github.com/ShichenXie/scorecardpy | MIT | 814 | 2026-07-28 | APAC — description is literally `评分卡` |
+| toad | https://github.com/amphibian-dev/toad | MIT | 529 | 2026-06-16 | APAC — "ESC Team's credit scorecard tools" |
+| scorecardpipeline | https://github.com/itlubber/scorecardpipeline | MIT | 266 | 2026-09-05 | APAC — pipeline scorecard modelling, rule mining, PMML export, Excel reporting |
+| optbinning | https://github.com/guillermo-navas-palencia/optbinning | Apache-2.0 | 538 | 2026-11-22 | EMEA |
+
+All MIT or Apache-2.0. All maintained within the last five months. These are
+not algorithms but **end-to-end toolchains**: binning, WOE/IV, feature
+selection, fitting, performance reporting, PMML export, hyperparameter search.
+
+**Why it matters commercially, beyond the novelty.** This KB has told clients
+for four passes that the judgment layer is virgin ground with no incumbent to
+displace. **In consumer credit, in this region, that is false — the judgment
+layer is already built, permissively licensed, and in production use.** An APAC
+lending engagement that proposes to build a scorecard stack is proposing
+rework a reviewer will catch. What is *not* built is the layer around it:
+governance, drift monitoring, adverse-action explanation, and the evidence
+trail a supervisor will ask for. **Sell the assurance layer, adopt the
+modelling layer.** See Pattern 31.
+
+**The regulatory picture, re-measured, with one conflict unresolved.**
+
+- **MAS** — one source reports **final Guidelines on Artificial Intelligence
+  Risk Management issued 2026-10-07**; another reports MAS still consulting on
+  comprehensive AI Risk Management Guidelines (governance, explainability,
+  lifecycle controls, third-party AI provider oversight) with a response
+  possible late 2026. **Unresolved against a MAS primary document, and this is
+  the third consecutive pass carrying an unverified MAS item.** Close it by
+  reading `mas.gov.sg` directly, not by another search.
+- **HKMA** — runs a generative-AI sandbox, with a cross-sector experimentation
+  environment announced **March 2026**, and has published **"Capacity Building
+  for Future Banking, 2026–2030"**, setting expectations for AI-literate risk,
+  audit and compliance staff. *Secondary.* The capacity-building angle is a
+  distinctive EMEA/APAC difference worth noting: the supervisor is regulating
+  **staff competence**, not only system controls.
+- **APRA** — issued an industry letter warning that AI governance is **"not
+  keeping pace"** with adoption, with explicit focus on **agentic workflows**.
+  *Secondary.*
+- **Indonesia (OJK)** — has issued AI governance guidance for banking.
+  *Secondary.*
+
+**The assurance deficit, re-confirmed with a sharper number.** One source
+reports **over 50% of APAC financial institutions are not using AI for
+anti-money laundering**, and another simultaneously calls APAC banking the
+region's most advanced AI adopter while saying most APAC institutions "are not
+ready". Those are not contradictory: they are the adoption/assurance inversion
+this KB recorded as Trend 20. The region leads on deployment and trails on
+evidence.
+
+**Players named in this pass's sources:** DBS, OCBC and UOB (cited for strict
+anti-credential-sharing controls and app-bound cryptographic tokens).
+*Secondary.*
+
+**Informed gap, measured:** no APAC-origin asset appeared in the valuation or
+regulatory-capital plane. `meenmo/ISDA_SIMM` (MIT, 32★) is the only permissive
+initial-margin implementation found globally and its origin was not established.
 ### LATAM
 
 **Regulatory posture: thin on AI-specific finance rules, strong on payment rails.**
@@ -1667,6 +1874,84 @@ engagement; Peru's **DS 115-2025-PCM** financial deadline has passed; Chile's
 Latin America** (July 2026, 20 banks ranked) is the first regional benchmark to
 position a client against — read it before any LATAM banking pitch.
 
+
+#### Pass 9 (2026-11-25) — the region's third consecutive measured absence, and what it is NOT evidence for
+
+**Open finance, newly measured, and Brazil continues to lead the KB.**
+**Open Finance payment initiation without redirection opened to the general
+public from 2026-04-22**, and **credit portability via Open Finance launched in
+February 2026**. *Both secondary-sourced.* Mexico's position is unchanged from
+pass 7: mandatory open-finance standards are expected to expand addressable
+markets materially, while the **secondary rules remain unfinalised** — so a
+Mexican open-finance pitch is still a **readiness** engagement, not a
+compliance one.
+
+**Regulation, re-measured.**
+
+- **Brazil** — as of March 2026, still **no fully enacted finance-specific AI
+  statute**; AI is supervised through data-protection law and sectoral
+  financial rules.
+- **Mexico** — still **no dedicated AI law**; CNBV supervises through
+  enforcement, and **authorised an AI-based investment advisor in May 2026**.
+  That authorisation is the most concrete LATAM precedent this KB has: it
+  establishes that the route to market is **case-by-case supervisory
+  authorisation**, not conformity with a published AI regime.
+- **Peru** — holds the **first AI regulation in force in the region**
+  (consistent with the DS 115-2025-PCM date already on file).
+- **Argentina** — has enforced a **technical communication on AI since 2023**.
+
+*All secondary. Verify against BCB, CNBV/Banxico and SBS publications before
+use in a proposal.* Adoption: **Finnovista's 2026 Fintech Radar puts 77% of
+Mexican fintechs already using AI** — the figure pass 7 recorded, unchanged, so
+it is cited here rather than re-reported as new.
+
+**The informed gap, measured in the region's own languages.** This pass opened
+the valuation, regulatory-capital and credit-scorecard planes. **No
+LATAM-origin asset appeared in any of them.** The gap was measured in Spanish
+and Portuguese rather than with translated US terms, per this KB's standing
+rule:
+
+| Query | Results | Best asset found |
+|---|---|---|
+| `capital regulatorio` | 7 | `MarcialMtzA/Basilea-III-Calculo-ICAP` — Mexican ICAP and Basel III capital calculation, **no licence**, 0★, 2026-11-23 |
+| `riesgo de credito` | 299 | an unlicensed credit-report evaluation system, 8★ |
+| `scoring crediticio` | 190 | an unlicensed logistic-regression scoring notebook, 4★ |
+| `basileia` | 84 | **collides with a Byzantine alternate-history worldbuilding project** (15★) |
+
+**Every hit is coursework** — 0–8★, almost all unlicensed, none maintained as a
+library. Two are days old (`Basilea-III-Calculo-ICAP`, 2026-11-23;
+`credit-risk-pd-pdd`, a Brazilian PD and *capital regulatório* pipeline for a
+wholesale corporate book, 2026-08-08), which shows the work is being done — as
+individual projects, not as shared libraries.
+
+**What this absence is NOT evidence for, and the distinction decides how to
+sell into the region.** It is tempting to read it as build-opportunity. Pass 5
+established why that reading is usually wrong for LATAM, and the same mechanism
+applies here with a twist:
+
+- **SPED and CFDI** were monopoly-country formats, so the addressable developer
+  population was one market and commercial issuers owned the ground.
+- **Basel, SA-CCR and FRTB are the opposite — they are global standards**, and
+  the global permissive population for them is *also* nearly empty (one
+  AGPL-3.0 FRTB calculator at 13★ worldwide; ISDA's own SIMM reference
+  implementation dead since 2015). **LATAM is not behind here. Nobody is
+  ahead.**
+
+So the honest regional statement is: **this is not a LATAM gap, it is a global
+one that LATAM shares**, and the reason is Trend 30's condition 3 — the
+fixture for a capital number is the client's own book and cannot be published
+anywhere, by anyone. The consequence is the same for a Brazilian bank as for a
+German one: **the capital plane is a build, the fixture is the first
+deliverable, and the regulator's national discretions are what make it
+non-portable.** That is a better LATAM conversation than an apology for missing
+libraries, and it is the first time in nine passes that a measured LATAM
+absence turned out to carry no regional penalty at all.
+
+**Where the region does lead, restated for contrast:** payment rails
+(`bacen/pix-api`, 3,010★, a central bank's own specification with no EMEA
+equivalent) and agentic-payment safety shape. The region's ranking across this
+KB's planes is now: **first on rails, last on books, absent on models, and tied
+with everyone on capital.**
 ### Global / cross-region
 
 - **Agentic governance is the universal gap.** Accenture recommends a dedicated
@@ -1959,6 +2244,76 @@ most directly sellable number in the file, because the deliverable that closes
 a transforming-stage gap is engineering and evidence, not strategy. It applies
 to every emerging market in scope, not only LATAM.
 
+
+#### Pass 9 (2026-11-25) — the law's judgment clause, and the question that scopes any engagement
+
+**The correction.** Since pass 5 this KB has held that permissive supply
+follows the **file format**, and the commercial instruction was *"adopt the
+parser, build the decision."* Clauses 2–4 refined which formats. **This pass
+measured the most mature permissive asset in financial services and it is not a
+parser:** `lballabio/QuantLib`, BSD-3-Clause, 7,804★, pushed on the day of this
+pass — a library of **pricing models**, which is pure judgment.
+
+**The property that actually predicts supply is a publishable oracle**, with
+three conditions: correctness decided **outside** any single institution; the
+deciding artefact **freely publishable** (clause 3, generalised past file
+formats); and it runs on a **fixture small enough to ship in the repository.**
+
+A file format satisfies all three trivially. A pricing model satisfies all
+three too — closed forms for the simple cases, textbook mathematics, a fixture
+of one instrument, shipped by QuantLib as a regression suite. So does a credit
+scorecard: monotonicity and information value are checkable on a public
+dataset, which is why `scorecardpy` (MIT, 814★), `optbinning` (Apache-2.0,
+538★) and `toad` (MIT, 529★) exist while `dunning` has one star.
+
+**The falsifying counter-case, measured in the same pass.** Regulatory capital
+satisfies conditions 1 and 2 and fails 3. BCBS 279, CRR2 and FRTB are published
+formulas read by every bank and parsed rather than queried — and the entire
+global permissive population is `meenmo/ISDA_SIMM` (MIT, 32★),
+`SACCR-BCBS279` (MIT, 2★), `K-SACCR` (MPL-2.0, 1★), one **AGPL-3.0** FRTB
+calculator at 13★, and ISDA's own Apache-2.0 SIMM reference implementation
+**dead since 2015-03-08**. **The formula is publishable; the fixture — this
+bank's trading book under this regulator's national discretions — is not.**
+
+**The corrected commercial line:**
+
+> **Adopt whatever has a publishable oracle, including judgment. Build what
+> needs the client's own book.**
+
+**And the one-sentence scoping question for any engagement in any industry:**
+
+> **Can the thing that decides whether this is correct be shipped in a public
+> repository?**
+
+If yes, it is already built and adopting it is the cheap half. If no, **that is
+the engagement**, and the **first deliverable is the fixture** — the golden
+dataset, the reconciled book, the agreed test cases — because without it
+neither the client nor the reviewer can tell whether anything works. This
+replaces "adopt the parser, build the decision" as this KB's standing
+engagement heuristic; the old line remains correct wherever a format is
+involved, which is a subset of where the new one applies.
+
+**Prediction for the other eleven industries, falsifiable:** a judgment layer
+has mature permissive libraries wherever correctness is decided by published
+mathematics on a small fixture — actuarial reserving (already confirmed by
+pass 7's three-language differential oracle), load-flow calculation in energy,
+dosimetry in healthcare, structural analysis in manufacturing — and is empty
+wherever the oracle needs the client's whole estate: capital adequacy, network
+planning, population health risk adjustment, demand forecasting.
+
+**Secondary market data recorded this pass, flagged as such.** McKinsey's
+*Global Banking Annual Review 2026* ("The AI disruption dividend") reports
+agentic AI use cases paying back investment in **about ten months**, and frames
+early competitive positioning as being either a **data source** or a
+**storefront** for agent-driven commerce — read from a partial excerpt, so the
+figure should be checked in the full report before it is quoted to a client.
+The WEF/Accenture *AI Playbook for Financial Services 2026* and the Linux
+Foundation/FINOS **2026 report on AI and open source in financial services**
+(dated 2026-08-31) were both surfaced and **not read**; the FINOS one is the
+most directly relevant document to this KB's own subject matter and should be
+read in full next pass. Oracle's 2026 banking predictions (agents in production,
+FX hedging and payment optimisation, composable cores) are **vendor forecasts**
+and are recorded as such, not as evidence.
 ## Regional asymmetry — the summary
 
 | Region | Binding AI-in-finance rules | Hard date to sell against | Posture |
@@ -2162,3 +2517,24 @@ summary table above:**
 | **MAS red teaming from 1 July 2026** | Third independent secondary path this pass | Still **secondary**; no primary MAS document read by any pass |
 | `OpenCyclos` licence (`NOASSERTION`) | Not pursued | Unresolved deliberately — 5-year-stale fork of a superseded major version |
 | Alleged **"MAS Supervisory Notice on Governance of Autonomous AI Agents"** (Aug 2026) | Uncorroborated since pass 5 | **Do not cite.** Pass 6's correction stands |
+
+### Gap register — pass 9 additions (2026-11-25)
+
+| Gap | Status | Evidence |
+|---|---|---|
+| Valuation / derivatives pricing plane never opened in this KB | **CLOSED** | QuantLib (BSD-3, 7,804★), ORE (Modified BSD, 831★), Strata (Apache-2.0, 3,029 refs), QuantLib-SWIG (405★). Grep before this pass: `QuantLib` ×2 in prose, `Strata` ×0 |
+| Credit-scorecard / model-development judgment layer | **CLOSED, and it reverses a KB claim** | Six live permissive libraries, four above 250★, three APAC-authored. The "judgment layer is virgin ground" claim is false in consumer credit |
+| EBA COREP/FINREP supervisory reporting | **CLOSED** | `Meaningful-Data/xbridge` (Apache-2.0, 10★, pushed 2026-11-25 16:34 UTC). Found under `eba taxonomy`; `corep` as a query is unusable |
+| Corporate actions / ISO 15022 | **MEASURED EMPTY — and the empty result is the finding** | `iso15022 in:name` = 2 results, both 0★, unlicensed, one dead since 2017. The only MIT work is `mt564-bridge`, which converts **out** of MT564 into ISO 20022 `seev.031`. Clause 3 in motion |
+| US mortgage / MISMO | **MEASURED ABSENT — survived the vocabulary correction** | 363 results, nearly all collisions (`mismo` = "same" in Spanish). Only mortgage-relevant repos: `matmill5/MISMO` (AGPL-3.0, 5★) and a tool dead since 2021-01-03. **No permissive library** |
+| Regulatory capital (FRTB / SA-CCR / SIMM) | **MEASURED THIN, globally, and the reason is now explained** | Best permissive: ISDA_SIMM (MIT, 32★), SACCR-BCBS279 (MIT, 2★), K-SACCR (MPL-2.0, 1★). FRTB: one AGPL-3.0 calculator, 13★. OpenSIMM: Apache-2.0, dead since 2015. Fails Trend 30 condition 3 |
+| CBDC | **CLOSED as reference architecture, not as a dependency** | `mit-dci/opencbdc-tx` MIT at `COPYING`, 931★, co-copyright MIT DCI + the Federal Reserve, **no push in 20 months**; whole org dormant |
+| LATAM in the valuation / capital plane | **MEASURED ABSENT — and carries no regional penalty** | Measured in Spanish and Portuguese: all hits coursework, 0–8★, mostly unlicensed. But the *global* population is nearly empty too, so LATAM is not behind here |
+| APAC in the valuation / capital plane | **OPEN** | No APAC-origin asset found. `meenmo/ISDA_SIMM` origin not established |
+| `Strata` star count and push date | **OPEN — not measurable** | `search/repositories` returns HTTP 422 for both `repo:OpenGamma/Strata` and `org:OpenGamma`, while `ls-remote` resolves 3,029 refs. Maintenance inferred from tag `v2.9.4` only |
+| MAS AI Risk Management Guidelines — final or in consultation | **OPEN, third consecutive pass** | One secondary source says final 2026-10-07; another says still consulting. Close by reading `mas.gov.sg`, not by searching |
+| EU AI Act high-risk date for credit scoring | **OPEN, fourth consecutive pass** | 2026-08-02 vs 2027-12-02 under the Digital Omnibus. Not verified against EUR-Lex |
+| AI Act derogations for financial institutions (QMS / monitoring) | **NEW, OPEN — high commercial value** | Secondary sources report the Act allows derogations where equivalent financial-services requirements exist. If true it changes the EMEA pitch materially. Verify against the Act's text |
+| US third-party risk guidance replacement covering AI vendors | **NEW, OPEN** | Proposal reported published September 2026; text not read |
+| ORE release numbering ("v15/v16/v17" vs tags `v1.8.x`) | **RESOLVED as a counting convention, not a conflict** | 21 non-peeled tags; the public number is a release count. Pin the tag, never the count |
+| Linux Foundation / FINOS 2026 report on AI and open source in financial services | **OPEN — read it next pass** | Surfaced (dated 2026-08-31), not read. The most directly relevant document to this KB's own subject |

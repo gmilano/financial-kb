@@ -1029,3 +1029,193 @@ runs a free public API, the lookup is a network call, not a parse**, so there
 is no file to implement and no library accretes. That refines the law rather
 than breaking it: **the law predicts libraries for formats you must *parse*,
 not for registries you merely *query*.**
+
+---
+
+## Pass 9 (2026-11-25) — the valuation plane, and the agents that sit on a judgment with an oracle
+
+This KB has argued for four passes that permissive open source clusters on
+**file formats** and is absent from **decisions**, and the commercial line that
+followed was *"adopt the parser, build the decision."* **That line is wrong as
+a blanket rule, and this pass measured where it breaks.** The most mature
+permissive asset in financial services is not a parser. It is a library of
+**pricing models** — pure judgment, no file format anywhere near it — and it
+was pushed to while this pass was being written.
+
+### Valuation and risk engines — the plane this KB had never opened
+
+Grep across all eight files before this pass: `QuantLib` appeared **twice**, in
+prose. `Strata`, `Open Source Risk`, `OpenSourceRisk` appeared **zero** times.
+
+| Asset | Repo | Licence | ★ | Last push | What it is |
+|---|---|---|---|---|---|
+| QuantLib | https://github.com/lballabio/QuantLib | BSD-3-Clause (see licence note) | 7,804 | 2026-11-25 | The de facto standard open-source quantitative finance library: term structures, instruments, pricing engines, Monte Carlo, calibration. Latest tag `v1.44` |
+| QuantLib-SWIG | https://github.com/lballabio/QuantLib-SWIG | same grant as QuantLib | 405 | 2026-11-25 | Official wrappers to Python, Java, C#, R — how a non-C++ stack consumes the library |
+| ORE (Open Source Risk Engine) | https://github.com/OpenSourceRisk/Engine | Modified BSD | 831 | 2026-09-15 | XVA, exposure simulation, sensitivities and capital analytics **built on QuantLib**; 21 release tags, latest `v1.8.9.1` |
+| Strata | https://github.com/OpenGamma/Strata | Apache-2.0 | not measurable (see note) | tag `v2.9.4` | OpenGamma's market-risk and analytics library in Java — an **independent** implementation, not a QuantLib derivative |
+| explORE | https://github.com/OpenSourceRisk/explORE | Apache-2.0 | 1 | 2026-02-19 | ORE's own exploration/UI layer |
+| FinancePy | https://github.com/FinancePy-Org/FinancePy | **GPL-3.0** | 3,239 | 2026-11-24 | Python derivatives pricing across fixed income, equity, FX and credit. **Copyleft — see the licence correction below** |
+
+All six resolve by `git ls-remote` (2,532 / 826 / 248 / 3,029 / 3 / 284 refs).
+
+**Why this matters more than the star counts suggest.** A pricing model is a
+judgment: it embeds a choice of stochastic process, a calibration method and a
+discounting convention, and two desks will disagree about all three. By this
+KB's own prior reasoning it should look like three-way match (1★) or dunning
+(1★). It does not. It looks like `ledger/ledger`, only bigger.
+
+**The mechanism, and it is the new clause of this KB's law — see
+`intel/trends.md` Trend 30.** A pricing model has a **publishable oracle**:
+closed-form solutions for the simple cases, published benchmark values, and a
+regression suite that runs on a fixture of *one instrument*. Correctness is
+decided outside any institution, and the artefact that decides it is small
+enough to ship in the repository. That is the same property a file format has —
+it is just not a file.
+
+### Regulatory capital — the counter-case that makes the clause falsifiable
+
+Published formula (BCBS 279, CRR2, FRTB), multi-party, parsed not queried: by
+clauses 1–4 this plane should be rich. It is the thinnest plane measured this
+pass.
+
+| Asset | Repo | Licence | ★ | Last push | Note |
+|---|---|---|---|---|---|
+| ISDA SIMM | https://github.com/meenmo/ISDA_SIMM | MIT (20 lines, 1,062 B) | 32 | 2026-06-25 | Implements ISDA SIMM v2.3–2.6. **The only permissive initial-margin asset with any traction** |
+| SACCR-BCBS279 | https://github.com/henrik-lauritsen-ch/SACCR-BCBS279 | MIT | 2 | 2023-03-23 | EAD for a derivatives portfolio under BCBS 279 |
+| K-SACCR | https://github.com/danielep71/K-SACCR | MPL-2.0 | 1 | 2026-11-25 | Excel/VBA SA-CCR toolkit with reconciliation and audit evidence, under CRR and Basel. Pushed hours before this pass |
+| SACCR (R) | https://github.com/sa-ccr/SACCR | **GPL-3.0** | 7 | 2026-11-14 | R package for SA-CCR under CRR2. Copyleft |
+| FRTB calculators | https://github.com/frtb-net/FRTB | **AGPL-3.0** | 13 | 2026-02-01 | **The only FRTB capital calculator found. AGPL — strongest copyleft in this KB's financial set** |
+| OpenSIMM | https://github.com/Sleto/OpenSIMM | Apache-2.0 | 0 | **2015-03-08** | ISDA's own proposed reference implementation, untouched for eleven years |
+
+**The reason the plane is empty, and it is clause 5's second half:** the oracle
+for a capital number is not publishable. You cannot check an FRTB charge
+against a closed form — you check it against *this bank's trading book under
+this regulator's national discretions*. The fixture is the client's book, and
+the client's book cannot ship in a repository. **A published formula is not
+enough; the thing you test it against has to be publishable too.**
+
+### Credit scorecards — judgment, four permissive implementations, and an APAC centre of gravity
+
+The other place a judgment acquired a publishable oracle. Monotonic binning,
+information value and weight-of-evidence are **checkable criteria** that run on
+a public dataset, so the judgment became shareable.
+
+| Asset | Repo | Licence | ★ | Last push | Region of origin |
+|---|---|---|---|---|---|
+| optbinning | https://github.com/guillermo-navas-palencia/optbinning | Apache-2.0 (200 lines) | 538 | 2026-11-22 | EMEA |
+| scorecardpy | https://github.com/ShichenXie/scorecardpy | MIT (20 lines, 1,067 B) | 814 | 2026-07-28 | APAC |
+| toad | https://github.com/amphibian-dev/toad | MIT (20 lines, 1,064 B) | 529 | 2026-06-16 | APAC |
+| scorecardpipeline | https://github.com/itlubber/scorecardpipeline | MIT | 266 | 2026-09-05 | APAC |
+| monotonic-binning | https://github.com/jstephenj14/Monotonic-WOE-Binning-Algorithm | MIT | 118 | 2022-10-26 | — |
+| MARVIS-Agent | https://github.com/eddyzzl/marvis-risk-agent | MIT (20 lines, 1,073 B) | 397 | 2026-11-10 | — |
+
+**Three of the four scorecard libraries are APAC-authored** (two carry Chinese
+documentation; `scorecardpy`'s description is literally `评分卡`). This is the
+first plane in this KB where the *judgment* layer has a regional centre of
+gravity, and it is not North America or Europe. Placed in
+`intel/market.md` under APAC.
+
+`eddyzzl/marvis-risk-agent` (397★, MIT, pushed 2026-11-10) is the newest agent
+row of this pass: a credit-risk agent for model development, validation,
+feature engineering and strategy workflows. At 397★ it is two orders of
+magnitude above the servicing-plane agents pass 5 recorded at 0–1★, and the
+difference is exactly clause 5 — a scorecard can be scored against a holdout,
+a dunning strategy cannot.
+
+### Agent rows added — four permissive, one copyleft, two indices
+
+| Agent | Repo | Licence | ★ | Last push | Note |
+|---|---|---|---|---|---|
+| Claude for Financial Services | https://github.com/anthropics/financial-services | Apache-2.0 (201 lines, 11,357 B) | 41,511 | 2026-11-12 | Agent skills, plugins and workflow templates for finance work |
+| FinRobot | https://github.com/AI4Finance-Foundation/FinRobot | Apache-2.0 (200 lines, 11,551 B) | 8,478 | 2026-10-24 | AI4Finance's multi-agent platform for financial applications |
+| LangAlpha | https://github.com/ginlix-ai/LangAlpha | Apache-2.0 (189 lines, no appendix) | 2,346 | 2026-11-25 | Market-research agent stack; describes itself as "Claude Code for Financial Market" |
+| Trading-R1 | https://github.com/TauricResearch/Trading-R1 | Apache-2.0 (200 lines, 11,356 B) | 781 | 2026-11-25 | Tauric Research's trading-reasoning model line, sibling to TradingAgents already in the top set |
+| FinceptTerminal | https://github.com/Fincept-Corporation/FinceptTerminal | **AGPL-3.0** (660 lines, 34,522 B, title line `GNU AFFERO GENERAL PUBLIC LICENSE`) | 34,209 | 2026-11-19 | Terminal-style analytics and research app. **34k★ and network-copyleft: do not link into a client platform** |
+| awesome-finance-agents | https://github.com/aowang-ai/awesome-finance-agents | CC0-1.0 (120 lines, 7,047 B) | 111 | 2026-11-24 | Bilingual curated index of finance agents, organised by financial function and reliability |
+| awesome-quant | https://github.com/wilsonfreitas/awesome-quant | **no licence file** | 30,903 | 2026-11-25 | The quant library index. Index, not a dependency — same treatment as `moov-io/awesome-fintech` |
+
+### Licence correction, and it is the third consecutive pass to correct this probe
+
+**Defect 1 — a copyright roster breaks the line count.** Pass 5 replaced this
+KB's byte-band rule with a **line-count** rule after bytes misread
+`moov-io/fincen`. The line rule now breaks in the same way, and on the largest
+asset in this pass. `lballabio/QuantLib`'s licence is at `LICENSE.TXT`
+(uppercase extension — a filename tier this KB's probe did not have), is
+**239 lines / 8,960 B**, and GitHub classifies it `NOASSERTION`. Against the
+published band — BSD-3 ≈ 28 lines — 239 lines is **8.5× out**, and a
+count-driven gate would have flagged a 7,804★ library as unidentifiable.
+
+The file is **180 lines of copyright attributions** (one per contributor,
+running to `Copyright (C) 2026`), then attribution notes for code taken from
+Peter Jäckel's *Monte Carlo Methods in Finance*, Argonne National Laboratory
+and the Joe–Kuo number sets, and then — at the very end — a verbatim
+three-clause BSD grant, retention clause, binary-reproduction clause and
+non-endorsement clause included. **It is BSD-3-Clause.** Fully permissive,
+fully usable.
+
+**Defect 2 — a body grep for `GNU AFFERO` matches GPL-3.0.** Found on
+`FinancePy-Org/FinancePy` (3,239★). Its licence is **673 lines / 35,148 B**;
+a grep of the body for `GNU AFFERO` hits, because **GPL-3.0 §13 is titled
+"Use with the GNU Affero General Public License"** and names it three times
+(lines 552, 556, 559). The title line reads `GNU GENERAL PUBLIC LICENSE`, and
+SPDX says `GPL-3.0`. Line counts cannot separate the two either — GPL-3 ≈ 673
+and AGPL-3 ≈ 660 are **13 lines apart**. Cross-checked against a genuine
+AGPL file: `FinceptTerminal`'s title line reads `GNU AFFERO GENERAL PUBLIC
+LICENSE`.
+
+**The corrected probe (full version in `compose/patterns.md`, Pattern 24
+addendum 2):** read the **first non-blank line** as the licence title; use the
+body marker only where there is no title line (BSD has none; MIT's header is
+sometimes omitted); treat every count as *an instruction to read the file*,
+never as an identification. **The distinction between GPL-3.0 and AGPL-3.0
+decides whether a hosted deployment triggers source disclosure, so this
+particular confusion is the expensive one.**
+
+**Measurement caveat on the counts themselves:** `wc -l` counts line
+terminators, so a canonical Apache-2.0 reads **200 or 201** depending on
+whether the file ends with a newline. Both appear in this pass's table. The
+band is 200–201, not 201.
+
+**Fifth consecutive pass in which `NOASSERTION` resolves to a real permissive
+grant.** This pass: QuantLib (BSD-3 behind a 180-line roster), ORE (BSD at
+`license.txt`, all-lowercase), `mit-dci/opencbdc-tx` (MIT at `COPYING`), and
+`OpenGamma/Strata`, which `search/repositories` refuses entirely with HTTP 422
+while `ls-remote` resolves 3,029 refs and its `LICENSE.txt` is canonical
+Apache-2.0. **Three new filename tiers in one pass: `LICENSE.TXT`,
+`license.txt`, `COPYING`.**
+
+### Measured and excluded — written down so the next pass does not re-search
+
+- **MISMO (US mortgage data standard) — a real absence, and this KB must stop
+  reaching for the zero-trap.** `mismo in:name` returns **363 results** and
+  almost all of them are collisions: `mismo` is Spanish for "same", so the top
+  hits are a record-linkage library (`NickCrews/mismo`, LGPL-3.0, 24★), a React
+  Native screen-sharing package (`KrakenWagen/mismo`, MIT, 8★) and a Rust toy
+  language. The only mortgage-relevant repos are `matmill5/MISMO` (**AGPL-3.0**,
+  5★) and `alialiayman/MISMO-Creation-tool` (no licence, dead since
+  **2021-01-03**). **There is no permissive MISMO library.** This KB has
+  invoked the zero-result trap three times to overturn an apparent gap; here
+  the gap survived the vocabulary correction. **A measured absence is now a
+  finding, and "mortgage" is one.**
+- **ISO 15022 / corporate actions — empty, and the reason is clause 3.**
+  `iso15022 in:name` returns **2 results**, both 0★, both unlicensed, one
+  untouched since **2017-02-09**. Meanwhile ISO 20022 has twelve Apache-2.0
+  libraries in `moov-io` alone. Both are multi-party interchange formats; the
+  difference is that ISO 20022's message definitions are published and ISO
+  15022's MT definitions sit behind SWIFT's licensing. **This is clause 3
+  ("readable without paying to join") producing its cleanest measurement yet.**
+  The two MIT repos that do exist are in `repos/foundations.md` and they point
+  *out* of the proprietary format into the published one.
+- **`ultibi` (open-source FRTB engine) — does not exist at any probed slug.**
+  `ultima-ib/ultibi`, `ultimaib/ultibi` and `AnatolyBug/ultibi` all return
+  **0 refs** from `ls-remote` and 404 on every licence path. What exists is two
+  **unlicensed documentation** repos, `ultima-ib/ultibi-frtb-book` (6★) and
+  `ultima-ib/ultibi-general-book` (0★), both dead since **2023**. The slug was
+  probed from recall rather than from a search result, and three channels
+  agreeing on its absence is what caught it. **Not listed.**
+- **`corep` and `finrep` are unusable as queries.** `corep in:name` returns
+  3,897 results led by `nodejs/corepack` (3,856★) and `LSPosed/CorePatch`
+  (3,601★); `finrep` returns `sewardlee337/finreportr`. The EBA supervisory
+  reporting plane was found under **`eba taxonomy`** instead — see
+  `repos/foundations.md`. **Collisions, not scarcity, and the collision is
+  invisible in the result count.**

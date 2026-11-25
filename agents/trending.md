@@ -9,6 +9,126 @@ updated: 2026-11-25
 > **APPEND-ONLY.** Newest dated section at the top; everything below it is
 > history and must not be rewritten.
 
+## 2026-11-25 (pass 9)
+
+**Theme of the week: the most mature permissive asset in financial services is
+a library of pricing models, and this KB had never listed it. The commercial
+rule it has published for four passes — "adopt the parser, build the decision"
+— is wrong as stated, and this is the correction.**
+
+### New this week — the valuation plane, first time in this log
+
+`lballabio/QuantLib` (**BSD-3-Clause, 7,804★, pushed 2026-11-25** — the day of
+this pass, latest tag `v1.44`) is the de facto standard open-source
+quantitative finance library. Around it: `OpenSourceRisk/Engine` (ORE, Modified
+BSD, 831★, XVA and exposure analytics built on QuantLib, 21 release tags) and
+`OpenGamma/Strata` (Apache-2.0, `v2.9.4`, Java, **independent of QuantLib**).
+
+**Why it is the most important row added in nine passes.** A pricing model is
+not a file format. It is a judgment — a stochastic process, a calibration
+choice, a discounting convention, all three contested between desks. This KB's
+law said permissive supply clusters on formats and is absent from decisions,
+and the commercial instruction that followed was *adopt the parser, build the
+decision*. QuantLib is a decision layer with 7,804★, a BSD grant and a commit
+from this morning. **The law was measuring the wrong property.**
+
+The property that actually predicts supply is a **publishable oracle**:
+something that decides correctness outside any one institution, on a fixture
+small enough to ship in the repository. A file format has one (the bytes
+conform or they do not). **So does a pricing model** — closed-form solutions
+for the simple cases plus a regression suite that prices one instrument. Both
+get libraries. See `intel/trends.md` Trend 30.
+
+### The counter-case, measured in the same pass, which is what makes it falsifiable
+
+Regulatory capital has a **published formula** (BCBS 279, CRR2, FRTB), is
+multi-party, and is parsed rather than queried — it satisfies every clause this
+KB had. Supply:
+
+| Plane | Best permissive asset | ★ | Note |
+|---|---|---|---|
+| ISDA SIMM | `meenmo/ISDA_SIMM` MIT | 32 | v2.3–2.6 |
+| SA-CCR | `henrik-lauritsen-ch/SACCR-BCBS279` MIT | 2 | plus `danielep71/K-SACCR` MPL-2.0, 1★ |
+| SA-CCR (R) | `sa-ccr/SACCR` **GPL-3.0** | 7 | copyleft |
+| FRTB | `frtb-net/FRTB` **AGPL-3.0** | 13 | **the only FRTB calculator found** |
+| ISDA's own SIMM reference | `Sleto/OpenSIMM` Apache-2.0 | 0 | **untouched since 2015-03-08** |
+
+**The formula is publishable; the fixture is not.** You cannot check an FRTB
+charge against a closed form — only against *this bank's trading book under
+this regulator's national discretions*, and that cannot ship in a repository.
+**That is the second half of the clause, and it is what divides QuantLib
+(7,804★) from FRTB (13★, AGPL) despite both being pure judgment on published
+mathematics.**
+
+### The other judgment plane that is not empty — and it is APAC's
+
+Credit scorecards: `scorecardpy` (MIT, 814★), `optbinning` (Apache-2.0, 538★),
+`toad` (MIT, 529★), `scorecardpipeline` (MIT, 266★),
+`eddyzzl/marvis-risk-agent` (MIT, **397★**, pushed 2026-11-10, a credit-risk
+agent for model development and validation). Monotonic binning, information
+value and weight-of-evidence are **checkable on a public dataset** — a
+publishable oracle, so the judgment became shareable.
+
+**Three of the four libraries are APAC-authored** (`scorecardpy`'s description
+is `评分卡`; `toad` is the ESC Team's). First plane in this KB where the
+*judgment* layer has a regional centre of gravity, and it is neither North
+America nor Europe.
+
+### Agent rows added
+
+`anthropics/financial-services` (Apache-2.0, **41,511★**, 2026-11-12),
+`AI4Finance-Foundation/FinRobot` (Apache-2.0, 8,478★),
+`ginlix-ai/LangAlpha` (Apache-2.0, 2,346★, pushed today),
+`TauricResearch/Trading-R1` (Apache-2.0, 781★, pushed today, sibling of
+TradingAgents already in the top set).
+
+**Flagged copyleft at scale:** `Fincept-Corporation/FinceptTerminal` —
+**AGPL-3.0**, **34,209★**, pushed 2026-11-19. Thirty-four thousand stars on a
+network-copyleft analytics terminal. Do not link it into a client platform.
+
+**Index tier gains a licence:** `aowang-ai/awesome-finance-agents` is
+**CC0-1.0** (111★), where `moov-io/awesome-fintech` and
+`wilsonfreitas/awesome-quant` (30,903★) have **no licence file at all**. An
+index is not a dependency either way, but CC0 means the *list itself* can be
+ingested into a KB like this one, and the other two cannot.
+
+### Two defects in this log's own licence probe, both reproducible
+
+**A copyright roster breaks the line count.** Pass 5 replaced the byte-band
+rule with a line-count rule. QuantLib's `LICENSE.TXT` is **239 lines** against
+a BSD-3 band of ≈28 — **8.5× out** — because 180 of those lines are
+contributor copyright attributions before the grant. GitHub says
+`NOASSERTION`. A count-driven gate would have rejected a 7,804★ BSD-3 library.
+
+**A body grep for `GNU AFFERO` matches GPL-3.0.** `FinancePy-Org/FinancePy`
+(3,239★): **GPL-3.0**, 673 lines, and the body names Affero three times because
+**§13 is titled "Use with the GNU Affero General Public License"**. Line counts
+cannot separate them either — GPL-3 ≈ 673, AGPL-3 ≈ 660, **13 lines apart**.
+Only the **first non-blank line** discriminates, confirmed against
+FinceptTerminal's genuine `GNU AFFERO GENERAL PUBLIC LICENSE` title.
+
+**This is the expensive confusion**: GPL-3.0 versus AGPL-3.0 decides whether a
+hosted deployment triggers source disclosure. Corrected probe in
+`compose/patterns.md`, Pattern 24 addendum 2.
+
+### Not recommended, recorded to save the next pass the search
+
+- **MISMO (US mortgage) — a real absence, and this log must stop reaching for
+  the zero-trap.** 363 results, nearly all collisions (`mismo` is Spanish for
+  "same"). The only mortgage-relevant repos are `matmill5/MISMO` (**AGPL-3.0**,
+  5★) and a tool dead since **2021**. This KB has overturned three apparent
+  gaps by changing vocabulary; **this one survived the correction.** A measured
+  absence is a finding.
+- **`ultibi` does not exist.** Three slugs, 0 refs each; only two unlicensed
+  doc repos dead since 2023. Caught because the slug came from recall, not from
+  a search result.
+- **`mit-dci/opencbdc-tx`** — MIT, 931★, co-copyright *MIT DCI and the Federal
+  Reserve*, and **no push in 20 months**. Reference architecture, not a
+  dependency.
+- **`corep` / `finrep` as queries**: unusable. `corep` returns `nodejs/corepack`
+  (3,856★). The EBA plane was found under **`eba taxonomy`**:
+  `Meaningful-Data/xbridge`, Apache-2.0, pushed **16:34 UTC today**.
+
 ## 2026-11-25 (pass 8)
 
 **Theme of the week: the Bank for International Settlements shipped an agentic

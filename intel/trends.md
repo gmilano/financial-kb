@@ -903,3 +903,242 @@ The reading, and it is the opposite of what a technology-led pitch would say:
   UK Financial Services AI Adoption Plan recorded in `intel/market.md` this
   pass is secondary-sourced and flagged there. It was not read at its primary
   source.
+
+---
+
+## Pass 9 (2026-11-25) — the law gets its judgment clause, and the probe fails twice
+
+### Trend 30 — Permissive supply follows a PUBLISHABLE ORACLE, not a file format
+
+This is a correction to this KB's central finding, not an addition to it, and
+it changes a commercial instruction the KB has published for four passes.
+
+**What this KB has said since pass 5:** permissive, mature open source clusters
+on published interchange formats and is absent from the decision layer above
+them. The line that followed was **"adopt the parser, build the decision."**
+Clauses 2–4 refined *which* formats (read by more than one party; readable
+without paying to join; parsed rather than queried).
+
+**What this pass measured:** the single most mature permissive asset in
+financial services is not a parser.
+
+| Asset | Licence | ★ | What it is |
+|---|---|---|---|
+| `lballabio/QuantLib` | BSD-3-Clause | 7,804 | Pricing models — pure judgment, no file format in sight. Pushed 2026-11-25 |
+| `OpenSourceRisk/Engine` | Modified BSD | 831 | XVA and exposure analytics on QuantLib |
+| `OpenGamma/Strata` | Apache-2.0 | — | Independent Java market-risk library |
+| `ShichenXie/scorecardpy` | MIT | 814 | Credit scorecard development |
+| `guillermo-navas-palencia/optbinning` | Apache-2.0 | 538 | Optimal monotonic binning with constraints |
+| `amphibian-dev/toad` | MIT | 529 | Credit scorecard tooling |
+| `eddyzzl/marvis-risk-agent` | MIT | 397 | Credit-risk agent: model development, validation, strategy |
+
+A pricing model embeds a contested choice of stochastic process, calibration
+method and discounting convention. A scorecard embeds a contested choice of
+bins and features. Both are judgments. Both have permissive libraries with
+hundreds to thousands of stars. **Under the format law they should look like
+three-way match (1★) and dunning (1★). They do not.**
+
+**The property that actually predicts supply.** A judgment acquires a library
+when it has a **publishable oracle**:
+
+1. **Correctness is decided outside any single institution** — by a closed-form
+   solution, a published benchmark, a regulatory formula, or a statistical
+   criterion. Not by this institution's policy or risk appetite.
+2. **The deciding artefact is freely publishable** (this is clause 3, already
+   in the KB, now generalised beyond file formats).
+3. **It runs on a fixture small enough to ship in the repository.**
+
+A file format satisfies all three trivially: the bytes conform or they do not,
+the spec is public, and one sample file is the fixture. **A pricing model
+satisfies all three too** — a European option has a closed form, the
+mathematics is in textbooks, and the fixture is one instrument. QuantLib ships
+exactly that as a regression suite. **So does a scorecard**: monotonicity and
+information value are checkable, the method is published, and the fixture is a
+public credit dataset.
+
+**The counter-case, measured in the same pass, which is what makes the clause
+falsifiable rather than a restatement.** Regulatory capital satisfies
+conditions 1 and 2 and fails 3:
+
+| Plane | Best permissive asset | ★ |
+|---|---|---|
+| ISDA SIMM | `meenmo/ISDA_SIMM` (MIT) | 32 |
+| SA-CCR | `henrik-lauritsen-ch/SACCR-BCBS279` (MIT) | 2 |
+| SA-CCR (R) | `sa-ccr/SACCR` (**GPL-3.0**) | 7 |
+| FRTB | `frtb-net/FRTB` (**AGPL-3.0**) | 13 |
+| ISDA's own SIMM reference | `Sleto/OpenSIMM` (Apache-2.0) | 0, dead since **2015** |
+
+BCBS 279, CRR2 and the FRTB standards are published formulas, read by every
+bank, parsed not queried. By clauses 1–4 this plane should be rich. It is the
+thinnest measured this pass. **The formula is publishable; the fixture is not.**
+You cannot check an FRTB charge against a closed form — only against this
+bank's trading book under this regulator's national discretions, and that
+cannot ship in a repository. Condition 3 fails, and the plane collapses to one
+AGPL calculator at 13★ and a reference implementation abandoned eleven years
+ago.
+
+**The corrected commercial line, and it is better than the old one:**
+
+> **Adopt whatever has a publishable oracle — including judgment. Build what
+> needs the client's own book.**
+
+The old line sent teams to rewrite QuantLib (a reviewer catches that) and told
+them capital modelling was adoptable (it is not). The new line puts the
+boundary where the evidence puts it. **The dividing question for any
+engagement is one sentence: can the thing that decides whether this is correct
+be shipped in a public repository?** If yes, it is already built. If no, that
+is the engagement, and the first deliverable is the fixture.
+
+**Falsifiable prediction for the other eleven industries:** a judgment layer
+will have mature permissive libraries wherever correctness is decided by
+published mathematics on a small fixture — actuarial reserving (already
+confirmed by pass 7's three-language oracle), engineering load-flow
+calculations in energy, dosimetry in healthcare — and will be empty wherever
+the oracle needs the client's whole estate: capital adequacy, network planning,
+population health risk adjustment.
+
+### Trend 31 — US model-risk guidance covers the valuation plane and nothing else that matters
+
+SR 26-2 / OCC Bulletin 2026-13 (**2026-04-17**) superseded SR 11-7, and
+secondary reporting is consistent that **generative and agentic AI are out of
+scope**, with examiners filling the gap through supervision and the agencies
+planning a request for information on model risk as it relates to AI. This KB
+recorded that in pass 8 as a gap: *no examiner's manual to inherit.*
+
+**This pass found the exception, and it is commercially useful.** A valuation
+or capital model built on QuantLib or ORE is **squarely inside** model-risk
+scope — it is exactly what SR 11-7 was written for, and SR 26-2 continues to
+cover it. So the valuation plane is the one place in financial services where
+an AI-adjacent engagement arrives with **a mature supervisory vocabulary
+already in place**: model inventory, development documentation, independent
+validation, outcomes analysis, benchmarking against an alternative
+implementation.
+
+**Consequence for sequencing a North American engagement:** the second line of
+defence has no accepted framework for an agentic workflow and a well-worn one
+for a valuation model. An engagement that starts in the valuation plane can be
+reviewed under guidance that already exists, and the governance artefacts it
+produces — differential benchmarking, documented challenger models,
+reproducible test suites — are the same artefacts the agentic work will need
+later and cannot yet justify. **Start where the examiner has a manual.**
+
+### Trend 32 — Licence evidence has ten tiers, and the roster tier breaks counting entirely
+
+Pass 5 replaced byte bands with line counts after bytes misread
+`moov-io/fincen`. Pass 8 brought the tier count to nine. **This pass broke the
+line rule the same way, on a bigger asset, and found a second defect that no
+count can fix.**
+
+**Tier 10 — the grant behind a contributor roster.** `lballabio/QuantLib`:
+`LICENSE.TXT`, **239 lines / 8,960 B**, GitHub `NOASSERTION`. Published BSD-3
+band ≈ 28 lines; this is **8.5× out**. The content is 180 lines of contributor
+copyrights running to 2026, then attribution notes for third-party code, then a
+verbatim three-clause BSD grant. **BSD-3-Clause, fully permissive.** A
+count-driven gate rejects a 7,804★ library.
+
+**And the defect that counting cannot reach: GPL-3.0's body names Affero.**
+`FinancePy-Org/FinancePy` (3,239★): 673 lines, SPDX `GPL-3.0`, title line
+`GNU GENERAL PUBLIC LICENSE` — and three occurrences of "GNU Affero General
+Public License" in the body, because **§13 is titled "Use with the GNU Affero
+General Public License"**. GPL-3 ≈ 673 lines and AGPL-3 ≈ 660 are **13 lines
+apart**, so no band separates them. Only the **first non-blank line** does,
+confirmed against `FinceptTerminal` (**AGPL-3.0**, 34,209★), whose title line
+reads `GNU AFFERO GENERAL PUBLIC LICENSE`.
+
+**This is the expensive confusion in the whole licence-probe exercise.**
+GPL-3.0 versus AGPL-3.0 is the difference between "we may ship a modified
+binary with source" and "hosting this as a service obliges us to publish our
+source." A probe that resolves the first as the second kills a usable asset;
+one that resolves the second as the first creates an obligation nobody
+budgeted.
+
+**The rule, stated so it cannot be re-broken by a third counting scheme:**
+every count — bytes or lines — is **an instruction to read the file**, never an
+identification. Identify from the **first non-blank line**; fall back to a body
+marker only for licences with no title line (BSD has none, MIT's header is
+sometimes omitted); and confirm the grant by reading the **tail**, because a
+roster lives at the top and the grant at the bottom.
+
+**Fifth consecutive pass in which `NOASSERTION` resolves to a real permissive
+grant** — QuantLib (BSD-3 behind a roster), ORE (BSD at `license.txt`),
+`opencbdc-tx` (MIT at `COPYING`). **Three new filename tiers:** `LICENSE.TXT`,
+`license.txt`, `COPYING`.
+
+### Trend 33 — A measured absence is a finding, and the zero-trap has a limit
+
+This KB has used the **zero-result trap** three times to overturn an apparent
+gap: a low or zero result count usually means the query used a consultant's
+words instead of the artefact's name (`BSA SAR filing` → 0, while
+`moov-io/fincen` builds exactly those forms). The rule has been productive and
+it has been applied as though it always holds.
+
+**This pass found a case where it does not.** US mortgage data has a published
+multi-party standard, MISMO, and `mismo in:name` returns **363 results**. The
+count looks healthy; nearly all of it is collision — `mismo` is Spanish for
+"same", so the field is led by a record-linkage library (LGPL-3.0, 24★), a
+React Native screen-sharing package (MIT, 8★) and a Rust toy language. The only
+mortgage-relevant repositories are `matmill5/MISMO` (**AGPL-3.0**, 5★) and
+`alialiayman/MISMO-Creation-tool` (no licence, dead since **2021-01-03**).
+**There is no permissive MISMO library, and the vocabulary correction did not
+rescue the plane — it confirmed the absence.**
+
+**Both failure modes are now measured, and they are symmetric:**
+
+| Symptom | Usual cause | Test |
+|---|---|---|
+| Low count, real category | Consultant vocabulary instead of the artefact's name | Re-query as `{standard-or-agency} + {artefact noun}` |
+| **High count, empty category** | **A collision carrying an unrelated population** | **Read the top rows; a count never shows a collision** |
+
+`corep` → 3,897 results led by `nodejs/corepack` is the same failure as
+`mismo`. **`basileia` collides with a Byzantine alternate-history worldbuilding
+project.** `xva` collides with a voice-synthesis app at 642★. **A result count
+carries almost no information in either direction; only the rows do.**
+
+The standing consequence for every pass in every industry: **report a gap only
+after reading the top rows, and once read, report it as measured.** An informed
+absence — "MISMO has no permissive library, here is what was searched" — is
+worth more to an engagement than a padded table, and this KB now has a case
+where the honest answer was the absence.
+
+### Trend 34 — The CBDC plane is permissive, central-bank-authored, and abandoned
+
+`mit-dci/opencbdc-tx` (931★) is the public reference transaction processor for
+a hypothetical general-purpose retail CBDC, from MIT's Digital Currency
+Initiative and the Federal Reserve Bank of Boston's Project Hamilton. Its
+licence sits at `COPYING`, is 21 lines, and reads *"Copyright (c) 2021 MIT
+(Digital Currency Initiative) and the Federal Reserve"* — **an MIT grant
+co-held by a US central bank.** Pass 8 found that the institution sets the
+licence; here two institutions co-set a permissive one, which is the strongest
+version of that finding.
+
+**And nothing in the organisation has been pushed for 20 months** —
+`opencbdc-tx` since **2025-03-20**, the orchestrator since 2024-08, the wallet
+since 2024-09, the Terraform since 2023-06.
+
+**How to use it, and this is the honest framing for a client conversation:**
+it is the best publicly readable description of a high-throughput two-phase
+retail payment core, written by people with a central bank's requirements, and
+it is not maintained. **Read it, cite its architecture, do not link it.** A KB
+that listed it as a live dependency on the strength of 931★ and an MIT grant
+would be wrong in the way that costs a delivery team a sprint.
+
+### What this pass could not measure, stated so it is not mistaken for coverage
+
+- **`OpenGamma/Strata`'s star count and last push date.** Both `repo:` and
+  `org:` queries return HTTP 422 while `ls-remote` resolves 3,029 refs and the
+  licence file serves canonical Apache-2.0. Recorded as **not measurable**.
+  Maintenance was inferred from the tag series reaching `v2.9.4`, which is
+  weaker evidence than a push date and is labelled as such.
+- **Whether MAS's AI Risk Management Guidelines are final.** One secondary
+  source reports final guidelines issued **2026-10-07**; another reports MAS
+  still consulting with a response expected late 2026. **Not resolved against
+  a MAS primary document.** Pass 7 and 8 left comparable MAS items open; this
+  is the third pass carrying an unverified MAS date, and it should be closed by
+  reading `mas.gov.sg` directly rather than by another search.
+- **The EU AI Act high-risk date for credit scoring.** The conflict this KB has
+  carried since pass 6 persists: 2026-08-02 under the original calendar,
+  deferred to **2027-12-02** for credit scoring and life/health insurance under
+  the Digital Omnibus amendment. **Still not verified against EUR-Lex.**
+- **Whether ORE's "15th release" maps to any tag.** The repo carries 21
+  non-peeled tags and the project describes v15/v16/v17; the mapping between
+  the two numbering schemes was not established. Pin the tag, never the count.
